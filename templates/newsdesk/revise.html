@@ -1,0 +1,20 @@
+{% extends "wagtailadmin/base.html" %}
+{% block titletag %}Revise with AI: {{ page.title }}{% endblock %}
+{% block content %}
+  {% include "wagtailadmin/shared/header.html" with title="Revise with AI" subtitle=page.title icon="draft" %}
+  <div class="nice-padding">
+    <p class="help-block help-info">
+      The <strong>{{ desk.name }}</strong> agent will rewrite this draft as a new revision of the same article,
+      using its original source material, its style guide and its {{ memory_size }} memory note{{ memory_size|pluralize }}.
+      The revised draft goes back to Editor review. The agent never publishes.
+    </p>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% for field in form %}
+        {% include "wagtailadmin/shared/field.html" %}
+      {% endfor %}
+      <button type="submit" class="button">Revise with AI</button>
+      <a href="{{ edit_url }}" class="button button-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

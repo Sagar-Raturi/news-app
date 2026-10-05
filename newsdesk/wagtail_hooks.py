@@ -1,6 +1,13 @@
+from django.urls import path, reverse
+from wagtail import hooks
+from wagtail.admin.action_menu import ActionMenuItem
+from wagtail.admin.widgets import PageListingButton
 from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
 
+from news.models import ArticlePage
+
+from . import views
 from .models import DeskAgent, DraftRequest
 
 
@@ -47,3 +54,43 @@ class NewsdeskGroup(SnippetViewSetGroup):
 
 
 register_snippet(NewsdeskGroup)
+
+
+@hooks.register("register_admin_urls")
+def register_newsdesk_urls():
+    return [path("newsdesk/revise/<int:page_id>/", views.revise_article, name="newsdesk_revise")]
+
+
+@hooks.register("register_page_header_buttons")
+def revise_with_ai_button(page, user, view_name, next_url=None):
+    specific = page.specific
+    if isinstance(specific, ArticlePage) and views.can_revise(specific, user):
+        yield PageListingButton(
+            "Revise with AI",
+            url=reverse("newsdesk_revise", args=[page.pk]),
+            icon_name="draft",
+            priority=35,
+        )
+
+
+class ReviseWithAIMenuItem(ActionMenuItem):
+    """'Revise with AI' in the save/publish menu at the bottom of the edit screen."""
+
+    label = "Revise with AI"
+    name = "action-revise-with-ai"
+    icon_name = "draft"
+
+    def is_shown(self, context):
+        page = context.get("page")
+        if context["view"] != "edit" or page is None:
+            return False
+        specific = page.specific
+        return isinstance(specific, ArticlePage) and views.can_revise(specific, context["request"].user)
+
+    def get_url(self, parent_context):
+        return reverse("newsdesk_revise", args=[parent_context["page"].pk])
+
+
+@hooks.register("register_page_action_menu_item")
+def register_revise_menu_item():
+    return ReviseWithAIMenuItem(order=45)
