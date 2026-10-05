@@ -1,6 +1,7 @@
 """Django settings. Everything environment-specific comes from env vars."""
 
 import os
+import sys
 from pathlib import Path
 
 import dj_database_url
@@ -150,7 +151,10 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {"console": {"class": "logging.StreamHandler"}},
-    "root": {"handlers": ["console"], "level": os.environ.get("DJANGO_LOG_LEVEL", "INFO")},
+    "root": {
+        "handlers": ["console"],
+        "level": "WARNING" if "test" in sys.argv else os.environ.get("DJANGO_LOG_LEVEL", "INFO"),
+    },
 }
 
 if not DEBUG:

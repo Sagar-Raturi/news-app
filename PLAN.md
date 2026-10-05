@@ -10,7 +10,7 @@ Work top to bottom. Tick each item when done and commit.
 - [x] 4. Content models: HomePage, SectionPage, ArticlePage (type, standfirst,
       authors, tags, hero, StreamField body, sources, published date,
       AI-assisted flag), Author snippet, tags, StandardPage; migrations
-- [ ] 5. Model tests (page hierarchy, defaults, published date, authors, tags)
+- [x] 5. Model tests (page hierarchy, defaults, published date, authors, tags)
 - [ ] 6. `bootstrap_site` command: page tree (home, 9 sections, About & AI
       policy), Writer/Editor groups + permissions, "Newsroom review" workflow
 - [ ] 7. Workflow tests (writer can't publish, submit → editor approves →
