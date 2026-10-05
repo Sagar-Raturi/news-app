@@ -1,0 +1,78 @@
+x-app-env: &app-env
+  DATABASE_URL: postgres://newsapp:newsapp@db:5432/newsapp
+  CELERY_BROKER_URL: redis://redis:6379/0
+  DJANGO_DEBUG: "1"
+  DJANGO_SECRET_KEY: dev-only-insecure-secret-key-change-me
+  SITE_BASE_URL: http://localhost:8000
+  WAGTAILADMIN_BASE_URL: http://localhost:8000
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: newsapp
+      POSTGRES_USER: newsapp
+      POSTGRES_PASSWORD: newsapp
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U newsapp -d newsapp"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      <<: *app-env
+      SEED_DEMO: "1"
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build: .
+    command: celery -A config worker --loglevel=info
+    environment:
+      <<: *app-env
+      RUN_MIGRATIONS: "0"
+    volumes:
+      - .:/app
+      - media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # Optional: rebuild Tailwind on template changes.
+  # docker compose --profile css up tailwind
+  tailwind:
+    image: node:22-alpine
+    profiles: ["css"]
+    working_dir: /app
+    command: sh -c "npm install && npm run watch:css"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+
+volumes:
+  pgdata:
+  media:
+  node_modules:

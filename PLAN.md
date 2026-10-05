@@ -5,7 +5,7 @@ Work top to bottom. Tick each item when done and commit.
 - [x] 1. Project docs: CLAUDE.md, PLAN.md, DECISIONS.md
 - [x] 2. Django + Wagtail project skeleton: requirements, env-driven settings,
       Postgres, Celery app + Redis config, URLs, .gitignore
-- [ ] 3. Docker: Dockerfile, docker-compose.yml (db, redis, web, worker),
+- [x] 3. Docker: Dockerfile, docker-compose.yml (db, redis, web, worker),
       entrypoint that migrates, bootstraps and seeds
 - [ ] 4. Content models: HomePage, SectionPage, ArticlePage (type, standfirst,
       authors, tags, hero, StreamField body, sources, published date,
