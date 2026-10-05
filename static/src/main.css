@@ -1,0 +1,167 @@
+/* The Ledger — Tailwind source. Rebuild with `npm run build:css`. */
+@import "tailwindcss" source(none);
+@plugin "@tailwindcss/typography";
+
+@source "../../templates";
+@source "../../news/templates";
+@source "../../core/templates";
+
+@theme {
+  --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Ink on paper, one accent. */
+  --color-paper: #fbf9f4;
+  --color-paper-dark: #f2eee5;
+  --color-ink: #17140f;
+  --color-ink-soft: #3b3731;
+  --color-muted: #6b665d;
+  --color-rule: #ddd7cb;
+  --color-rule-strong: #17140f;
+  --color-accent: #b4441c;
+  --color-accent-dark: #8f3414;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-paper text-ink font-serif antialiased;
+    font-optical-sizing: auto;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  }
+  a {
+    text-underline-offset: 0.18em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Layout */
+  .container-wide {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .container-read {
+    @apply mx-auto w-full max-w-[42.5rem] px-4 sm:px-0;
+  }
+
+  /* Labels and meta (Inter) */
+  .kicker {
+    @apply font-sans text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-accent;
+  }
+  .kicker-muted {
+    @apply font-sans text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-muted;
+  }
+  .meta {
+    @apply font-sans text-xs text-muted;
+  }
+  .section-heading {
+    @apply flex items-baseline justify-between border-t-2 border-rule-strong pt-2 pb-3 font-sans text-sm font-bold uppercase tracking-[0.12em];
+  }
+  .section-heading a:hover {
+    @apply text-accent;
+  }
+
+  /* Headlines (Source Serif) */
+  .headline {
+    @apply font-serif font-semibold leading-tight tracking-[-0.01em] text-ink;
+    text-wrap: balance;
+  }
+  .headline a {
+    @apply hover:underline decoration-1;
+  }
+  .standfirst {
+    @apply font-serif text-ink-soft leading-snug;
+    text-wrap: pretty;
+  }
+
+  /* Story lists separated by thin rules */
+  .rule-list > * + * {
+    @apply border-t border-rule pt-4 mt-4;
+  }
+
+  .badge-ai {
+    @apply inline-flex items-center gap-1 border border-accent/50 px-1.5 py-0.5 font-sans text-[0.65rem] font-semibold uppercase tracking-wider text-accent;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 border border-ink px-5 py-2.5 font-sans text-sm font-semibold transition-colors hover:bg-ink hover:text-paper;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Article body: typography plugin, tuned for long-form reading */
+  .prose-ledger {
+    @apply prose prose-lg max-w-none font-serif;
+    --tw-prose-body: var(--color-ink);
+    --tw-prose-headings: var(--color-ink);
+    --tw-prose-links: var(--color-ink);
+    --tw-prose-bold: var(--color-ink);
+    --tw-prose-bullets: var(--color-accent);
+    --tw-prose-counters: var(--color-muted);
+    --tw-prose-quotes: var(--color-ink);
+    --tw-prose-quote-borders: var(--color-accent);
+    --tw-prose-hr: var(--color-rule);
+    --tw-prose-captions: var(--color-muted);
+    --tw-prose-th-borders: var(--color-rule-strong);
+    --tw-prose-td-borders: var(--color-rule);
+    line-height: 1.7;
+  }
+  .prose-ledger a {
+    @apply decoration-accent decoration-1 underline-offset-2 hover:text-accent;
+  }
+  .prose-ledger h2 {
+    @apply mt-10 mb-3 text-2xl font-semibold;
+  }
+  .prose-ledger figcaption {
+    @apply font-sans text-xs;
+  }
+
+  /* Drop cap on the opening paragraph */
+  .dropcap > p:first-child::first-letter {
+    float: left;
+    font-size: 4.1em;
+    line-height: 0.82;
+    font-weight: 600;
+    margin: 0.06em 0.09em 0 0;
+    color: var(--color-accent);
+  }
+
+  .pullquote {
+    @apply my-10 border-y border-rule-strong py-6 text-center;
+  }
+  .pullquote blockquote {
+    @apply font-serif text-2xl leading-snug font-medium italic text-ink sm:text-[1.7rem];
+    text-wrap: balance;
+  }
+  .pullquote blockquote::before {
+    content: "“";
+    @apply block font-serif text-5xl leading-none not-italic text-accent;
+  }
+
+  .factbox {
+    @apply my-8 border-t-2 border-accent bg-paper-dark px-5 py-5 sm:px-6;
+  }
+  .factbox h3 {
+    @apply mb-3 font-sans text-xs font-bold uppercase tracking-[0.12em] text-ink;
+  }
+  .factbox .rich-text p,
+  .factbox li {
+    @apply font-serif text-base leading-relaxed text-ink-soft;
+  }
+  .factbox .rich-text p + p {
+    @apply mt-3;
+  }
+}

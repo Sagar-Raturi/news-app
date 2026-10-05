@@ -1,0 +1,27 @@
+{% load static wagtailcore_tags wagtailuserbar ledger %}<!doctype html>
+<html lang="en-IN" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% if page.seo_title %}{{ page.seo_title }}{% elif page %}{{ page.title }}{% endif %}{% endblock %} · {{ settings.core.SiteSettings.site_name }}</title>
+  <meta name="description" content="{% block meta_description %}{% if page.search_description %}{{ page.search_description }}{% else %}{{ settings.core.SiteSettings.tagline }}{% endif %}{% endblock %}">
+  {% block seo %}{% endblock %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  <script src="{% static 'js/htmx.min.js' %}" defer></script>
+</head>
+<body class="min-h-screen flex flex-col {% block body_class %}{% endblock %}">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-paper focus:px-3 focus:py-2 font-sans text-sm">Skip to content</a>
+  {% wagtailuserbar %}
+
+  {% include "includes/masthead.html" %}
+
+  <main id="main" class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include "includes/footer.html" %}
+</body>
+</html>

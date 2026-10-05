@@ -1,0 +1,31 @@
+{% load wagtailcore_tags %}
+<footer class="mt-16 border-t-2 border-rule-strong bg-paper-dark">
+  <div class="container-wide grid gap-10 py-10 md:grid-cols-12">
+    <div class="md:col-span-4">
+      <p class="font-serif text-2xl font-bold">{{ settings.core.SiteSettings.site_name }}</p>
+      <p class="mt-2 max-w-xs font-serif text-ink-soft">{{ settings.core.SiteSettings.tagline }}. Reporting that explains, analysis that argues, and opinion clearly labelled as such.</p>
+    </div>
+    <nav aria-label="Footer sections" class="md:col-span-5">
+      <p class="kicker-muted mb-3">Sections</p>
+      <ul class="grid grid-cols-2 gap-x-6 gap-y-2 font-sans text-sm sm:grid-cols-3">
+        {% for section in nav_sections %}<li><a class="hover:text-accent" href="{% pageurl section %}">{{ section.title }}</a></li>{% endfor %}
+      </ul>
+    </nav>
+    <div class="md:col-span-3">
+      <p class="kicker-muted mb-3">The Ledger</p>
+      <ul class="space-y-2 font-sans text-sm">
+        {% if about_page %}<li><a class="hover:text-accent" href="{% pageurl about_page %}">About us</a></li>
+        <li><a class="hover:text-accent" href="{% pageurl about_page %}#our-ai-policy">How we use AI</a></li>{% endif %}
+        <li><a class="hover:text-accent" href="{% url 'news:author_list' %}">Our journalists</a></li>
+        <li><a class="hover:text-accent" href="{% url 'news:search' %}">Search</a></li>
+        <li><a class="hover:text-accent" href="/admin/">Newsroom login</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-rule">
+    <div class="container-wide flex flex-col gap-2 py-4 font-sans text-xs text-muted sm:flex-row sm:justify-between">
+      <p>&copy; {% now "Y" %} {{ settings.core.SiteSettings.site_name }}. All rights reserved.</p>
+      {% if settings.core.SiteSettings.demo_notice %}<p>This site currently shows demonstration content. Articles are illustrative, not real reporting.</p>{% endif %}
+    </div>
+  </div>
+</footer>
