@@ -46,8 +46,8 @@ saved as AI-assisted drafts and submitted to Editor review. Agents never publish
       error handling) and an offline "fake" writer for demos/tests
 - [x] 20. Draft → ArticlePage conversion (safe HTML, source-URL guard, byline,
       AI disclosure) and submission to Newsroom review
-- [ ] 21. Celery task + enqueue on commission; failure handling
-- [ ] 22. Feedback capture: "Request changes" comments on AI drafts become
+- [x] 21. Celery task + enqueue on commission; failure handling
+- [x] 22. Feedback capture: "Request changes" comments on AI drafts become
       desk memory automatically
 - [ ] 23. Wagtail admin: "Newsdesk" menu (desks with inline memory,
       commissions list/inspect), permissions for Writers/Editors, desks created
