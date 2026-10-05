@@ -24,7 +24,7 @@ Work top to bottom. Tick each item when done and commit.
       sitemap.xml, Google News sitemap, robots.txt
 - [x] 12. Page/view tests (home, section, article, author, tag, search, about,
       sitemaps, structured data)
-- [ ] 13. Demo seed: `seed_demo` command, generated hero images, ~20 articles,
+- [x] 13. Demo seed: `seed_demo` command, generated hero images, ~20 articles,
       authors, About & AI policy content, demo users (writer/editor/admin)
 - [ ] 14. Seed tests + full test run; code review pass and fixes
 - [ ] 15. Verify `docker compose up` end-to-end from README; screenshots/smoke

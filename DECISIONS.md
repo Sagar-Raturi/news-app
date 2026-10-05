@@ -23,3 +23,6 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Google News sitemap lists only articles from the last 48 hours (per Google's guidance); everything else is in `/sitemap.xml`, which also lists author and tag pages.
 - Added an RSS feed at `/feed/` — tiny cost, expected of a news site.
 - The Wagtail Site's hostname/port are synced from `SITE_BASE_URL` by `bootstrap_site` so canonical URLs and sitemaps carry the right origin (incl. `:8000` locally).
+- Demo logins are admin/admin, editor/editor, writer/writer (created only by `seed_demo`, which Docker runs when `SEED_DEMO=1`) — easy to try the workflow locally; documented as dev-only.
+- `seed_demo` leaves one draft waiting in "Editor review" so the publishing workflow can be tried immediately.
+- Seeded articles get backdated publish times (0–9 days) so the homepage, "Latest" rail and Google News sitemap look like a live site.
