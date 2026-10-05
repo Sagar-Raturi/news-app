@@ -37,7 +37,7 @@ One writing agent per desk (section). Each desk has a style guide and a
 feedback memory; drafts are written by Claude from editor-supplied material,
 saved as AI-assisted drafts and submitted to Editor review. Agents never publish.
 
-- [ ] 17. `newsdesk` app: DeskAgent (style guide, model, effort), DeskFeedback
+- [x] 17. `newsdesk` app: DeskAgent (style guide, model, effort), DeskFeedback
       (memory notes, per article type), DraftRequest (brief, sources, status,
       usage); migrations; anthropic SDK dependency and settings
 - [ ] 18. Prompt builder (house rules + desk style + desk memory, cached) and

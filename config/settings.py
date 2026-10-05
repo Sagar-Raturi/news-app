@@ -25,6 +25,7 @@ CSRF_TRUSTED_ORIGINS = env_list("DJANGO_CSRF_TRUSTED_ORIGINS", "http://localhost
 INSTALLED_APPS = [
     "core",
     "news",
+    "newsdesk",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.settings",
@@ -141,6 +142,12 @@ CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379/
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", CELERY_BROKER_URL)
 CELERY_TASK_ALWAYS_EAGER = env_bool("CELERY_TASK_ALWAYS_EAGER", False)
 CELERY_TIMEZONE = TIME_ZONE
+
+# Newsdesk AI agents. The Anthropic SDK reads ANTHROPIC_API_KEY from the
+# environment. NEWSDESK_WRITER=fake writes canned drafts without calling the
+# API (demos, tests).
+NEWSDESK_WRITER = os.environ.get("NEWSDESK_WRITER", "anthropic")
+NEWSDESK_MAX_TOKENS = int(os.environ.get("NEWSDESK_MAX_TOKENS", "16000"))
 
 # Emails go to the console in dev (workflow notifications).
 EMAIL_BACKEND = os.environ.get(
