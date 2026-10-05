@@ -32,8 +32,8 @@ def make_article(section, title="Test article", authors=(), tags=(), days_ago=No
     if days_ago is not None:
         kwargs["published_date"] = timezone.now() - datetime.timedelta(days=days_ago)
     article = ArticlePage(title=title, live=False, **kwargs)
-    for author in authors:
-        article.article_authors.add(ArticleAuthor(author=author))
+    for order, author in enumerate(authors):
+        article.article_authors.add(ArticleAuthor(author=author, sort_order=order))
     if tags:
         article.tags.add(*tags)
     section.add_child(instance=article)

@@ -1,6 +1,6 @@
 from django.contrib.syndication.views import Feed
 from django.db.models import Count, Q, prefetch_related_objects
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views.decorators.cache import cache_control
@@ -25,8 +25,9 @@ def _render_listing(request, template, context):
 
 
 def author_list(request):
+    public_ids = ArticlePage.objects.live().public().values("pk")
     authors = Author.objects.annotate(
-        article_count=Count("article_authors", filter=Q(article_authors__page__live=True))
+        article_count=Count("article_authors", filter=Q(article_authors__page__in=public_ids))
     ).order_by("name")
     return render(request, "news/author_list.html", {"authors": authors})
 
@@ -41,6 +42,8 @@ def author_detail(request, slug):
 def tag_detail(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
     articles = live_articles().filter(tags=tag).distinct()
+    if not articles.exists():
+        raise Http404("No published articles with this tag")
     page_obj = paginate(request, articles)
     return _render_listing(request, "news/tag_detail.html", {"tag": tag, "page_obj": page_obj})
 
@@ -63,7 +66,7 @@ def search(request):
             qs = qs.filter(article_type=article_type)
         page_obj = paginate(request, qs.search(query))
         articles = attach_sections(page_obj.object_list)
-        prefetch_related_objects(articles, "article_authors__author")
+        prefetch_related_objects(articles, "hero_image__renditions", "article_authors__author")
         authors = Author.objects.filter(name__icontains=query)[:4] if len(query) > 2 else []
 
     context = {
@@ -122,7 +125,7 @@ class LatestArticlesFeed(Feed):
         return "/"
 
     def items(self):
-        return live_articles()[:30]
+        return live_articles().prefetch_related("tags")[:30]
 
     def item_title(self, item):
         return item.title
@@ -140,4 +143,4 @@ class LatestArticlesFeed(Feed):
         return ", ".join(a.name for a in item.authors)
 
     def item_categories(self, item):
-        return [item.get_article_type_display(), *item.tags.names()]
+        return [item.get_article_type_display(), *(tag.name for tag in item.tags.all())]

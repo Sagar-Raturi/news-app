@@ -3,7 +3,8 @@ import math
 from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.db import models
-from django.db.models import F
+from django.db.models import F, Window
+from django.db.models.functions import RowNumber, Substr
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.functional import cached_property
@@ -24,7 +25,12 @@ WORDS_PER_MINUTE = 230
 
 
 def is_htmx(request):
-    return request is not None and request.headers.get("HX-Request") == "true"
+    """True for HTMX partial requests (not history restores, which need full pages)."""
+    return (
+        request is not None
+        and request.headers.get("HX-Request") == "true"
+        and not request.headers.get("HX-History-Restore-Request")
+    )
 
 
 def paginate(request, queryset, per_page=ARTICLES_PER_PAGE):
@@ -97,15 +103,19 @@ def live_articles():
         ArticlePage.objects.live()
         .public()
         .select_related("hero_image")
-        .prefetch_related("article_authors__author")
+        .prefetch_related("article_authors__author", "hero_image__renditions")
         .order_by(F("published_date").desc(nulls_last=True), "-first_published_at", "-pk")
     )
 
 
-def attach_sections(articles):
+def sections_by_path():
+    return {s.path: s for s in SectionPage.objects.all()}
+
+
+def attach_sections(articles, sections=None):
     """Set each article's section from one query instead of one per article."""
     articles = list(articles)
-    sections = {s.path: s for s in SectionPage.objects.all()}
+    sections = sections_by_path() if sections is None else sections
     for article in articles:
         article._section = sections.get(article.path[: -Page.steplen])
     return articles
@@ -136,43 +146,68 @@ class HomePage(Page):
 
     TOP_STORY_COUNT = 5
 
-    def get_top_stories(self, count=TOP_STORY_COUNT):
-        curated = [
-            item.article.specific
-            for item in self.featured_articles.select_related("article").all()
-            if item.article and item.article.live
-        ][:count]
-        stories = list(curated)
+    def get_top_stories(self, count=TOP_STORY_COUNT, base=None, sections=None):
+        base = live_articles() if base is None else base
+        curated_ids = [item.article_id for item in self.featured_articles.all()]
+        # Only curated stories that are still live and public, in curated order.
+        by_id = {a.pk: a for a in base.filter(pk__in=curated_ids)}
+        stories = [by_id[pk] for pk in curated_ids if pk in by_id][:count]
         if len(stories) < count:
-            stories += list(
-                live_articles().exclude(pk__in=[s.pk for s in stories])[: count - len(stories)]
+            stories += list(base.exclude(pk__in=[s.pk for s in stories])[: count - len(stories)])
+        return attach_sections(stories, sections)
+
+    def get_section_blocks(self, base, exclude_ids, per_section=4):
+        """Latest stories per homepage section in a single query (window function)."""
+        sections = list(SectionPage.objects.child_of(self).live().filter(show_on_homepage=True))
+        if not sections:
+            return []
+        prefix_len = len(self.path) + Page.steplen
+        section_path = Substr("path", 1, prefix_len)
+        rows = (
+            base.descendant_of(self)
+            .filter(depth=self.depth + 2)
+            .exclude(pk__in=exclude_ids)
+            .annotate(
+                section_path=section_path,
+                row=Window(
+                    RowNumber(),
+                    partition_by=section_path,
+                    order_by=[F("published_date").desc(nulls_last=True), F("first_published_at").desc(), F("pk").desc()],
+                ),
             )
-        return attach_sections(stories)
+            .filter(row__lte=per_section)
+        )
+        grouped = {}
+        for article in rows:
+            grouped.setdefault(article.section_path, []).append(article)
+        blocks = []
+        for section in sections:
+            articles = grouped.get(section.path, [])
+            for article in articles:
+                article._section = section
+            if articles:
+                blocks.append({"section": section, "articles": articles})
+        return blocks
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        top_stories = self.get_top_stories()
+        # Build the base queryset once: .public() queries view restrictions on creation.
+        base = live_articles()
+        sections = sections_by_path()
+        top_stories = self.get_top_stories(base=base, sections=sections)
         used = {a.pk for a in top_stories}
 
         opinion = attach_sections(
-            live_articles().filter(article_type__in=ArticlePage.OPINION_TYPES)[:5]
+            base.filter(article_type__in=ArticlePage.OPINION_TYPES).exclude(pk__in=used)[:5], sections
         )
         used |= {a.pk for a in opinion}
 
         explainers = attach_sections(
-            live_articles().filter(article_type=ArticlePage.ArticleType.EXPLAINER).exclude(pk__in=used)[:4]
+            base.filter(article_type=ArticlePage.ArticleType.EXPLAINER).exclude(pk__in=used)[:4], sections
         )
         used |= {a.pk for a in explainers}
 
-        section_blocks = []
-        for section in SectionPage.objects.child_of(self).live().filter(show_on_homepage=True):
-            articles = list(
-                live_articles().child_of(section).exclude(pk__in=used)[:4]
-            )
-            for article in articles:
-                article._section = section
-            if articles:
-                section_blocks.append({"section": section, "articles": articles})
+        section_blocks = self.get_section_blocks(base, used)
 
         context.update(
             lead=top_stories[0] if top_stories else None,
@@ -180,7 +215,7 @@ class HomePage(Page):
             opinion_articles=opinion,
             explainers=explainers,
             section_blocks=section_blocks,
-            latest=attach_sections(live_articles()[:8]),
+            latest=attach_sections(base[:6], sections),
         )
         return context
 
@@ -248,6 +283,7 @@ class ArticleAuthor(Orderable):
     panels = [FieldPanel("author")]
 
     class Meta(Orderable.Meta):
+        ordering = ["sort_order", "pk"]
         unique_together = [("page", "author")]
 
 
@@ -317,6 +353,8 @@ class ArticlePage(Page):
 
     parent_page_types = ["news.SectionPage"]
     subpage_types = []
+    # A copy is a new story: it gets its own date when first published.
+    exclude_fields_in_copy = ["published_date"]
 
     search_fields = Page.search_fields + [
         index.SearchField("standfirst"),
@@ -354,9 +392,12 @@ class ArticlePage(Page):
     def display_date(self):
         return self.published_date or self.first_published_at or self.latest_revision_created_at
 
-    @property
+    @cached_property
     def authors(self):
-        return [item.author for item in self.article_authors.all()]
+        items = self.article_authors.all()
+        if "article_authors" not in getattr(self, "_prefetched_objects_cache", {}):
+            items = items.select_related("author")
+        return [item.author for item in items]
 
     @property
     def is_opinion(self):
@@ -380,7 +421,8 @@ class ArticlePage(Page):
         return max(1, math.ceil(self.word_count / WORDS_PER_MINUTE))
 
     def get_related_articles(self, count=3):
-        tag_ids = list(self.tags.values_list("pk", flat=True))
+        # self.tags may be an in-memory FakeQuerySet during previews.
+        tag_ids = [tag.pk for tag in self.tags.all()]
         qs = live_articles().exclude(pk=self.pk)
         related = []
         if tag_ids:

@@ -11,6 +11,7 @@
     <p class="meta mt-2">{{ page_obj.paginator.count }} article{{ page_obj.paginator.count|pluralize }}</p>
   </header>
   <div class="max-w-4xl pt-6">
+    <h2 class="section-heading"><span>Latest on {{ tag.name }}</span></h2>
     {% if articles %}
       <div class="rule-list">{% include "news/includes/article_list_page.html" %}</div>
     {% else %}

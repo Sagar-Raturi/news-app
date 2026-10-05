@@ -16,9 +16,9 @@
     </div>
     {% if page_obj.has_other_pages %}
       <nav aria-label="Search pages" class="mt-8 flex items-center justify-between font-sans text-sm">
-        {% if page_obj.has_previous %}<a class="btn" href="?q={{ query|urlencode }}&section={{ section_slug }}&type={{ article_type }}&page={{ page_obj.previous_page_number }}">← Previous</a>{% else %}<span></span>{% endif %}
+        {% if page_obj.has_previous %}<a class="btn" href="{% querystring page=page_obj.previous_page_number %}">← Previous</a>{% else %}<span></span>{% endif %}
         <span class="text-muted">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-        {% if page_obj.has_next %}<a class="btn" href="?q={{ query|urlencode }}&section={{ section_slug }}&type={{ article_type }}&page={{ page_obj.next_page_number }}">Next →</a>{% else %}<span></span>{% endif %}
+        {% if page_obj.has_next %}<a class="btn" href="{% querystring page=page_obj.next_page_number %}">Next →</a>{% else %}<span></span>{% endif %}
       </nav>
     {% endif %}
   {% else %}

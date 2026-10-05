@@ -8,7 +8,6 @@ from django.core.files.images import ImageFile
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils import timezone
-from taggit.models import Tag
 from wagtail.images.models import Image
 from wagtail.models import Collection, Site
 
@@ -54,7 +53,7 @@ class Command(BaseCommand):
         content = json.loads(CONTENT_FILE.read_text(encoding="utf-8"))
         with transaction.atomic():
             if options["reset"]:
-                self.reset()
+                self.reset(content)
             site = bootstrap()
             authors = self.create_authors(content["authors"])
             users = self.create_users(site, authors)
@@ -73,13 +72,13 @@ class Command(BaseCommand):
 
     # -- steps --------------------------------------------------------------
 
-    def reset(self):
-        for page in ArticlePage.objects.all():
+    def reset(self, content):
+        """Remove only what this command created (demo slugs and demo images)."""
+        slugs = [a["slug"] for a in content["articles"]] + [REVIEW_DRAFT["slug"]]
+        for page in ArticlePage.objects.filter(slug__in=slugs):
             page.delete()
-        Author.objects.all().delete()
-        Tag.objects.filter(news_articlepagetag_items__isnull=True).delete()
+        Author.objects.filter(slug__in=[a["slug"] for a in content["authors"]]).delete()
         Image.objects.filter(collection__name=DEMO_COLLECTION).delete()
-        get_user_model().objects.filter(username__in=[u[0] for u in DEMO_USERS]).delete()
 
     def create_authors(self, data):
         authors = {}
@@ -145,8 +144,8 @@ class Command(BaseCommand):
                 live=False,
                 owner=users["writer"],
             )
-            for slug in item["authors"]:
-                article.article_authors.add(ArticleAuthor(author=authors[slug]))
+            for order, slug in enumerate(item["authors"]):
+                article.article_authors.add(ArticleAuthor(author=authors[slug], sort_order=order))
             article.tags.add(*item.get("tags", []))
             section.add_child(instance=article)
             article.save_revision(user=users["writer"]).publish(user=users["editor"])
@@ -188,7 +187,7 @@ class Command(BaseCommand):
         )
         author = getattr(writer, "author_profile", None)
         if author:
-            article.article_authors.add(ArticleAuthor(author=author))
+            article.article_authors.add(ArticleAuthor(author=author, sort_order=0))
         article.tags.add("Monsoon Session", "Parliament")
         sections[REVIEW_DRAFT["section"]].add_child(instance=article)
         article.save_revision(user=writer)

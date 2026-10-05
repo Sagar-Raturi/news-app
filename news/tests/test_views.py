@@ -75,16 +75,36 @@ class SiteTestCase(TestCase):
 
 class HomePageViewTests(SiteTestCase):
     def test_renders_top_stories_rails_and_sections(self):
+        for i in range(4):
+            make_article(self.sections["health"], title=f"Fresh health story {i}", days_ago=0.01 * (i + 1))
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "news/home_page.html")
-        self.assertEqual(response.context["lead"], self.rbi)
+        self.assertEqual(response.context["lead"].title, "Fresh health story 0")
+        self.assertIn(self.rbi, response.context["top_stories"])
         self.assertContains(response, "RBI holds rates as food prices cool")
         self.assertContains(response, 'id="opinion-heading"')
         self.assertIn(self.column, response.context["opinion_articles"])
         section_titles = [b["section"].title for b in response.context["section_blocks"]]
         self.assertNotIn("Opinion", section_titles)
         self.assertNotContains(response, "Unpublished scoop")
+
+    def test_stories_not_repeated(self):
+        HomeFeaturedArticle.objects.create(page=self.home, article=self.column, sort_order=0)
+        response = self.client.get("/")
+        self.assertEqual(response.context["lead"], self.column)
+        self.assertNotIn(self.column, response.context["opinion_articles"])
+        shown = [response.context["lead"], *response.context["top_stories"], *response.context["opinion_articles"]]
+        shown += [a for block in response.context["section_blocks"] for a in block["articles"]]
+        self.assertEqual(len(shown), len({a.pk for a in shown}))
+
+    def test_private_curated_story_hidden(self):
+        from wagtail.models import PageViewRestriction
+
+        PageViewRestriction.objects.create(page=self.old_news, restriction_type="password", password="x")
+        HomeFeaturedArticle.objects.create(page=self.home, article=self.old_news, sort_order=0)
+        response = self.client.get("/")
+        self.assertNotContains(response, "Monsoon session opens")
 
     def test_curated_lead(self):
         HomeFeaturedArticle.objects.create(page=self.home, article=self.old_news, sort_order=0)
@@ -211,6 +231,11 @@ class AuthorAndTagViewTests(SiteTestCase):
         self.assertContains(response, "RBI holds rates")
         self.assertNotContains(response, "Monsoon session opens")
 
+    def test_draft_only_tag_404(self):
+        self.draft.tags.add("Embargoed")
+        self.draft.save()
+        self.assertEqual(self.client.get("/tags/embargoed/").status_code, 404)
+
     def test_unknown_tag_404(self):
         self.assertEqual(self.client.get("/tags/nope/").status_code, 404)
 
@@ -233,6 +258,18 @@ class SearchViewTests(SiteTestCase):
         self.assertNotContains(response, "Why cities need heat plans")
         response = self.client.get("/search/?q=monsoon&section=economy")
         self.assertNotContains(response, "Monsoon session opens")
+
+    def test_history_restore_gets_full_page(self):
+        response = self.client.get("/search/?q=monsoon", HTTP_HX_REQUEST="true", HTTP_HX_HISTORY_RESTORE_REQUEST="true")
+        self.assertContains(response, "<html")
+        self.assertIn("HX-Request", response["Vary"])
+
+    def test_pagination_links_encode_params(self):
+        with self.captureOnCommitCallbacks(execute=True):
+            for i in range(ARTICLES_PER_PAGE + 1):
+                make_article(self.sections["health"], title=f"Monsoon health note {i}")
+        response = self.client.get("/search/", {"q": "monsoon", "type": "a&b"})
+        self.assertContains(response, "type=a%26b")
 
     def test_htmx_returns_results_fragment(self):
         response = self.client.get("/search/?q=monsoon", HTTP_HX_REQUEST="true")
@@ -277,6 +314,15 @@ class SitemapTests(SiteTestCase):
         self.assertIsNotNone(recent.find("news:news/news:publication_date", NS).text)
         # Older than 48 hours: excluded.
         self.assertNotIn(f"http://localhost:8000{self.old_news.url}", urls)
+
+    def test_private_articles_tags_not_in_sitemap(self):
+        from wagtail.models import PageViewRestriction
+
+        private = make_article(self.sections["society"], title="Members only", tags=["Secret Topic"])
+        PageViewRestriction.objects.create(page=private, restriction_type="password", password="x")
+        content = self.client.get("/sitemap.xml").content.decode()
+        self.assertNotIn("secret-topic", content)
+        self.assertNotIn("members-only", content)
 
     def test_robots_txt(self):
         response = self.client.get("/robots.txt")

@@ -74,6 +74,15 @@ class PermissionTests(NewsroomTestCase):
         self.assertTrue(article_perms.can_edit())
         self.assertFalse(article_perms.can_publish())
 
+    def test_writer_cannot_edit_or_delete_colleagues_drafts(self):
+        colleague = User.objects.create_user("colleague", "c@example.com", "pass")
+        colleague.groups.add(Group.objects.get(name=WRITERS))
+        article = self.make_draft(user=colleague)
+        perms = article.permissions_for_user(self.writer)
+        self.assertFalse(perms.can_edit())
+        self.assertFalse(perms.can_delete())
+        self.assertTrue(article.permissions_for_user(self.editor).can_edit())
+
     def test_editor_can_publish(self):
         article = self.make_draft()
         self.assertTrue(article.permissions_for_user(self.editor).can_publish())
@@ -88,6 +97,24 @@ class PermissionTests(NewsroomTestCase):
         task = self.workflow.tasks.first().specific
         self.assertEqual(task.get_actions(article, self.writer), [])
         self.assertIn("approve", [name for name, *_ in task.get_actions(article, self.editor)])
+
+
+class PreviewTests(NewsroomTestCase):
+    """Editors must be able to preview submissions (regression: tags FakeQuerySet)."""
+
+    def test_editor_previews_draft_in_review(self):
+        article = self.make_draft()
+        article.tags.add("Inflation")
+        article.save_revision(user=self.writer)
+        state = self.workflow.start(article, self.writer)
+        self.client.force_login(self.editor)
+        response = self.client.get(reverse("wagtailadmin_pages:view_draft", args=(article.pk,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Draft story")
+        preview = self.client.get(
+            reverse("wagtailadmin_pages:workflow_preview", args=(article.pk, state.current_task_state.task.pk))
+        )
+        self.assertEqual(preview.status_code, 200)
 
 
 class WorkflowFlowTests(NewsroomTestCase):

@@ -45,7 +45,9 @@ SECTIONS = [
 ABOUT_SLUG = "about"
 ABOUT_TITLE = "About & AI policy"
 
-WRITER_PAGE_PERMS = ["add_page", "change_page"]
+# "add" lets writers create pages and edit/delete their own drafts, but not
+# colleagues' pages; Editors can edit anything.
+WRITER_PAGE_PERMS = ["add_page"]
 EDITOR_PAGE_PERMS = ["add_page", "change_page", "publish_page", "bulk_delete_page", "lock_page", "unlock_page"]
 WRITER_COLLECTION_PERMS = [
     ("wagtailimages", "add_image"),

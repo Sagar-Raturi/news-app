@@ -101,6 +101,11 @@ class ArticlePageTests(WagtailPageTestCase):
         self.assertIn(sibling, related)
         self.assertNotIn(article, related)
 
+    def test_copy_gets_its_own_date(self):
+        article = make_article(self.economy, title="Original", days_ago=4)
+        copy = article.copy(update_attrs={"slug": "original-copy", "title": "Copy"}, keep_live=False)
+        self.assertIsNone(copy.published_date)
+
     def test_opinion_types(self):
         article = make_article(self.economy, article_type="editorial")
         self.assertTrue(article.is_opinion)

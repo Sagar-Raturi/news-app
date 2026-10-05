@@ -27,3 +27,5 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - `seed_demo` leaves one draft waiting in "Editor review" so the publishing workflow can be tried immediately.
 - Seeded articles get backdated publish times (0–9 days) so the homepage, "Latest" rail and Google News sitemap look like a live site.
 - Docker image has no apt packages; a `wait_for_db` management command replaces `pg_isready` — faster builds, fewer moving parts. Entrypoint is run via `sh` so it works even if the executable bit is lost (bind mounts, Windows checkouts).
+- Writers get only Wagtail's `add_page` permission (create, then edit/delete their own drafts); Editors can edit anyone's — stops writers deleting colleagues' drafts in review (found in code review).
+- The homepage never repeats a story across top stories, opinion rail, explainers and section blocks; private (view-restricted) articles never appear in listings, sitemaps or tag pages.
