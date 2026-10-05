@@ -65,9 +65,10 @@ def build_system(desk, article_type):
 
 
 def build_user_message(request):
-    label = request.get_article_type_display()
+    label = request.get_article_type_display().lower()
+    article = "an" if label[0] in "aeiou" else "a"
     return (
-        f"Write a {label.lower()}.\n\n"
+        f"Write {article} {label}.\n\n"
         f"Article type guidance: {TYPE_GUIDANCE.get(request.article_type, '')}\n\n"
         f"<brief>\n{request.brief.strip()}\n</brief>\n\n"
         f"<source_material>\n{request.source_material.strip()}\n</source_material>"
