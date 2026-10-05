@@ -15,3 +15,6 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Fonts loaded from Google Fonts (Source Serif 4 + Inter) with system serif/sans fallbacks — per the design brief; avoids vendoring font files.
 - Demo articles avoid fabricated quotes from real named people (roles instead) and link only to top-level official sites — realistic without inventing statements by real persons.
 - Hero images for demo articles are generated abstract illustrations (Pillow) — no licensing issues, no network needed at seed time.
+- Wagtail's default "Moderators" group and "Moderators approval" workflow are removed/deactivated by `bootstrap_site`; "Writers" and "Editors" groups with permissions scoped to the home page replace them — the brief names exactly two roles.
+- Workflow is a single "Editor review" group-approval task — draft → review → publish maps 1:1; Editors keep publish rights so they can publish their own copy or urgent corrections directly.
+- Opinion section is hidden from homepage section blocks (`show_on_homepage=False`) because opinion and editorials get their own homepage rail.
