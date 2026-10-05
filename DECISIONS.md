@@ -44,3 +44,13 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Calls run in the Celery worker, never in a web request — drafts take tens of seconds.
 - `NEWSDESK_WRITER=fake` produces canned drafts without an API key — lets the flow be demoed and tested offline; tests never call the real API.
 - Starter desks and style guides come from `bootstrap_site` (created once, never overwritten), example memory notes from `seed_demo`.
+
+## Phase 2b — Revise with AI
+
+- A revision is a DraftRequest with `revision_of` + `instructions`, reusing the same task, listing and inspect screens — one pipeline for drafts and revisions.
+- Revisions rewrite the same article as a new page revision (slug, byline, image kept; history preserved) instead of creating a new article — editors review one story, with Wagtail's revision history as the audit trail.
+- The agent receives the latest saved text (including manual edits), the editor's instructions, the original brief and source material, and the desk memory; it returns the complete article, not a patch — simpler and more reliable than partial edits.
+- After a revision, a "changes requested" draft resumes review (Wagtail's own resubmit); an open review is cancelled and restarted so the editor reviews the revised text, not the old revision.
+- Revision is a deliberate button, not automatic on "Request changes" — each run costs money and the editor may prefer the writer to fix it.
+- Available to editors, and to the draft's writer once changes are requested (it's locked to them while in review); never for published or human-written articles, nor while a run is pending.
+- Links in a revision are kept only if they appear in the source material or the editor's instructions.

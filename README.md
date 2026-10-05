@@ -112,6 +112,26 @@ review, with the commissioning writer's byline (or the desk's default author).
 The commission's detail page shows the agent's **notes for the editor**
 (claims to check, gaps in the material) and token usage.
 
+### Revise with AI
+
+When an agent's draft needs work, the editor clicks **Request changes** and
+writes what's wrong. Then, on the article's edit screen, choose **Revise with
+AI**. It's in the green save/publish menu at the bottom, and in the "⋯" menu
+next to the title. The form is prefilled with your latest comment; adjust it
+and submit.
+
+The same desk agent rewrites the draft as a **new revision of the same
+article**. It gets your instructions, the current text (including any edits
+made by hand), the original brief and source material, and the desk's memory.
+The slug, byline and image are kept. A minute or so later the article is back
+in **Editor review** with the revised text; the old version stays in the
+page's *History*. Because "Request changes" comments also go into the desk's
+memory, future drafts from that desk avoid the same problem.
+
+Who can use it: editors, and the draft's own writer once changes have been
+requested. Not available for published articles or human-written ones, or
+while the agent is already working on that draft.
+
 ### Teaching a desk (memory)
 
 *Newsdesk AI → Desk agents → (desk)* (editors):
@@ -138,7 +158,8 @@ cost. Usage per draft is shown on each commission.
 
 How it works in code: `newsdesk/prompts.py` (house rules + desk style +
 memory), `newsdesk/writer.py` (Claude call with structured output),
-`newsdesk/publishing.py` (draft → article in review), `newsdesk/tasks.py`
+`newsdesk/publishing.py` (draft → article in review, revisions),
+`newsdesk/views.py` ("Revise with AI" screen), `newsdesk/tasks.py`
 (Celery job), `newsdesk/signals.py` (review comments → memory).
 
 ## Common commands

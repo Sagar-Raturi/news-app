@@ -138,7 +138,7 @@ def resubmit_for_review(page, user):
 
 def apply_revision(request, result):
     """Rewrite the existing draft as a new page revision; slug, byline and image are kept."""
-    page = request.article.specific
+    page = ArticlePage.objects.get(pk=request.article_id)  # fresh: live state and latest revision
     if page.live:
         raise ValueError("This article is already published; revise it by hand.")
     draft = result.draft

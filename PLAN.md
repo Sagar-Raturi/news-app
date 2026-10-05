@@ -68,4 +68,4 @@ of the same article and it returns to Editor review.
       byline and image kept) and resubmit to review; Celery task branch
 - [x] 28. Admin: "Revise with AI" button on the article's edit screen and a
       form prefilled with the latest "Request changes" comment; permissions
-- [ ] 29. Tests, README/DECISIONS, Docker verification
+- [x] 29. Tests, README/DECISIONS, Docker verification

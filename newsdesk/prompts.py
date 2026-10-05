@@ -77,7 +77,8 @@ def _plain(rich_text):
 
 def article_as_text(page):
     """The article's latest saved content (including manual edits) as plain text."""
-    page = page.get_latest_revision_as_object()
+    # Re-read from the database: the latest revision may be newer than `page`.
+    page = ArticlePage.objects.get(pk=page.pk).get_latest_revision_as_object()
     lines = [f"Headline: {page.title}", f"Standfirst: {page.standfirst}", ""]
     for block in page.body:
         value = block.value
