@@ -4,6 +4,9 @@ An analysis-led Indian news website — news, analysis, explainers, opinion and
 editorials — built with Django 5.2, Wagtail 7.0, PostgreSQL, HTMX and Tailwind CSS.
 Celery + Redis are wired up for future background jobs.
 
+Screenshots: [homepage](docs/screenshots/final-home-desktop.png) ·
+[article on mobile](docs/screenshots/final-article-mobile.png)
+
 ## Quick start (Docker)
 
 Requires Docker with Compose v2.
