@@ -8,6 +8,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         result = bootstrap()
+        if options["verbosity"] == 0:
+            return
         self.stdout.write(
             self.style.SUCCESS(
                 f"Site ready: {len(result['sections'])} sections, groups "

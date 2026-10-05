@@ -13,7 +13,7 @@ Work top to bottom. Tick each item when done and commit.
 - [x] 5. Model tests (page hierarchy, defaults, published date, authors, tags)
 - [x] 6. `bootstrap_site` command: page tree (home, 9 sections, About & AI
       policy), Writer/Editor groups + permissions, "Newsroom review" workflow
-- [ ] 7. Workflow tests (writer can't publish, submit → editor approves →
+- [x] 7. Workflow tests (writer can't publish, submit → editor approves →
       live, editor can reject; admin views)
 - [ ] 8. Frontend tooling: Tailwind 4 build (package.json, main.css), vendored
       HTMX, base layout (masthead, section nav, footer)
