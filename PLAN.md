@@ -42,7 +42,7 @@ saved as AI-assisted drafts and submitted to Editor review. Agents never publish
       usage); migrations; anthropic SDK dependency and settings
 - [x] 18. Prompt builder (house rules + desk style + desk memory, cached) and
       structured ArticleDraft schema
-- [ ] 19. Writers: Anthropic writer (structured output, refusal fallback,
+- [x] 19. Writers: Anthropic writer (structured output, refusal fallback,
       error handling) and an offline "fake" writer for demos/tests
 - [ ] 20. Draft → ArticlePage conversion (safe HTML, source-URL guard, byline,
       AI disclosure) and submission to Newsroom review
