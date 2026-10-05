@@ -37,6 +37,9 @@
   a {
     text-underline-offset: 0.18em;
   }
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+  }
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
