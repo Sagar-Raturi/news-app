@@ -27,6 +27,6 @@ Work top to bottom. Tick each item when done and commit.
 - [x] 13. Demo seed: `seed_demo` command, generated hero images, ~20 articles,
       authors, About & AI policy content, demo users (writer/editor/admin)
 - [x] 14. Seed tests + full test run; code review pass and fixes
-- [ ] 15. Verify `docker compose up` end-to-end from README; screenshots/smoke
+- [x] 15. Verify `docker compose up` end-to-end from README; screenshots/smoke
       check of every page
-- [ ] 16. README (setup, roles, workflow how-to) and final summary
+- [x] 16. README (setup, roles, workflow how-to) and final summary
