@@ -4,7 +4,7 @@ from celery import shared_task
 from django.db import transaction
 
 from .models import DraftRequest
-from .publishing import create_article
+from .publishing import apply_revision, create_article
 from .writer import DraftError, get_writer
 
 logger = logging.getLogger(__name__)
@@ -23,7 +23,10 @@ def draft_article(request_id):
     try:
         result = get_writer().write(request)
         with transaction.atomic():
-            article = create_article(request, result)
+            if request.is_revision:
+                article = apply_revision(request, result)
+            else:
+                article = create_article(request, result)
     except (DraftError, ValueError) as exc:
         request.status = DraftRequest.Status.FAILED
         request.error = str(exc)

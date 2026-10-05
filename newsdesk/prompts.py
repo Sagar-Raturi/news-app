@@ -67,7 +67,12 @@ def build_system(desk, article_type):
 
 
 def _plain(rich_text):
-    return " ".join(strip_tags(getattr(rich_text, "source", str(rich_text))).split())
+    """Rich text -> plain text, one blank line between paragraphs."""
+    html = getattr(rich_text, "source", str(rich_text))
+    for closing in ("</p>", "</li>", "<br>", "<br/>"):
+        html = html.replace(closing, closing + "\n\n")
+    paragraphs = (" ".join(chunk.split()) for chunk in strip_tags(html).split("\n\n"))
+    return "\n\n".join(p for p in paragraphs if p)
 
 
 def article_as_text(page):

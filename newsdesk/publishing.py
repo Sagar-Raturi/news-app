@@ -1,6 +1,7 @@
 """Turn an agent's ArticleDraft into an AI-assisted ArticlePage draft in review."""
 
 from django.utils.html import escape
+from wagtail.models import WorkflowState
 from django.utils.text import Truncator, slugify
 
 from news.models import ArticleAuthor, ArticlePage
@@ -116,3 +117,47 @@ def create_article(request, result):
     if workflow:
         workflow.start(article, user)
     return article
+
+
+def resubmit_for_review(page, user):
+    """Send the page (with its latest revision) back into Editor review."""
+    page = page.specific_class.objects.get(pk=page.pk)
+    state = page.current_workflow_state
+    workflow = page.get_workflow()
+    if state and state.status == WorkflowState.STATUS_NEEDS_CHANGES:
+        # Same as a writer pressing "Resubmit": the review task restarts on the latest revision.
+        state.resume(user)
+    elif state and state.status == WorkflowState.STATUS_IN_PROGRESS:
+        # Review was still open: restart it so the editor reviews the revised text.
+        state.cancel(user=user)
+        if workflow:
+            workflow.start(page, user)
+    elif workflow:
+        workflow.start(page, user)
+
+
+def apply_revision(request, result):
+    """Rewrite the existing draft as a new page revision; slug, byline and image are kept."""
+    page = request.article.specific
+    if page.live:
+        raise ValueError("This article is already published; revise it by hand.")
+    draft = result.draft
+    body = body_blocks(draft)
+    if not body:
+        raise ValueError("The revision had no usable body text.")
+
+    revised = page.get_latest_revision_as_object()
+    revised.title = Truncator(draft.headline.strip()).chars(255)
+    revised.standfirst = Truncator(draft.standfirst.strip()).chars(300)
+    revised.body = body
+    revised.sources = safe_sources(draft, request.source_material + "\n" + request.instructions)
+    revised.ai_assisted = True
+    revised.ai_note = ai_note(request, result.model)
+    tags = [t.strip()[:100] for t in draft.tags if t.strip()][:MAX_TAGS]
+    revised.tags.clear()
+    if tags:
+        revised.tags.add(*tags)
+    revised.save_revision(user=request.requested_by)
+
+    resubmit_for_review(page, request.requested_by)
+    return page

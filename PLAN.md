@@ -64,7 +64,7 @@ of the same article and it returns to Editor review.
 - [x] 26. Revision commissions (revision_of + instructions); prompt carries the
       current draft (latest revision, incl. manual edits) and the instructions;
       fake writer supports revisions
-- [ ] 27. Apply a revision to the existing article (new page revision, slug,
+- [x] 27. Apply a revision to the existing article (new page revision, slug,
       byline and image kept) and resubmit to review; Celery task branch
 - [ ] 28. Admin: "Revise with AI" button on the article's edit screen and a
       form prefilled with the latest "Request changes" comment; permissions

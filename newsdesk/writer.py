@@ -101,7 +101,8 @@ class FakeWriter:
 
     def revise(self, request):
         page = request.article.get_latest_revision_as_object()
-        paragraphs = [line for line in article_as_text(page).splitlines()[3:] if line and not line.startswith(("Sources:", "Tags:", "- "))]
+        text = article_as_text(page).split("\n\nSources:")[0].split("\nTags:")[0]
+        paragraphs = [chunk.strip() for chunk in text.split("\n\n")[1:] if chunk.strip()]
         body = [
             DraftBlock(
                 type="paragraph",
