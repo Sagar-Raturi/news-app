@@ -4,10 +4,7 @@
 # touch the schema.
 set -e
 
-until pg_isready -d "$DATABASE_URL" -q; do
-  echo "Waiting for PostgreSQL..."
-  sleep 1
-done
+python manage.py wait_for_db
 
 if [ "${RUN_MIGRATIONS:-1}" = "1" ]; then
   python manage.py migrate --noinput

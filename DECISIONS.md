@@ -26,3 +26,4 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Demo logins are admin/admin, editor/editor, writer/writer (created only by `seed_demo`, which Docker runs when `SEED_DEMO=1`) — easy to try the workflow locally; documented as dev-only.
 - `seed_demo` leaves one draft waiting in "Editor review" so the publishing workflow can be tried immediately.
 - Seeded articles get backdated publish times (0–9 days) so the homepage, "Latest" rail and Google News sitemap look like a live site.
+- Docker image has no apt packages; a `wait_for_db` management command replaces `pg_isready` — faster builds, fewer moving parts. Entrypoint is run via `sh` so it works even if the executable bit is lost (bind mounts, Windows checkouts).
