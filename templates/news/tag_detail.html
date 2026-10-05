@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load ledger %}
+{% block title %}{{ tag.name }}{% endblock %}
+{% block meta_description %}Coverage, analysis and explainers on {{ tag.name }}.{% endblock %}
+{% block seo %}<link rel="canonical" href="{% url 'news:tag_detail' tag.slug as tag_url %}{{ tag_url|absolute }}">{% endblock %}
+{% block content %}
+<div class="container-wide pt-8">
+  <header class="border-b border-rule pb-5">
+    <p class="kicker">Topic</p>
+    <h1 class="headline mt-1 text-4xl sm:text-5xl">{{ tag.name }}</h1>
+    <p class="meta mt-2">{{ page_obj.paginator.count }} article{{ page_obj.paginator.count|pluralize }}</p>
+  </header>
+  <div class="max-w-4xl pt-6">
+    {% if articles %}
+      <div class="rule-list">{% include "news/includes/article_list_page.html" %}</div>
+    {% else %}
+      <p class="py-10 font-sans text-muted">Nothing published on this topic yet.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% if query %}
+  {% if authors %}
+    <section class="mb-8">
+      <h2 class="section-heading"><span>Journalists</span></h2>
+      <ul class="flex flex-wrap gap-4">
+        {% for author in authors %}
+          <li><a class="flex items-center gap-2 font-sans text-sm font-semibold hover:text-accent" href="{{ author.get_absolute_url }}">{% include "news/includes/author_avatar.html" with size="h-8 w-8 text-[0.65rem]" %}{{ author.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+  <h2 class="section-heading"><span>Articles</span><span class="meta normal-case tracking-normal">{{ page_obj.paginator.count }} result{{ page_obj.paginator.count|pluralize }} for “{{ query }}”</span></h2>
+  {% if articles %}
+    <div class="rule-list">
+      {% for article in articles %}{% include "news/includes/teaser.html" with variant="row" %}{% endfor %}
+    </div>
+    {% if page_obj.has_other_pages %}
+      <nav aria-label="Search pages" class="mt-8 flex items-center justify-between font-sans text-sm">
+        {% if page_obj.has_previous %}<a class="btn" href="?q={{ query|urlencode }}&section={{ section_slug }}&type={{ article_type }}&page={{ page_obj.previous_page_number }}">← Previous</a>{% else %}<span></span>{% endif %}
+        <span class="text-muted">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}<a class="btn" href="?q={{ query|urlencode }}&section={{ section_slug }}&type={{ article_type }}&page={{ page_obj.next_page_number }}">Next →</a>{% else %}<span></span>{% endif %}
+      </nav>
+    {% endif %}
+  {% else %}
+    <p class="py-6 font-serif text-lg text-ink-soft">No articles matched. Try fewer or different words.</p>
+  {% endif %}
+{% else %}
+  <p class="font-serif text-lg text-ink-soft">Search across every news report, analysis, explainer and column.</p>
+{% endif %}

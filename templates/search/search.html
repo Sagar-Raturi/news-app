@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}{% if query %}Search: {{ query }}{% else %}Search{% endif %}{% endblock %}
+{% block seo %}<meta name="robots" content="noindex, follow">{% endblock %}
+{% block content %}
+<div class="container-wide pt-8">
+  <div class="max-w-4xl">
+    <h1 class="headline text-4xl sm:text-5xl">Search</h1>
+    <form action="{% url 'news:search' %}" method="get" role="search" class="mt-5"
+          hx-get="{% url 'news:search' %}" hx-target="#search-results" hx-push-url="true"
+          hx-trigger="input delay:350ms, submit">
+      <label for="search-q" class="sr-only">Search articles</label>
+      <div class="flex border-b-2 border-ink">
+        <input id="search-q" type="search" name="q" value="{{ query }}" placeholder="Search news, analysis and opinion…" autocomplete="off" autofocus
+               class="min-w-0 flex-1 bg-transparent py-3 font-serif text-xl placeholder:text-muted focus:outline-none sm:text-2xl">
+        <button type="submit" class="px-3 font-sans text-sm font-semibold hover:text-accent">Search</button>
+      </div>
+      <div class="mt-3 flex flex-wrap gap-3 font-sans text-sm">
+        <label class="flex items-center gap-2"><span class="text-muted">Section</span>
+          <select name="section" class="border border-rule bg-paper px-2 py-1">
+            <option value="">All</option>
+            {% for section in sections %}<option value="{{ section.slug }}" {% if section.slug == section_slug %}selected{% endif %}>{{ section.title }}</option>{% endfor %}
+          </select>
+        </label>
+        <label class="flex items-center gap-2"><span class="text-muted">Type</span>
+          <select name="type" class="border border-rule bg-paper px-2 py-1">
+            <option value="">All</option>
+            {% for value, label in article_types %}<option value="{{ value }}" {% if value == article_type %}selected{% endif %}>{{ label }}</option>{% endfor %}
+          </select>
+        </label>
+        <span class="htmx-indicator meta self-center">Searching…</span>
+      </div>
+    </form>
+    <div id="search-results" class="mt-8" aria-live="polite">{% include "search/results.html" %}</div>
+  </div>
+</div>
+{% endblock %}

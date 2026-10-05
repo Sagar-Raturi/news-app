@@ -1,9 +1,16 @@
-from django.db.models import Count, Q
-from django.db.models import prefetch_related_objects
+from django.contrib.syndication.views import Feed
+from django.db.models import Count, Q, prefetch_related_objects
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from django.views.decorators.cache import cache_control
 from taggit.models import Tag
 
+from core.models import SiteSettings
+
 from .models import ArticlePage, Author, SectionPage, attach_sections, is_htmx, live_articles, paginate
+from .seo import author_json_ld, to_json_ld
+from .sitemaps import google_news_articles
 
 LIST_PARTIAL = "news/includes/article_list_page.html"
 
@@ -27,7 +34,8 @@ def author_list(request):
 def author_detail(request, slug):
     author = get_object_or_404(Author, slug=slug)
     page_obj = paginate(request, author.live_articles())
-    return _render_listing(request, "news/author_detail.html", {"author": author, "page_obj": page_obj})
+    context = {"author": author, "page_obj": page_obj, "author_json_ld": to_json_ld(author_json_ld(author))}
+    return _render_listing(request, "news/author_detail.html", context)
 
 
 def tag_detail(request, slug):
@@ -71,3 +79,65 @@ def search(request):
     if is_htmx(request):
         return render(request, "search/results.html", context)
     return render(request, "search/search.html", context)
+
+
+@cache_control(max_age=300)
+def news_sitemap(request):
+    """Google News sitemap: articles published in the last 48 hours."""
+    site_settings = SiteSettings.for_request(request)
+    context = {
+        "articles": google_news_articles(),
+        "publication_name": site_settings.site_name,
+        "language": site_settings.publication_language,
+    }
+    return render(request, "news/news_sitemap.xml", context, content_type="application/xml")
+
+
+def robots_txt(request):
+    from core.templatetags.ledger import absolute
+
+    lines = [
+        "User-agent: *",
+        "Disallow: /admin/",
+        "Disallow: /django-admin/",
+        "Disallow: /search/",
+        "",
+        f"Sitemap: {absolute(reverse('sitemap'))}",
+        f"Sitemap: {absolute(reverse('news:news_sitemap'))}",
+    ]
+    return HttpResponse("\n".join(lines) + "\n", content_type="text/plain")
+
+
+class LatestArticlesFeed(Feed):
+    description = "The latest news, analysis and opinion."
+
+    def __call__(self, request, *args, **kwargs):
+        self.site_name = SiteSettings.for_request(request).site_name
+        return super().__call__(request, *args, **kwargs)
+
+    def title(self):
+        return self.site_name
+
+    def link(self):
+        return "/"
+
+    def items(self):
+        return live_articles()[:30]
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.standfirst
+
+    def item_link(self, item):
+        return item.url
+
+    def item_pubdate(self, item):
+        return item.display_date
+
+    def item_author_name(self, item):
+        return ", ".join(a.name for a in item.authors)
+
+    def item_categories(self, item):
+        return [item.get_article_type_display(), *item.tags.names()]

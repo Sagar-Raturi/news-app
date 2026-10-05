@@ -19,8 +19,8 @@ Work top to bottom. Tick each item when done and commit.
       HTMX, base layout (masthead, section nav, footer)
 - [x] 9. Page templates: homepage (top stories + section blocks), section
       page (HTMX load more), article page, StandardPage
-- [ ] 10. Author pages, tag pages, search (HTMX live results)
-- [ ] 11. SEO: Open Graph/Twitter tags, canonical, NewsArticle JSON-LD,
+- [x] 10. Author pages, tag pages, search (HTMX live results)
+- [x] 11. SEO: Open Graph/Twitter tags, canonical, NewsArticle JSON-LD,
       sitemap.xml, Google News sitemap, robots.txt
 - [ ] 12. Page/view tests (home, section, article, author, tag, search, about,
       sitemaps, structured data)

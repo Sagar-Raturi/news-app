@@ -18,3 +18,8 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Wagtail's default "Moderators" group and "Moderators approval" workflow are removed/deactivated by `bootstrap_site`; "Writers" and "Editors" groups with permissions scoped to the home page replace them — the brief names exactly two roles.
 - Workflow is a single "Editor review" group-approval task — draft → review → publish maps 1:1; Editors keep publish rights so they can publish their own copy or urgent corrections directly.
 - Opinion section is hidden from homepage section blocks (`show_on_homepage=False`) because opinion and editorials get their own homepage rail.
+- AI policy anchor is `/about/#our-ai-policy` (auto-generated from the "Our AI policy" heading) rather than a hand-set `#ai-policy` — headings get slug ids automatically, so editors don't manage anchors.
+- JSON-LD uses `@type: NewsArticle` for every article type (type exposed via `genre`) — the brief asks for NewsArticle and it is the type Google's news features document best.
+- Google News sitemap lists only articles from the last 48 hours (per Google's guidance); everything else is in `/sitemap.xml`, which also lists author and tag pages.
+- Added an RSS feed at `/feed/` — tiny cost, expected of a news site.
+- The Wagtail Site's hostname/port are synced from `SITE_BASE_URL` by `bootstrap_site` so canonical URLs and sitemaps carry the right origin (incl. `:8000` locally).

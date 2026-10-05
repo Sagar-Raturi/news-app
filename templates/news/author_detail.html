@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load ledger %}
+{% block title %}{{ author.name }}{% endblock %}
+{% block meta_description %}{{ author.bio|default:author.role|truncatechars:160 }}{% endblock %}
+{% block seo %}
+  <link rel="canonical" href="{{ author.get_absolute_url|absolute }}">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="{{ author.name }}">
+  <meta property="og:url" content="{{ author.get_absolute_url|absolute }}">
+  <script type="application/ld+json">{{ author_json_ld|safe }}</script>
+{% endblock %}
+{% block content %}
+<div class="container-wide pt-8">
+  <header class="flex flex-col gap-5 border-b border-rule pb-6 sm:flex-row sm:items-center">
+    {% include "news/includes/author_avatar.html" with size="h-20 w-20 text-xl" %}
+    <div class="max-w-2xl">
+      {% if author.role %}<p class="kicker">{{ author.role }}</p>{% endif %}
+      <h1 class="headline mt-1 text-4xl sm:text-5xl">{{ author.name }}</h1>
+      {% if author.bio %}<p class="standfirst mt-2 text-lg">{{ author.bio }}</p>{% endif %}
+      {% if author.twitter %}<p class="meta mt-2"><a class="hover:text-accent" href="https://x.com/{{ author.twitter }}" rel="noopener me">@{{ author.twitter }}</a></p>{% endif %}
+    </div>
+  </header>
+  <div class="max-w-4xl pt-6">
+    <h2 class="section-heading"><span>Latest from {{ author.name }}</span><span class="meta normal-case tracking-normal">{{ page_obj.paginator.count }} article{{ page_obj.paginator.count|pluralize }}</span></h2>
+    {% if articles %}
+      <div class="rule-list">{% include "news/includes/article_list_page.html" %}</div>
+    {% else %}
+      <p class="py-10 font-sans text-muted">No published articles yet.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

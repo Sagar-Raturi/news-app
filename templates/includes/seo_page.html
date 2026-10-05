@@ -1,0 +1,11 @@
+{% load ledger wagtailcore_tags %}{% share_image_url settings.core.SiteSettings.default_share_image as og_image %}
+  <link rel="canonical" href="{{ page.full_url }}">
+  <meta property="og:site_name" content="{{ settings.core.SiteSettings.site_name }}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:title" content="{% if page.depth == 2 %}{{ settings.core.SiteSettings.site_name }}{% else %}{{ page.seo_title|default:page.title }}{% endif %}">
+  <meta property="og:description" content="{{ page.search_description|default:page.specific.intro|default:settings.core.SiteSettings.tagline|striptags|truncatechars:200 }}">
+  <meta property="og:url" content="{{ page.full_url }}">
+  {% if og_image %}<meta property="og:image" content="{{ og_image }}">{% endif %}
+  <meta name="twitter:card" content="{% if og_image %}summary_large_image{% else %}summary{% endif %}">
+  {% if settings.core.SiteSettings.twitter_handle %}<meta name="twitter:site" content="@{{ settings.core.SiteSettings.twitter_handle }}">{% endif %}

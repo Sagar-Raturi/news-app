@@ -1,0 +1,2086 @@
+{
+  "authors": [
+    {
+      "slug": "ananya-iyer",
+      "name": "Ananya Iyer",
+      "role": "Political Editor",
+      "bio": "Ananya Iyer has covered Parliament, elections and Centre-state relations for fifteen years, first from Chennai and now from Delhi. She writes on legislation, federalism and the machinery of government.",
+      "twitter": "ananyaiyer_ledger"
+    },
+    {
+      "slug": "farhan-qureshi",
+      "name": "Farhan Qureshi",
+      "role": "International Affairs Editor",
+      "bio": "Farhan Qureshi has reported from South-east Asia and the Gulf and now edits The Ledger's international coverage from Delhi. He is interested in trade, migration and India's neighbourhood.",
+      "twitter": "farhanq_ledger"
+    },
+    {
+      "slug": "meera-deshpande",
+      "name": "Meera Deshpande",
+      "role": "Economics Correspondent",
+      "bio": "Meera Deshpande writes about monetary policy, public finance and the rural economy from Mumbai. Before journalism she worked as a research analyst at a Pune-based policy institute.",
+      "twitter": "meerad_ledger"
+    },
+    {
+      "slug": "arjun-gowda",
+      "name": "Arjun Gowda",
+      "role": "Bengaluru Correspondent",
+      "bio": "Arjun Gowda reports on urban governance, water and transport in Bengaluru and the rest of Karnataka. He grew up in Mandya and has a soft spot for stories about the city's lakes.",
+      "twitter": ""
+    },
+    {
+      "slug": "priyanka-bora",
+      "name": "Priyanka Bora",
+      "role": "Health Reporter",
+      "bio": "Priyanka Bora covers public health, hospitals and health policy. She trained in public health in Guwahati and has reported from district hospitals across the North-east and the Hindi heartland.",
+      "twitter": "priyankabora_ledger"
+    },
+    {
+      "slug": "siddharth-nair",
+      "name": "Siddharth Nair",
+      "role": "Science Writer",
+      "bio": "Siddharth Nair writes about space, technology and the science behind public policy. He studied physics in Thiruvananthapuram and has followed India's space programme for more than a decade.",
+      "twitter": "sidnair_ledger"
+    },
+    {
+      "slug": "harpreet-kaur",
+      "name": "Harpreet Kaur",
+      "role": "Education Correspondent",
+      "bio": "Harpreet Kaur reports on schools, universities and examinations. A former schoolteacher in Ludhiana, she brings a view from the classroom to stories about education policy.",
+      "twitter": ""
+    },
+    {
+      "slug": "debashish-sen",
+      "name": "Debashish Sen",
+      "role": "Columnist",
+      "bio": "Debashish Sen writes a weekly column on cities, work and public life. He spent two decades as a reporter and editor in Kolkata and Mumbai before turning to commentary.",
+      "twitter": "debashishsen_col"
+    },
+    {
+      "slug": "editorial-board",
+      "name": "The Editorial Board",
+      "role": "Editorial",
+      "bio": "The Ledger's editorials represent the collective view of the publication's editorial board. They are unsigned because they speak for the institution rather than for any one writer.",
+      "twitter": ""
+    }
+  ],
+  "articles": [
+    {
+      "slug": "monsoon-session-long-bill-list-short-calendar",
+      "headline": "Monsoon session opens with a long bill list and a short calendar",
+      "standfirst": "The government wants to pass a dozen-odd bills in barely three weeks of sittings. The opposition wants time for prices, jobs and the conduct of elections first.",
+      "section": "politics",
+      "type": "news",
+      "authors": [
+        "ananya-iyer"
+      ],
+      "tags": [
+        "Parliament",
+        "Monsoon Session",
+        "Legislation"
+      ],
+      "featured": false,
+      "ai_assisted": true,
+      "ai_note": "AI tools were used to compile the list of pending bills from parliamentary bulletins; every entry was checked by our politics desk against the official record.",
+      "days_ago": 2.4,
+      "hero_caption": "An illustration of the circular Parliament chamber seen from above, with rows of benches and a stack of bills on the central table.",
+      "hero_alt": "Illustrated overhead view of a parliamentary chamber with a pile of papers in the centre.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Parliament's monsoon session opened on Monday with the government signalling an ambitious legislative agenda and the opposition promising to force debates on food prices, unemployment and the conduct of forthcoming state elections. With roughly three weeks of sittings scheduled, floor managers on both sides privately concede that not everything on the list will get through.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The provisional agenda circulated at the customary all-party meeting on Sunday runs to more than a dozen bills. Among them are amendments to the insolvency code, a revision of the law governing multi-state cooperative societies, changes to the framework for coastal shipping, and bills to repeal colonial-era statutes the government regards as obsolete.</p><p>A senior official in the Ministry of Parliamentary Affairs said the government expected to pass “at least the financial and time-bound legislation” and would seek cooperation on the rest. Supplementary demands for grants, which authorise additional spending beyond what was approved in the budget, must be voted on before the session ends.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Opposition parties have a different list. At a joint meeting on Sunday evening, their leaders agreed to press for a discussion, under a rule that ends in a vote, on the rising prices of vegetables and pulses, and for a separate debate on employment. An opposition MP from Kerala said his party would not obstruct legislation “for the sake of it”, but warned that bills pushed through without discussion would be resisted on the floor.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A bill passed in twenty minutes is not a law that has been scrutinised. It is a law that has been announced.",
+            "attribution": "An opposition MP from Kerala"
+          }
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>That concern is not new. Data compiled by PRS Legislative Research show that a much smaller share of bills has been referred to parliamentary committees in recent Lok Sabhas than in the 2000s, and that a growing number are passed with less than an hour of debate. Members of the treasury benches argue that disruptions, not haste, are the main reason for thin debate, and point out that time lost to adjournments leaves little room for detailed discussion at the end of a session.</p><p>Two bills are likely to test the session's mood. The insolvency amendments have the support of lenders but have drawn questions from some economists about the powers they hand to creditors. The cooperatives bill touches a subject on which several states have argued that the Centre's role should remain limited.</p>"
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "What to watch",
+            "body": "<p>Whether any bill is referred to a standing or select committee; how much of question hour survives the first week; and whether the Business Advisory Committee sets aside time for the debates on prices and jobs that the opposition has demanded.</p>"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Legislative tracker and session previews",
+          "publisher": "PRS Legislative Research",
+          "url": "https://prsindia.org/",
+          "note": "Bill-wise status and data on committee referrals"
+        },
+        {
+          "title": "Digital Sansad",
+          "publisher": "Parliament of India",
+          "url": "https://sansad.in/",
+          "note": "Official record of proceedings in both Houses"
+        },
+        {
+          "title": "Ministry of Parliamentary Affairs",
+          "publisher": "Government of India",
+          "url": "https://mpa.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "cash-transfers-women-reshaping-state-elections",
+      "headline": "Cash in hand: how monthly payments to women are reshaping state elections",
+      "standfirst": "Direct cash transfers to women have become the centrepiece of state campaigns across party lines. They win votes, but they also strain budgets and crowd out spending that lasts.",
+      "section": "politics",
+      "type": "analysis",
+      "authors": [
+        "ananya-iyer"
+      ],
+      "tags": [
+        "Elections",
+        "Welfare",
+        "State Finances"
+      ],
+      "featured": true,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 1.55,
+      "hero_caption": "An illustration of a woman checking a payment notification on a mobile phone, with a ballot box and a bank passbook in the background.",
+      "hero_alt": "Illustration of a woman looking at her phone beside a ballot box and a passbook.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Walk into almost any district collectorate in the weeks before a state election and you will find the same scene: queues of women holding Aadhaar cards and bank passbooks, waiting to be enrolled in a scheme that promises a fixed sum every month. Over the past few years, direct cash transfers to women have gone from experiment to the default opening move of state campaigns, adopted by parties of every stripe and in states rich and poor.</p><p>The logic is simple. Women now vote at rates equal to or higher than men in many states, and the Election Commission's turnout figures have shown the gender gap narrowing steadily over two decades. A monthly transfer, credited into a woman's own account, is tangible in a way that a new highway or a revised syllabus is not. It is also, as one party strategist put it, “the only promise a voter can check on her phone”.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "A template spreads"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Madhya Pradesh's Ladli Behna scheme is widely credited with popularising the model. Maharashtra's Majhi Ladki Bahin Yojana and Jharkhand's Maiyan Samman Yojana followed in quick succession, and variants now exist or have been promised in several other states. The details differ — eligibility cut-offs, the size of the payment, whether it rises over time — but the architecture is the same: a monthly sum, typically somewhere between ₹1,000 and ₹2,500, paid by direct benefit transfer to women within an income band.</p>"
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "₹1,000–2,500",
+            "label": "typical monthly payment under state cash-transfer schemes for women",
+            "source": "Compiled from state scheme guidelines and manifestos; amounts vary by state"
+          }
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Because the payments are visible and frequent, they are hard to withdraw once started. No government that has inherited such a scheme has found it politically possible to end it; the more common response is to rename it, tweak eligibility, or promise a larger amount.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "What the money does"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>There is reasonable evidence that unconditional transfers to women do some good. Field studies in India and elsewhere suggest they raise household spending on food and children's needs, give women a measure of financial autonomy, and in some cases increase their say in household decisions. Women interviewed by researchers often describe the money as the first income that is unambiguously theirs.</p><p>But the effects depend on design. Transfers that arrive irregularly, or that are quietly pruned through stricter verification after an election, erode trust. And a sum of ₹1,500 a month, welcome as it is, is no substitute for regular paid work, which remains out of reach for a large share of Indian women.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "The transfer is real money, and women spend it well. The question is what the state stops doing in order to pay for it.",
+            "attribution": "A former state finance secretary"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "The fiscal arithmetic"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>That question is becoming urgent. For a large state, a scheme covering a crore women at ₹1,500 a month costs ₹18,000 crore a year — comparable to what some states spend on health in total. Several states that have launched such schemes were already carrying high debt and heavy committed spending on salaries, pensions and interest.</p><p>The Reserve Bank of India, in its annual studies of state budgets, has repeatedly cautioned that a rising share of revenue spent on subsidies and transfers leaves less room for capital investment. Analysts at PRS Legislative Research have noted similar pressures in individual state budgets, where new welfare commitments have been met partly by trimming or deferring capital outlays.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "What gets crowded out"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The trade-off is rarely explicit. No budget speech announces that a district hospital will go without a new wing so that a cash scheme can be funded. Instead, the squeeze shows up in delayed payments to contractors, vacancies left unfilled in schools and clinics, and capital projects that slip by a year or two.</p><p>There is also a federal dimension. Because the schemes are financed almost entirely from state resources, states with weaker tax bases face a starker choice than richer ones. Some have sought more flexibility in borrowing limits from the Centre; others have quietly narrowed eligibility after the first year.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Monthly cash transfers to women are now a standard feature of state election campaigns across parties.",
+              "Evidence suggests such transfers improve household consumption and women's financial autonomy, especially when paid reliably.",
+              "Large schemes can cost as much as a state's entire health budget, raising hard questions about what is crowded out.",
+              "Once launched, schemes are politically very difficult to scale back."
+            ]
+          }
+        },
+        {
+          "type": "heading",
+          "value": "The test ahead"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The coming round of state elections will show whether the model has reached saturation. When every major party promises a transfer, the promise stops distinguishing anyone, and campaigns may shift to the size of the payment — an auction that budgets cannot sustain indefinitely. Alternatively, voters may begin to weigh the transfer against the quality of the services they receive.</p><p>The more durable question is institutional. Cash transfers are a legitimate tool of welfare policy, and India's payments infrastructure makes them cheaper to run than ever. What is missing is a habit of evaluation: independent assessments of who receives the money, what it achieves and what it displaces, published before the next election rather than after it. Without that, the transfer risks becoming less a policy than a ritual.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "State Finances: A Study of Budgets",
+          "publisher": "Reserve Bank of India",
+          "url": "https://www.rbi.org.in/",
+          "note": "Annual report on state government finances"
+        },
+        {
+          "title": "State budget analyses",
+          "publisher": "PRS Legislative Research",
+          "url": "https://prsindia.org/",
+          "note": ""
+        },
+        {
+          "title": "Election results and turnout statistics",
+          "publisher": "Election Commission of India",
+          "url": "https://eci.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "india-asean-goods-pact-review-talks-resume",
+      "headline": "India pushes to rebalance ASEAN goods pact as review talks resume",
+      "standfirst": "Indian negotiators want tighter rules of origin and better market access in a review of the trade-in-goods agreement. South-east Asian partners would prefer to keep the scope narrow.",
+      "section": "international",
+      "type": "news",
+      "authors": [
+        "farhan-qureshi"
+      ],
+      "tags": [
+        "Trade",
+        "Diplomacy",
+        "Global Economy"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 3.2,
+      "hero_caption": "An illustration of container ships at a South-east Asian port, with cranes silhouetted against an evening sky.",
+      "hero_alt": "Illustration of container ships and cranes at a busy port.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Trade officials from India and the Association of Southeast Asian Nations resumed talks this week on a review of their trade-in-goods agreement, with New Delhi pressing for changes it says are needed to correct an imbalance that has widened since the pact took effect.</p><p>India's trade deficit with the bloc has grown substantially over that period, according to commerce ministry data, as imports of electronics, palm oil, metals and machinery have outpaced Indian exports. Indian officials have argued that the agreement's rules of origin are too loose, allowing goods produced largely elsewhere to enter India at concessional duty after minimal processing in an ASEAN country.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>“We are not asking to reopen the whole agreement. We are asking that it work as both sides intended when it was signed,” a senior official in the Department of Commerce said, speaking on condition of anonymity because the talks are ongoing.</p><p>Indian negotiators are understood to be seeking stricter value-addition thresholds, better mechanisms for verifying certificates of origin, and the ability to apply safeguard measures more quickly when surges in imports hurt domestic producers. They also want improved access for Indian pharmaceuticals, agricultural products and engineering goods, which industry groups say face non-tariff barriers in several ASEAN markets.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>South-east Asian diplomats, for their part, have signalled a preference for a narrower review focused on updating procedures and customs cooperation rather than renegotiating tariff schedules. A trade diplomat from one ASEAN member state said the bloc regarded the agreement as broadly balanced and was wary of changes that could be read as protectionist.</p><p>The review has been slow. Talks have run through multiple rounds, and negotiators on both sides acknowledge that self-imposed deadlines for concluding them have slipped more than once. Indian industry associations have urged the government not to settle for cosmetic changes, while exporters' groups, particularly in pharmaceuticals and services, want the talks to deliver concrete market access rather than only tighter defensive rules.</p><p>The negotiations come as India pursues trade agreements with several developed economies and seeks to position itself as an alternative manufacturing base for companies diversifying away from China. Analysts say the ASEAN review is a test of whether New Delhi can combine openness to trade with the safeguards that domestic manufacturers have long demanded.</p>"
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "Background",
+            "body": "<p>The ASEAN–India Trade in Goods Agreement reduced or eliminated tariffs on a large share of goods traded between India and South-east Asian countries. Agreements on services and investment were concluded later. Both sides agreed to a joint review of the goods agreement after India raised repeated concerns about the trade deficit and the working of the rules of origin.</p>"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Trade agreements and trade statistics",
+          "publisher": "Department of Commerce, Government of India",
+          "url": "https://commerce.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "ASEAN Secretariat",
+          "publisher": "ASEAN",
+          "url": "https://asean.org/",
+          "note": ""
+        },
+        {
+          "title": "Ministry of External Affairs",
+          "publisher": "Government of India",
+          "url": "https://www.mea.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "why-remittances-to-india-keep-rising",
+      "headline": "Why the money Indians send home keeps rising — and what could slow it",
+      "standfirst": "India is the world's largest recipient of remittances. The sources of that money are shifting from Gulf building sites to offices in America and Britain, and with them its risks.",
+      "section": "international",
+      "type": "analysis",
+      "authors": [
+        "farhan-qureshi",
+        "meera-deshpande"
+      ],
+      "tags": [
+        "Diaspora",
+        "Remittances",
+        "Global Economy",
+        "Digital Payments"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 4.5,
+      "hero_caption": "An illustration of a world map with lines of light connecting the Gulf, North America and Europe to towns across Kerala, Punjab and Bihar.",
+      "hero_alt": "Illustrated map showing flows of money from abroad to Indian states.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Every month, millions of Indians working abroad send a portion of their earnings home. Taken together, those transfers make India the largest recipient of remittances in the world — by the World Bank's estimates comfortably ahead of Mexico and far ahead of China. The inflow is now well above $100 billion a year, more than India receives in foreign direct investment in most years, and a quiet but important prop for the current account.</p><p>For families in Kerala, coastal Karnataka, eastern Uttar Pradesh, Bihar and Punjab, remittances pay for houses, school fees, weddings and medical bills. For the national economy, they help offset a persistent deficit in merchandise trade. Yet the shape of this money is changing in ways that are only beginning to be understood.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "From the Gulf to the West"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>For decades, the story of Indian remittances was largely a Gulf story: construction workers, drivers, nurses and domestic workers in the United Arab Emirates, Saudi Arabia, Kuwait, Qatar and Oman, sending money to villages in Kerala and beyond. The Gulf remains important. But the Reserve Bank of India's periodic surveys of inward remittances suggest that advanced economies, led by the United States and followed by the United Kingdom, Canada and Australia, now account for a larger share than the Gulf.</p><p>That shift reflects who is migrating. Indian software engineers, doctors, academics and students who stay on to work abroad earn far more than a construction worker in Dubai, and send larger sums, often less frequently. The rise of skilled migration has also changed what remittances are used for: less for subsistence, more for property, investments and the care of ageing parents.</p>"
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "3%",
+            "label": "the UN Sustainable Development Goal target for the average cost of sending a remittance",
+            "source": "UN Sustainable Development Goals, target 10.c"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Cheaper and faster, but not everywhere"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The cost of sending money to India is lower than in many corridors, helped by competition among banks, exchange houses and fintech firms, and by India's real-time payment systems. Links between UPI and fast-payment systems in Singapore and the UAE have made small transfers quicker and cheaper. But costs vary widely: sending small sums from some countries, or through cash-based channels, can still cost far more than the 3% target set under the UN's development goals.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "Three risks"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The first risk is policy abroad. Tighter immigration rules in the countries that now supply the largest share of remittances — on student visas, skilled-worker visas or post-study work — would slow the flow over time. A new excise on certain cash-based remittances from the United States, though small and largely avoidable through bank transfers, is a reminder that remittances are not beyond the reach of politics in host countries.</p><p>The second is the Gulf economy. Lower oil prices and the drive by Gulf states to employ more of their own citizens could squeeze demand for Indian workers in the sectors that employ them in the largest numbers. Workers in those jobs are also the least protected: their wages are lower, their contracts less secure, and their families most dependent on the money.</p><p>The third is concentration. Remittances flow overwhelmingly to a handful of states, and within them to particular districts. Kerala's long-running migration surveys have shown how dependent some local economies have become on money from abroad, and how vulnerable they are when workers return, as many did during the pandemic.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "Remittances are the most stable foreign inflow India has. But stable is not the same as guaranteed.",
+            "attribution": "An economist who studies migration at a Thiruvananthapuram research institute"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What policy can do"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>India's own policy levers are limited but not trivial. Better pre-departure training and stronger protection for low-wage workers in the Gulf would safeguard the most vulnerable flows. Lowering costs further through payment-system links, and making it easier for non-resident Indians to invest at home, would help at the margin.</p><p>Data could also be better. The RBI's surveys are valuable but infrequent, and there is little district-level information on who receives money and how it is used. Without that, policymakers are steering one of the economy's largest foreign inflows largely by feel.</p><p>For now, the trend is still upward. But the composition of India's remittances is increasingly a mirror of its migration — more skilled, more Western, and more exposed to decisions taken in foreign capitals.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Migration and remittances data",
+          "publisher": "World Bank",
+          "url": "https://www.worldbank.org/",
+          "note": ""
+        },
+        {
+          "title": "Surveys of India's inward remittances",
+          "publisher": "Reserve Bank of India",
+          "url": "https://www.rbi.org.in/",
+          "note": "Published periodically in the RBI Bulletin"
+        },
+        {
+          "title": "Global Knowledge Partnership on Migration and Development",
+          "publisher": "KNOMAD",
+          "url": "https://www.knomad.org/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "bengaluru-tightens-borewell-tanker-rules",
+      "headline": "Bengaluru tightens rules on borewells and tankers ahead of the dry months",
+      "standfirst": "The city's water board wants apartment complexes to meter borewells and builders to use treated water. Residents' groups say enforcement, not new rules, is the real problem.",
+      "section": "local",
+      "type": "news",
+      "authors": [
+        "arjun-gowda"
+      ],
+      "tags": [
+        "Water",
+        "Bengaluru",
+        "Urban India"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 2.8,
+      "hero_caption": "An illustration of a private water tanker parked outside a row of apartment blocks in Bengaluru, with a queue of residents holding plastic pots.",
+      "hero_alt": "Illustration of a water tanker beside apartment buildings and residents with containers.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Bengaluru's water utility has announced a fresh set of measures to curb groundwater depletion and regulate private water tankers, as officials try to avoid a repeat of the shortages that left large parts of the city queuing for water during a recent dry spell.</p><p>Under the measures, apartment complexes and commercial buildings that draw on borewells will be asked to install meters and report extraction; new borewells will need prior permission from the state's groundwater authority; and construction sites will be required to use treated wastewater rather than fresh water for curing concrete and suppressing dust. The Bangalore Water Supply and Sewerage Board has also said it will expand a registry of private tankers and cap the rates they can charge during shortages.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>A senior engineer with the board said the city's dependence on groundwater had become “unsustainable” in its peripheral wards, many of which were added to the city's limits long after its piped network was designed. “The newer parts of the city grew on borewells and tankers. We are trying to bring them into a system where extraction is at least measured,” the engineer said.</p><p>Bengaluru draws most of its piped supply from the Cauvery river, pumped uphill over roughly a hundred kilometres. The latest phase of the Cauvery water supply scheme has extended pipelines to many of the villages absorbed into the city, but household connections in several areas remain incomplete, and residents there continue to rely on borewells that are being drilled ever deeper.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Residents' groups gave the announcement a cautious welcome. Lakshmi, secretary of a residents' welfare association in Whitefield, said her complex had already installed meters and rainwater harvesting. “The rules have mostly existed on paper for years. What we need is for the board to actually inspect, and for tanker operators who flout limits to face consequences,” she said.</p><p>Groundwater experts have long warned that over-extraction in the city's outer zones, combined with the loss of lakes and wetlands to construction, has reduced natural recharge. Rainwater harvesting is mandatory for buildings above a certain plot size, but compliance checks have been patchy. The board has said it will use its billing database and satellite imagery to identify large properties that have not complied.</p><p>Officials said a public consultation on tanker rate caps would be held before the rules take effect. Some tanker operators have warned that caps set too low would make it unviable to serve distant areas.</p>"
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "What residents need to know",
+            "body": "<p>Large apartment complexes that use borewells should expect to install meters and file extraction returns. New borewells will need prior permission. Complaints about tanker overcharging can be lodged with the water board's helpline, which officials say will be expanded before the summer.</p>"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Central Ground Water Board",
+          "publisher": "Ministry of Jal Shakti",
+          "url": "https://cgwb.gov.in/",
+          "note": "Groundwater assessments for Karnataka"
+        },
+        {
+          "title": "Government of Karnataka",
+          "publisher": "Government of Karnataka",
+          "url": "https://www.karnataka.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Department of Water Resources",
+          "publisher": "Ministry of Jal Shakti",
+          "url": "https://jalshakti-dowr.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "delhi-grap-winter-smog-explained",
+      "headline": "Delhi's winter smog playbook: what GRAP does, and what it cannot",
+      "standfirst": "As the capital enters its worst months for air, an emergency plan kicks in stage by stage. Here is how it works, and why it treats symptoms rather than causes.",
+      "section": "local",
+      "type": "explainer",
+      "authors": [
+        "priyanka-bora"
+      ],
+      "tags": [
+        "Air Quality",
+        "Delhi",
+        "Public Health",
+        "Climate"
+      ],
+      "featured": true,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 0.8,
+      "hero_caption": "An illustration of India Gate faintly visible through thick grey haze, with commuters in masks in the foreground.",
+      "hero_alt": "Illustration of India Gate obscured by smog, with masked commuters.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Every year, as the monsoon retreats and the nights grow cooler, Delhi's air begins to thicken. By late October the city's air quality index routinely crosses into the “very poor” and “severe” bands, and residents of the National Capital Region brace for weeks of haze, burning eyes and school closures. The government's main tool for these weeks is the Graded Response Action Plan, or GRAP. Here is what it is, and what it can and cannot do.</p>"
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is GRAP?",
+            "answer": "<p>GRAP is a set of emergency measures that are triggered in stages as air quality worsens in Delhi and the surrounding NCR. It is administered by the Commission for Air Quality Management in NCR and Adjoining Areas (CAQM), a statutory body that took over the task from an earlier court-appointed authority. A sub-committee of the commission meets when forecasts suggest a deterioration and decides which stage to invoke.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "How are the stages decided?",
+            "answer": "<p>The plan has four stages linked to the daily air quality index: Stage I for “poor” air (an AQI of 201–300), Stage II for “very poor” (301–400), Stage III for “severe” (401–450) and Stage IV for “severe plus” (above 450). Since the plan was revised, the commission can also invoke a stage pre-emptively, a few days before a threshold is expected to be crossed, on the basis of forecasts from the India Meteorological Department and the Indian Institute of Tropical Meteorology.</p>"
+          }
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "450+",
+            "label": "the AQI level at which Stage IV, the strictest tier of GRAP, applies",
+            "source": "Commission for Air Quality Management"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is actually restricted?",
+            "answer": "<p>The measures are cumulative: each stage adds to the ones before it. Broadly:</p><ul><li><b>Stage I:</b> dust control at construction sites, a ban on the open burning of waste, stricter checks on visibly polluting vehicles, and mechanised road sweeping.</li><li><b>Stage II:</b> restrictions on diesel generator sets, higher parking fees to discourage private cars, and more frequent bus and metro services.</li><li><b>Stage III:</b> a halt to most construction and demolition, curbs on older petrol and diesel cars in Delhi and neighbouring districts, and a shift to hybrid classes for younger schoolchildren.</li><li><b>Stage IV:</b> a ban on the entry of most diesel trucks carrying non-essential goods, a halt even to public infrastructure projects, and advice that offices let half their staff work from home. States may move schools online.</li></ul>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Why does the air get so bad in winter?",
+            "answer": "<p>Partly meteorology. In winter, cooler air near the ground is trapped beneath a layer of warmer air — a temperature inversion — and low wind speeds mean pollutants are not dispersed. Emissions that would be diluted in summer accumulate instead. On top of a high year-round baseline from vehicles, road dust, industry, construction and the burning of waste and biomass, autumn adds smoke from crop-residue fires in Punjab and Haryana and, briefly, from firecrackers.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "How much of it is stubble burning?",
+            "answer": "<p>It varies sharply from day to day. Source-apportionment estimates published during the season suggest that on some days at the peak of the harvest, farm fires can account for a large share of Delhi's fine particulate pollution, while on others their contribution is small. Researchers broadly agree that local and regional sources within the NCR are responsible for most of the pollution over the season as a whole — which is why the air stays poor long after the burning ends.</p>"
+          }
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "GRAP is a fire extinguisher. Nobody should mistake it for a building code.",
+            "attribution": "An air-quality researcher at a Delhi university"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Does GRAP work?",
+            "answer": "<p>It can shave the peaks, but evidence that it does much more is thin. The measures are temporary, arrive after pollution has already built up, and depend on enforcement by many agencies across several states. Construction bans fall hardest on daily-wage workers, which is why courts have directed states to pay subsistence allowances to registered construction workers during long halts. Critics argue that the emergency framing distracts from the year-round measures — cleaner fuels, better public transport, waste management, industrial controls — that would lower the baseline itself.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is the longer-term plan?",
+            "answer": "<p>The National Clean Air Programme, run by the Union environment ministry, sets targets for cities to reduce particulate pollution and ties part of their funding to performance. Progress has been uneven. Many cities report improvements, but Delhi and several other northern cities remain far above the national standard, and further still above the much stricter guidelines of the World Health Organization.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What can residents do?",
+            "answer": "<p>Check the AQI forecast daily; the Central Pollution Control Board publishes city-level readings. On severe days, limit strenuous outdoor activity, particularly for children, older people and those with heart or lung conditions. Well-fitted N95 masks offer real protection outdoors; cloth masks do little. Air purifiers help in closed rooms but are no substitute for cleaner air outside.</p>"
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "In short",
+            "points": [
+              "GRAP is an emergency plan with four stages tied to the air quality index.",
+              "Measures are cumulative and can be triggered pre-emptively on forecasts.",
+              "Winter weather traps pollution; smoke from farm fires adds to a high local baseline.",
+              "Lasting improvement depends on year-round action, not emergency curbs."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Graded Response Action Plan",
+          "publisher": "Commission for Air Quality Management in NCR and Adjoining Areas",
+          "url": "https://caqm.nic.in/",
+          "note": ""
+        },
+        {
+          "title": "National Air Quality Index",
+          "publisher": "Central Pollution Control Board",
+          "url": "https://cpcb.nic.in/",
+          "note": "Daily city-level AQI bulletins"
+        },
+        {
+          "title": "India Meteorological Department",
+          "publisher": "Ministry of Earth Sciences",
+          "url": "https://www.imd.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Air quality and health",
+          "publisher": "World Health Organization, India",
+          "url": "https://www.who.int/india",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "why-the-rbi-chose-to-wait",
+      "headline": "Why the RBI chose to wait",
+      "standfirst": "The Monetary Policy Committee left the repo rate unchanged this week. Benign inflation made the case for a cut; global uncertainty and unfinished transmission made the case for patience.",
+      "section": "economy",
+      "type": "analysis",
+      "authors": [
+        "meera-deshpande"
+      ],
+      "tags": [
+        "RBI",
+        "Inflation",
+        "Interest Rates"
+      ],
+      "featured": true,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 0.35,
+      "hero_caption": "An illustration of the Reserve Bank of India's Mumbai headquarters with a stylised pause symbol overlaid on a line chart.",
+      "hero_alt": "Illustration of a central bank building with a pause symbol and a chart.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>When the Reserve Bank of India's Monetary Policy Committee announced on Wednesday that it would hold the repo rate steady, few in the bond market were surprised. But the decision was a closer call than the calm tone of the governor's statement suggested. Headline inflation has been running comfortably below the central bank's 4% target for several months, growth has been steady rather than spectacular, and a number of economists had argued that the real policy rate — the repo rate minus expected inflation — was higher than the economy needs.</p><p>So why wait? The committee's reasoning, set out in its resolution and in the governor's statement, rests on three arguments: that low food inflation may not last, that the global environment is unusually uncertain, and that earlier rate cuts have not yet fully worked their way through the banking system.</p>"
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "4%",
+            "label": "the RBI's medium-term target for consumer price inflation, within a tolerance band of 2–6%",
+            "source": "Flexible inflation-targeting framework under the RBI Act"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "The case for a cut"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The doves have a decent argument. Much of the fall in inflation has come from food, especially vegetables and pulses, after a good harvest. Core inflation, which strips out volatile food and fuel prices, has been more stable, but it too is not signalling overheating. With inflation below target, the real interest rate has risen even though the nominal rate has not moved, which amounts to a passive tightening of monetary conditions.</p><p>Private investment, meanwhile, remains hesitant outside a few sectors. Credit to small businesses has picked up, but bankers describe demand as uneven. A further cut, the argument goes, would support borrowing at a time when public capital spending cannot carry the economy indefinitely.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "Why patience won"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The committee's majority was not persuaded. Food prices in India are notoriously volatile, and the favourable base effects that have flattered recent inflation readings will fade in the coming months. An uneven monsoon in parts of the country, and the vulnerability of vegetable prices to unseasonal rain, mean that a spike cannot be ruled out. Cutting now and having to reverse course later would damage the committee's hard-won credibility.</p><p>The global picture adds to the caution. Shifts in trade policy among major economies, volatile capital flows and the uncertain path of interest rates in the United States all bear on the rupee. A central bank that cuts aggressively while others hold risks putting pressure on its currency at an awkward moment.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "The RBI is buying an option. Waiting costs very little if inflation stays low, and saves a great deal if it doesn't.",
+            "attribution": "An economist at a Mumbai-based brokerage"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Transmission is still working through"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The third argument is the most technical and perhaps the most persuasive. Rate cuts take time to reach borrowers. Loans linked to external benchmarks such as the repo rate adjust quickly, but a large stock of older loans is priced off banks' internal benchmarks, which move only as banks' own cost of deposits falls. Deposit rates, in turn, adjust with a lag, as existing fixed deposits mature and are renewed.</p><p>Bankers say the pass-through of previous cuts to new loans has been substantial but is not complete, and that deposit rates have further to fall. In that light, the committee may judge that the easing already delivered has yet to have its full effect — and that adding more now would be like turning up the thermostat before the room has had time to warm.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "What it means for households"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>For borrowers with home loans linked to the repo rate, the decision means no change in monthly instalments for now. Those on older loan products may still see some reduction as banks' funding costs ease. For savers, the pause offers a brief reprieve from falling fixed-deposit rates, though most banks have already trimmed rates on new deposits.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "The MPC held the repo rate even though inflation is running below its 4% target.",
+              "It cited volatile food prices, global uncertainty and incomplete transmission of earlier cuts.",
+              "The policy stance leaves room for a cut if inflation stays subdued.",
+              "Borrowers on repo-linked loans see no change; deposit rates may still drift lower."
+            ]
+          }
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "How the MPC works",
+            "body": "<p>The Monetary Policy Committee has six members: three from the Reserve Bank, including the governor, who has a casting vote, and three external members appointed by the government. It must meet at least four times a year and in practice meets six times. Each member's vote and written statement are published in the minutes, released two weeks after every meeting.</p>"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What to watch"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The minutes, due in a fortnight, will show how individual members voted and how close the committee came to a cut. Beyond that, the path of food prices through the winter, the strength of rural demand after the kharif harvest and the trajectory of global interest rates will decide whether this pause is a prelude to another cut or the end of the easing cycle.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Monetary policy statements and MPC minutes",
+          "publisher": "Reserve Bank of India",
+          "url": "https://www.rbi.org.in/",
+          "note": ""
+        },
+        {
+          "title": "Consumer Price Index releases",
+          "publisher": "Ministry of Statistics and Programme Implementation",
+          "url": "https://www.mospi.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "gst-simpler-slabs-explained",
+      "headline": "GST's simpler slabs, explained",
+      "standfirst": "India's goods and services tax has moved to a largely two-rate structure. What changed, who gains, what it costs the states, and what remains unfinished.",
+      "section": "economy",
+      "type": "explainer",
+      "authors": [
+        "meera-deshpande"
+      ],
+      "tags": [
+        "GST",
+        "Taxation",
+        "State Finances"
+      ],
+      "featured": false,
+      "ai_assisted": true,
+      "ai_note": "AI tools were used to cross-tabulate rate changes across product categories from GST Council notifications; every rate cited was verified by our economy desk against the official documents.",
+      "days_ago": 5.6,
+      "hero_caption": "An illustration of a shopping receipt with tax lines highlighted, beside a set of weighing scales balancing two coins.",
+      "hero_alt": "Illustration of a shopping bill and a balance scale holding two coins.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>When the goods and services tax was introduced, it replaced a tangle of central and state levies with a single tax — but one that came with four main rates, a separate cess and a long list of exceptions. The GST Council's decision to collapse most of those rates into two has been described by the government as the most significant change since the tax was launched. Here is what it means in practice.</p>"
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What has changed?",
+            "answer": "<p>Most goods and services now fall into one of two standard rates: 5% for essentials and items of mass consumption, and 18% for most other goods and services. The earlier 12% and 28% slabs have largely been folded into these two. A separate, higher rate of 40% applies to a narrow band of luxury and so-called sin goods, such as tobacco products and certain high-end vehicles. Some essentials, including many unprocessed foods, remain exempt.</p>"
+          }
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "5% and 18%",
+            "label": "the two standard GST rates that now cover most goods and services",
+            "source": "GST Council decisions"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Why was the change made?",
+            "answer": "<p>Three reasons are usually given. The first is simplicity: multiple rates created classification disputes, with businesses and tax officials arguing over whether a product belonged in one slab or another. The second is consumption: lower rates on many everyday and durable goods were expected to support household spending at a time of uneven demand. The third is timing: the compensation cess, introduced to make up states' revenue shortfalls in the early years of GST, was approaching the end of its life, which created room to redesign the structure.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Who benefits most?",
+            "answer": "<p>Buyers of goods that moved from 12% to 5% — a range of packaged foods, some household items and certain medicines — and of goods that moved from 28% to 18%, which include several consumer durables and building materials. Businesses gain from fewer classification disputes. Whether consumers see the full benefit depends on whether companies pass on the lower tax in their prices. The government has said it will monitor this; complaints of profiteering are now handled by the Competition Commission of India rather than a dedicated GST authority.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What does this cost the states?",
+            "answer": "<p>This has been the most contentious question. Lower rates on many goods mean lower revenue unless consumption rises enough to compensate. Because GST revenue is shared between the Centre and the states, and because states gave up most of their independent taxing powers when they joined GST, several states — including some governed by opposition parties — have asked for assurances or compensation. Estimates of the revenue loss vary widely with assumptions about how much demand responds; analysts generally expect a short-term dip, with the longer-term effect uncertain.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Does this fix the inverted duty problem?",
+            "answer": "<p>Partly. An inverted duty structure arises when the tax on inputs is higher than the tax on the finished product, leaving businesses with accumulated credits that they struggle to recover. Fewer rates reduce the scope for such mismatches, but some remain — in parts of the textile and fertiliser chains, for instance — and businesses have asked the council to address them.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is still outside GST?",
+            "answer": "<p>Petroleum products such as petrol, diesel and aviation turbine fuel, alcohol for human consumption and electricity remain outside the GST net and are taxed separately by the Centre and the states. Bringing them in would require agreement in the GST Council, where states have been reluctant to give up a major independent source of revenue.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What else is unfinished?",
+            "answer": "<p>Businesses have long sought a fully functioning appellate tribunal to settle disputes, simpler return filing and faster refunds for exporters. Tax practitioners also point out that the real test of simplification is not the number of rates but the number of disputes — and that depends on clear classification rules and consistent administration across states.</p>"
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Most goods and services now attract GST at either 5% or 18%.",
+              "A 40% rate applies to a narrow set of luxury and sin goods.",
+              "States worry about revenue; the long-run effect depends on whether consumption rises.",
+              "Petroleum products, alcohol and electricity remain outside GST."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "GST Council",
+          "publisher": "GST Council Secretariat",
+          "url": "https://gstcouncil.gov.in/",
+          "note": "Recommendations of council meetings"
+        },
+        {
+          "title": "Central Board of Indirect Taxes and Customs",
+          "publisher": "Ministry of Finance",
+          "url": "https://www.cbic.gov.in/",
+          "note": "Rate notifications"
+        },
+        {
+          "title": "Analysis of GST and state finances",
+          "publisher": "PRS Legislative Research",
+          "url": "https://prsindia.org/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "onion-prices-climb-late-rain-maharashtra",
+      "headline": "Onion prices climb as late rain damages Maharashtra's kharif crop",
+      "standfirst": "Wholesale prices at Lasalgaon have risen sharply in a fortnight. Farmers say the rain wiped out their gains; traders expect relief only when fresh supply arrives from other states.",
+      "section": "economy",
+      "type": "news",
+      "authors": [
+        "meera-deshpande"
+      ],
+      "tags": [
+        "Food Prices",
+        "Inflation",
+        "Agriculture",
+        "Trade"
+      ],
+      "featured": false,
+      "ai_assisted": true,
+      "ai_note": "AI tools were used to analyse daily arrival and price records from mandi data; our reporters verified the trends with traders, farmers and officials.",
+      "days_ago": 0.6,
+      "hero_caption": "An illustration of sacks of red onions stacked at a wholesale market yard, with traders bidding under a tin shed.",
+      "hero_alt": "Illustration of onion sacks and traders at an agricultural market.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Wholesale onion prices have risen sharply over the past two weeks after heavy, late rain damaged the standing kharif crop in parts of Nashik, Ahilyanagar and Pune districts, traders and farmers said. At Lasalgaon in Nashik district, the country's largest onion market, average prices for good-quality bulbs rose by roughly a third over the fortnight, according to an analysis of daily auction records, as arrivals of fresh produce slowed.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Sunil, who grows onions on four acres in Niphad taluka, said the rain had arrived just as the crop was maturing. “Half the field is rotting in the soil. What I can harvest will fetch a good price, but there is much less of it,” he said. Farmers in the region say that the cost of seed, fertiliser and labour has risen, leaving little cushion when a crop fails.</p><p>Traders said the rabi crop harvested earlier in the year and held in ventilated sheds was now the main source of supply, and that those stocks were dwindling. “Storage onions are moving fast. Unless the fresh crop comes from Karnataka and Madhya Pradesh in good volume, prices will stay firm for some weeks,” a commission agent at the Lasalgaon market said.</p><p>The increase is beginning to reach retail markets. Meena, a vegetable vendor in Pune's Kasba Peth, said she had raised her price twice in ten days. “Customers who used to take two kilos now take one. The small restaurants are buying less too,” she said.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Onions carry a small weight in the consumer price index but an outsized one in households' perception of inflation, and governments have historically been quick to act when prices rise. The Centre maintains a buffer stock of onions procured through cooperatives such as NAFED and NCCF, which it releases in cities when prices climb. An official in the Department of Consumer Affairs said the government was “monitoring the situation closely” and that buffer stocks were available for release if needed.</p><p>Farmers' organisations have warned against measures such as export curbs, which have been used during past spikes and which growers say depress their prices just when they have a chance to recover losses. Economists have long argued that better storage and processing capacity, and more predictable trade policy, would soften the boom-and-bust cycle that hurts farmers and consumers alike.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "Every time prices rise, the farmer is told to sacrifice for the consumer. Nobody compensates him when prices crash.",
+            "attribution": "A leader of a farmers' organisation in Nashik"
+          }
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "What happens next",
+            "body": "<p>Traders expect prices to ease once the late kharif crop arrives from other states over the coming weeks. The area sown with rabi onions after the monsoon will largely determine prices in the first half of next year.</p>"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Agmarknet: daily arrivals and prices",
+          "publisher": "Directorate of Marketing and Inspection, Ministry of Agriculture",
+          "url": "https://agmarknet.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Price monitoring",
+          "publisher": "Department of Consumer Affairs",
+          "url": "https://consumeraffairs.nic.in/",
+          "note": ""
+        },
+        {
+          "title": "National Agricultural Cooperative Marketing Federation of India",
+          "publisher": "NAFED",
+          "url": "https://www.nafed-india.com/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "can-welfare-boards-protect-gig-workers",
+      "headline": "Can welfare boards give India's gig workers a safety net?",
+      "standfirst": "Several states have passed laws creating welfare boards for delivery riders and cab drivers, funded by a levy on platforms. The idea is promising; the hard part is making it work.",
+      "section": "society",
+      "type": "analysis",
+      "authors": [
+        "meera-deshpande",
+        "arjun-gowda"
+      ],
+      "tags": [
+        "Gig Economy",
+        "Labour",
+        "Welfare"
+      ],
+      "featured": true,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 1.9,
+      "hero_caption": "An illustration of a delivery rider on a scooter at dusk, a phone mounted on the handlebar, with city traffic blurred behind.",
+      "hero_alt": "Illustration of a food-delivery rider on a scooter in evening traffic.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Ravi starts his day at seven, his phone clamped to the handlebar of a second-hand scooter, and by nine at night he has made between twenty and thirty food deliveries across Jaipur. On a good day he clears about ₹900 after fuel. On a bad day — rain, a puncture, a run of low-paying orders — far less. He has no paid leave, no health cover beyond what his family scrapes together, and no pension. “If I fall off this scooter tomorrow,” he says, “the app will simply find someone else.”</p><p>Ravi is one of millions of workers whose livelihoods depend on digital platforms for food delivery, ride-hailing, e-commerce logistics and home services. NITI Aayog has projected that India's gig workforce could rise to more than two crore by the end of the decade. Most of these workers are classified as independent contractors rather than employees, which places them outside the labour protections that apply to formal employment.</p>"
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "2 crore+",
+            "label": "projected size of India's gig and platform workforce by the end of the decade",
+            "source": "NITI Aayog projection"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "The state experiments"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Rajasthan was the first state to pass a dedicated law for platform-based gig workers, creating a welfare board and a fund financed by a fee on aggregators. Karnataka followed with its own legislation, which levies a welfare fee on transactions and obliges platforms to register workers and to explain the basis on which they are paid or deactivated. Other states, including Telangana and Jharkhand, have moved in the same direction.</p><p>At the national level, the Code on Social Security recognises gig and platform workers as a distinct category and allows the Centre to frame social security schemes for them, funded in part by contributions from aggregators. Workers can register on the e-Shram portal, and the Union government has extended health cover under Ayushman Bharat to registered platform workers.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "Why a welfare board?"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The welfare-board model has a long history in India. Construction workers' boards, funded by a cess on building projects, were designed to reach workers who move between employers and have no fixed workplace. Gig work shares some of those features: workers may log in to several apps, and no single platform considers itself responsible for them. A board funded by a levy on transactions sidesteps the question of who the employer is — a question courts in several countries have struggled to answer — and focuses instead on what the worker needs.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "Calling them partners does not change the fact that they carry all the risk. A welfare fee at least puts a price on that risk.",
+            "attribution": "A labour economist at a Bengaluru university"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "The record so far"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The record of existing boards is a cautionary tale. Construction workers' boards across states have collected large sums in cess, but auditors and parliamentary committees have repeatedly found that much of the money lies unspent, while many eligible workers have never been registered. Registration drives tend to be episodic, and benefits are often tied to paperwork that workers in informal jobs find hard to produce.</p><p>Gig workers' boards begin with some advantages. Platforms hold detailed digital records of who works, for how long and for how much, which could make registration and the delivery of benefits far easier than for construction labour. A transaction-level levy is also simpler to collect than a cess on building projects. But data alone will not do the work. Boards need staff, grievance mechanisms and the confidence of workers, who tend to see government bodies as distant.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "The platforms' view"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Platform companies have generally said they support social security for workers, but have raised concerns about multiple state levies on top of national contributions, and about the cost of compliance. Industry groups argue that a patchwork of state laws, each with its own fee and registration process, could raise prices for consumers and discourage expansion into smaller cities. Some have called for a single national framework instead.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Rajasthan, Karnataka and other states have created welfare boards for gig workers, funded by levies on platforms.",
+              "The Code on Social Security recognises gig workers, but much depends on schemes still being rolled out.",
+              "Welfare boards for construction workers have struggled to spend what they collect.",
+              "Platforms back social security in principle but worry about overlapping state levies."
+            ]
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What would make it work"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Three things matter most. The first is portability: a rider who switches cities or apps should not lose benefits. The second is transparency: workers should be able to see what has been collected on their behalf and what it buys. The third is scope. The boards' remit should extend beyond insurance to the issues workers raise most often — opaque pay calculations, sudden deactivation from apps and the absence of anyone to appeal to.</p><p>For Ravi, the abstractions matter less than whether a claim would be paid if he were injured on the road. That is the measure by which the new boards will be judged.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "India's Booming Gig and Platform Economy",
+          "publisher": "NITI Aayog",
+          "url": "https://www.niti.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "e-Shram portal",
+          "publisher": "Ministry of Labour and Employment",
+          "url": "https://eshram.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Code on Social Security",
+          "publisher": "Ministry of Labour and Employment",
+          "url": "https://labour.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "State legislation on platform workers",
+          "publisher": "PRS Legislative Research",
+          "url": "https://prsindia.org/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "caste-census-what-it-will-tell-us",
+      "headline": "Counting caste: what the next census will and will not tell us",
+      "standfirst": "For the first time since independence, the census is set to record caste for all communities. Why it matters, what earlier attempts taught, and the hard questions of method.",
+      "section": "society",
+      "type": "explainer",
+      "authors": [
+        "ananya-iyer"
+      ],
+      "tags": [
+        "Census",
+        "Social Justice",
+        "Elections"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 6.3,
+      "hero_caption": "An illustration of a census enumerator with a tablet sitting on the steps of a village house, talking to a family.",
+      "hero_alt": "Illustration of a census worker with a tablet speaking with a family outside their home.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>India's census has asked about religion, language and literacy for well over a century, but since independence it has recorded caste only for Scheduled Castes and Scheduled Tribes. That is set to change: the Union government has decided that the next census will enumerate caste across all communities. The decision settles a long political debate, but opens a set of practical and analytical questions that will shape how useful the data turn out to be.</p>"
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "When was caste last counted in full?",
+            "answer": "<p>The last census to record caste comprehensively was the one conducted in 1931, under British rule. The 1941 census collected some caste information, but it was never fully tabulated because of the Second World War. After independence, successive governments chose to count only Scheduled Castes and Scheduled Tribes, for whom the Constitution mandates reservation in legislatures and public employment — partly out of a concern that enumerating caste would entrench it.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Hasn't caste been surveyed since then?",
+            "answer": "<p>Yes, in several forms. The Socio-Economic and Caste Census of the early 2010s collected caste information, but the caste data were never released in full; officials cited large numbers of errors and inconsistencies in the way castes were recorded. More recently, several states — Bihar, Karnataka and Telangana among them — have carried out their own caste surveys, with differing methods and differing degrees of public disclosure.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Why do supporters want caste data?",
+            "answer": "<p>Their central argument is that policy on reservations and welfare is being made with figures that are close to a century old. The share of Other Backward Classes in the population, for instance, is often estimated from numbers derived from the 1931 census. Supporters argue that current data on the size, education, income and occupations of different groups would allow benefits to be better targeted, and would show which communities have and have not gained from existing policies.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "And why have some been wary?",
+            "answer": "<p>Critics have worried that official enumeration could harden caste identities, encourage competing claims of backwardness, and turn every census into a political contest over numbers. Others have raised more technical concerns: that a poorly designed exercise could produce unreliable data that are then used to make consequential decisions. Many who hold these concerns accept that better data are needed, but argue that the method matters more than the decision itself.</p>"
+          }
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "The hard part is not asking the question. It is deciding what counts as an answer.",
+            "attribution": "A demographer who has worked on census design"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Why is counting caste technically difficult?",
+            "answer": "<p>Because caste in India is not a short list of categories. There are thousands of jatis, many with regional variants, synonyms and multiple spellings, and some communities are classified differently from one state to another. Earlier exercises that allowed open-ended answers ended up with an unmanageably large number of distinct entries. The census will need a well-designed code directory, trained enumerators and a clear procedure for handling ambiguous responses — a particular challenge when data are collected digitally on enumerators' handheld devices, as is planned.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Will it change reservations?",
+            "answer": "<p>Not automatically. Reservation policy is set by governments and legislatures, within limits laid down by the courts. The Supreme Court's judgment in the Indra Sawhney case set a general ceiling of 50% on reservations, with exceptions for extraordinary circumstances, and that ceiling has been the subject of continuing litigation. New data could strengthen demands to revise quotas or to sub-categorise existing ones, but any change would still have to pass legal and political tests.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What should we look for when the data come out?",
+            "answer": "<p>Three things. First, whether the full tables are published, not just headline totals. Second, whether caste is cross-tabulated with education, occupation and assets, which is what makes the data useful for policy. Third, whether independent researchers can access anonymised records to test their reliability. The value of the exercise will depend less on the count itself than on how openly the results are shared.</p>"
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "The next census is set to record caste for all communities, for the first time since 1931.",
+              "Earlier attempts, including the SECC, ran into serious problems of data quality.",
+              "Supporters want better-targeted welfare; critics worry about hardening identities and unreliable numbers.",
+              "Usefulness will depend on classification, cross-tabulation and openness of publication."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Census of India",
+          "publisher": "Office of the Registrar General and Census Commissioner",
+          "url": "https://censusindia.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Ministry of Home Affairs",
+          "publisher": "Government of India",
+          "url": "https://www.mha.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Ministry of Social Justice and Empowerment",
+          "publisher": "Government of India",
+          "url": "https://socialjustice.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Reservation and census: background notes",
+          "publisher": "PRS Legislative Research",
+          "url": "https://prsindia.org/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "four-year-undergraduate-degree-explained",
+      "headline": "The four-year degree, explained: what students and parents need to know",
+      "standfirst": "Universities are moving to four-year undergraduate programmes with multiple exits and a credit bank. Here is how the system works, and the questions it still leaves open.",
+      "section": "education",
+      "type": "explainer",
+      "authors": [
+        "harpreet-kaur"
+      ],
+      "tags": [
+        "Higher Education",
+        "Education Policy",
+        "Students"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 7.1,
+      "hero_caption": "An illustration of students walking through a university gateway, with a path that branches into four labelled steps.",
+      "hero_alt": "Illustration of students at a campus gate with a staircase of four steps behind them.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>For generations, a bachelor's degree in arts, science or commerce in India took three years. Under the National Education Policy and the University Grants Commission's curriculum and credit framework for undergraduate programmes, a growing number of universities now offer — and some expect — a four-year programme instead, with the option of leaving earlier with a lesser qualification. The change is significant enough that many families are unsure what it means. Here are the basics.</p>"
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What exactly is the four-year undergraduate programme?",
+            "answer": "<p>It is a degree structure built around credits rather than years. A student who completes four years earns an honours degree, or an honours degree with research if they complete a research project in the final year and meet a minimum grade requirement. The fourth year is meant to allow deeper study, a dissertation or an extended internship.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What are the exit options?",
+            "answer": "<p>The framework allows students to leave at the end of each year with a qualification:</p><ul><li>After one year: an undergraduate certificate.</li><li>After two years: an undergraduate diploma.</li><li>After three years: a bachelor's degree.</li><li>After four years: a bachelor's degree with honours, or with honours and research.</li></ul><p>Students who leave can, in principle, return later and resume from where they stopped, within a time limit set by the university.</p>"
+          }
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "160",
+            "label": "approximate credits required for a four-year honours degree, against roughly 120 for a three-year degree",
+            "source": "UGC curriculum and credit framework"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is the Academic Bank of Credits?",
+            "answer": "<p>It is a digital system that stores the credits a student earns, linked to an APAAR ID — a unique academic identity number. The idea is that credits can be carried across institutions, so that a student could, for example, complete a certificate at one university and continue at another. In practice, how freely credits move depends on universities agreeing to recognise one another's courses, which is still a work in progress.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Is the three-year degree disappearing?",
+            "answer": "<p>Not entirely. Many universities let students exit with a bachelor's degree after three years, and that degree remains valid for jobs and for admission to a two-year master's programme. But at universities that have fully adopted the new framework, the default path is now four years.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What does the fourth year get you?",
+            "answer": "<p>Graduates of a four-year honours programme can enrol in a one-year master's degree rather than a two-year one, so the total time to a postgraduate degree stays at five years. Under UGC rules, four-year graduates with a sufficiently high grade can also apply directly for a PhD. A four-year degree may also be more readily recognised by universities abroad that expect sixteen years of education before graduate study.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What are the concerns?",
+            "answer": "<p>There are several. Teachers' associations at some universities have argued that the extra year requires more faculty and classrooms than have been provided, leading to large classes and thinly taught electives. An additional year also means an additional year of fees and living costs, which weighs most on students from poorer families and those who must move away to study. And there is a memory of a previous attempt: a four-year programme introduced at one major central university a little over a decade ago was rolled back within a year after protests.</p>"
+          }
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "Multiple exits sound like flexibility. For a first-generation student, they can also be an easy way out that becomes permanent.",
+            "attribution": "A college principal in Punjab"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "How should students decide?",
+            "answer": "<p>Ask the institution specific questions: how many faculty members teach the fourth year, what research supervision is available, whether internships are arranged or left to students, and how credits from other institutions are treated. Students who plan postgraduate study, particularly abroad, may find the fourth year worthwhile. Those who need to start earning quickly can take the three-year exit without penalty.</p>"
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Four-year programmes award honours, or honours with research, after about 160 credits.",
+              "Students can exit with a certificate, diploma or degree after one, two or three years.",
+              "Credits are stored in the Academic Bank of Credits, but portability between universities is still patchy.",
+              "Faculty shortages and the cost of an extra year are the main concerns."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Curriculum and Credit Framework for Undergraduate Programmes",
+          "publisher": "University Grants Commission",
+          "url": "https://www.ugc.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "National Education Policy",
+          "publisher": "Ministry of Education",
+          "url": "https://www.education.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Academic Bank of Credits",
+          "publisher": "Ministry of Education",
+          "url": "https://www.abc.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "single-teacher-government-schools-persist",
+      "headline": "More than a lakh government schools still run with a single teacher",
+      "standfirst": "The figures come from the government's own school data. Teachers and parents say the problem is not just numbers, but what one adult can do with five classes at once.",
+      "section": "education",
+      "type": "news",
+      "authors": [
+        "harpreet-kaur"
+      ],
+      "tags": [
+        "Schools",
+        "Teachers",
+        "Education Policy"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 3.7,
+      "hero_caption": "An illustration of a single teacher in a rural classroom, with children of different ages working in separate groups.",
+      "hero_alt": "Illustration of one teacher with a mixed-age group of children in a village school.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>More than a lakh schools across India are run by a single teacher, according to the Ministry of Education's UDISE+ database, which compiles information reported by schools every year. Together they enrol lakhs of children, many of them in remote rural areas and tribal districts where the nearest alternative school may be several kilometres away.</p><p>The number has declined over the past decade as states have consolidated small schools and recruited teachers, but the improvement has been slow, and in some states the count has barely moved. Education officials and researchers say the figures understate the problem, since many schools officially staffed by two teachers effectively run with one when a colleague is on leave, deputed to election duty or assigned to administrative work.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Sunita is the only teacher at a primary school in a hamlet in Maharashtra's Nandurbar district. She teaches 46 children across five classes in two rooms. “I give the older ones a lesson to copy while I teach the little ones to read, then I switch,” she said. “On days I have to go to the block office for meetings or data entry, the school is effectively closed.”</p><p>The Right of Children to Free and Compulsory Education Act sets a pupil-teacher ratio of 30:1 at the primary level and 35:1 at the upper-primary level, and requires at least two teachers in every primary school. The national average ratio falls within those limits, but averages hide wide variation: urban schools in some states have surplus teachers, while rural schools in the same districts go without.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>A large part of the shortfall comes from vacancies. By most estimates, several lakh sanctioned teaching posts remain unfilled across states, and many governments have relied on contract or guest teachers who are paid less and often leave. An official in a state education department, speaking on condition of anonymity, said recruitment had been held up by litigation over selection examinations and by budget constraints.</p><p>Some states have responded by merging or “pairing” small schools so that teachers can be pooled. Supporters say this makes better use of scarce staff; critics, including some parents' groups, say it lengthens journeys for young children, particularly girls, and risks pushing them out of school altogether.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "One teacher can keep a school open. One teacher cannot keep a school working.",
+            "attribution": "A district education officer in Odisha"
+          }
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "What happens next",
+            "body": "<p>Funding for teacher salaries under Samagra Shiksha, the Centre's integrated scheme for school education, is negotiated each year with every state. Education researchers say the next round of state plans will show whether filling vacancies is being given priority over spending on buildings and equipment.</p>"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "UDISE+ school statistics",
+          "publisher": "Ministry of Education",
+          "url": "https://udiseplus.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Department of School Education and Literacy",
+          "publisher": "Ministry of Education",
+          "url": "https://www.education.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Samagra Shiksha",
+          "publisher": "Ministry of Education",
+          "url": "https://samagra.education.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "antimicrobial-resistance-india-explained",
+      "headline": "Antimicrobial resistance: India's slow-moving emergency, explained",
+      "standfirst": "Infections that once yielded to cheap antibiotics are becoming harder to treat. Why India is especially exposed, what is being done, and what it will take.",
+      "section": "health",
+      "type": "explainer",
+      "authors": [
+        "priyanka-bora"
+      ],
+      "tags": [
+        "Antimicrobial Resistance",
+        "Public Health",
+        "Science"
+      ],
+      "featured": false,
+      "ai_assisted": true,
+      "ai_note": "AI tools were used to summarise several surveillance reports and research papers; every figure and claim was checked by our health desk against the original documents.",
+      "days_ago": 8.2,
+      "hero_caption": "An illustration of a petri dish in which bacterial colonies grow right up to the edge of an antibiotic disc.",
+      "hero_alt": "Illustration of bacteria growing around an antibiotic disc in a laboratory dish.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Doctors in Indian intensive care units increasingly describe a situation that would have seemed implausible a generation ago: patients with common infections — of the urinary tract, the bloodstream, the lungs — for whom the standard antibiotics no longer work, and sometimes none of the reserve drugs either. Antimicrobial resistance, or AMR, develops slowly and largely out of sight, which is precisely what makes it dangerous. Here is what you need to know.</p>"
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is antimicrobial resistance?",
+            "answer": "<p>It is the ability of bacteria, viruses, fungi and parasites to survive the medicines designed to kill them. Every time an antibiotic is used, susceptible bacteria die and resistant ones are more likely to survive and multiply. Over time, and especially when antibiotics are overused or misused, resistant strains become dominant. Resistance genes can also pass between bacteria, spreading the problem across species.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "How serious is the problem globally?",
+            "answer": "<p>Very. One widely cited study published in <i>The Lancet</i> estimated that bacterial AMR was directly responsible for around 1.27 million deaths worldwide in a single year, and associated with nearly five million. The World Health Organization lists AMR among the top global threats to public health. The burden is heaviest in low- and middle-income countries, where infection rates are higher and access to the newest drugs is limited.</p>"
+          }
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "1.27 million",
+            "label": "deaths worldwide directly attributed to bacterial antimicrobial resistance in one year, by a widely cited global estimate",
+            "source": "Global Research on Antimicrobial Resistance study, The Lancet"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Why is India particularly exposed?",
+            "answer": "<p>Several factors combine. India has a high burden of infectious disease, so antibiotics are used a great deal. Many are available at pharmacies without a prescription, despite rules that require one for certain drugs. Patients often stop courses early, and doctors under pressure sometimes prescribe broad-spectrum antibiotics for viral illnesses, where they do no good. Antibiotics are used in poultry farming and aquaculture, and effluent from some pharmaceutical manufacturing sites has been found to carry antibiotic residues into rivers. Crowded hospitals with weak infection control allow resistant bacteria to spread between patients.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What does Indian surveillance show?",
+            "answer": "<p>The Indian Council of Medical Research runs a network of laboratories that tracks resistance in samples from hospitals across the country. Its annual reports have documented high and, for some combinations, rising resistance among common hospital pathogens such as <i>Klebsiella pneumoniae</i>, <i>E. coli</i> and <i>Acinetobacter baumannii</i> — including to carbapenems, a class of antibiotics usually held in reserve for the most serious infections. When carbapenems fail, doctors are left with a handful of older, more toxic or more expensive options.</p>"
+          }
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "We are seeing young patients with infections we cannot treat. That used to be a story about the future.",
+            "attribution": "An infectious diseases physician at a government teaching hospital"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is the government doing?",
+            "answer": "<p>India has a National Action Plan on AMR covering human health, animal health, agriculture and the environment. Prescription-only antibiotics carry a red vertical line on their packaging to signal that they should not be sold over the counter. The use of colistin, a last-resort antibiotic, as a growth promoter in animal feed has been banned. Kerala was the first state to adopt its own AMR action plan and has run campaigns to curb over-the-counter sales. Implementation across states, however, remains uneven, and enforcement at pharmacies is weak.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is the AWaRe classification?",
+            "answer": "<p>It is a WHO system that groups antibiotics into three categories: <b>Access</b> antibiotics for common infections, which should be widely available; <b>Watch</b> antibiotics, which carry a higher risk of driving resistance and should be used more selectively; and <b>Reserve</b> antibiotics, to be kept for confirmed multi-drug-resistant infections. Studies of antibiotic consumption have found that India uses a high share of Watch antibiotics relative to the WHO's recommendations.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What can individuals do?",
+            "answer": "<p>Do not ask for antibiotics for colds, flu or most sore throats, which are usually viral. Take antibiotics only when prescribed, complete the course as instructed, and never share leftover tablets. Wash hands, keep vaccinations up to date and handle food safely: preventing infections in the first place is the surest way to reduce the need for antibiotics.</p>"
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "AMR makes common infections harder, and sometimes impossible, to treat.",
+              "India's exposure stems from high infection rates, easy access to antibiotics, farm use and weak infection control.",
+              "ICMR surveillance shows high resistance among key hospital pathogens, including to reserve drugs.",
+              "Policies exist, but enforcement at pharmacies and in hospitals remains the weak link."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Antimicrobial Resistance Research and Surveillance Network",
+          "publisher": "Indian Council of Medical Research",
+          "url": "https://www.icmr.gov.in/",
+          "note": "Annual surveillance reports"
+        },
+        {
+          "title": "Antimicrobial resistance",
+          "publisher": "World Health Organization, India",
+          "url": "https://www.who.int/india",
+          "note": ""
+        },
+        {
+          "title": "National Programme on AMR Containment",
+          "publisher": "National Centre for Disease Control",
+          "url": "https://ncdc.mohfw.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "tele-manas-regional-language-counsellors",
+      "headline": "States add regional-language counsellors as mental health helpline calls rise",
+      "standfirst": "Calls to the national tele-mental health service have grown steadily since its launch. Counsellors say students and young workers make up a rising share of callers.",
+      "section": "health",
+      "type": "news",
+      "authors": [
+        "priyanka-bora"
+      ],
+      "tags": [
+        "Mental Health",
+        "Public Health",
+        "Students"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 0.12,
+      "hero_caption": "An illustration of a counsellor wearing a headset in a quiet room, a notepad and a cup of tea on the desk beside her.",
+      "hero_alt": "Illustration of a telephone counsellor with a headset at a desk.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Several states are adding counsellors who speak regional languages to their tele-mental health cells, as calls to the national helpline continue to rise ahead of World Mental Health Day next week. Officials and counsellors say young people — students preparing for competitive examinations and early-career workers — account for a growing share of callers.</p><p>Tele-MANAS, the national tele-mental health programme run by the Union health ministry with technical support from NIMHANS in Bengaluru, offers free counselling on the toll-free number 14416. Calls are routed to state cells, where trained counsellors provide first-level support and refer callers who need specialist care to psychiatrists or to services in their district. The programme has handled lakhs of calls since it was launched, by the ministry's account.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>A psychologist who supervises a tele-counselling cell in Bhubaneswar said many callers were reluctant to describe their difficulties in English or Hindi. “People open up in their own language. When we started taking calls in Odia with counsellors from the same districts, the conversations changed — they became longer, more honest,” she said.</p><p>Exam-related stress, relationship difficulties, job insecurity and loneliness are among the most common reasons for calling, counsellors said. Asha, a nursing student in Kochi who called the helpline during her final-year examinations, said she had not told her family she was struggling. “It was easier to talk to a stranger who wasn't going to judge me. They also told me where I could see a counsellor in person,” she said.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Mental health professionals welcome the expansion but caution that a helpline cannot substitute for services on the ground. India has well under one psychiatrist per lakh people by most estimates, and they are concentrated in cities. The National Mental Health Survey, conducted by NIMHANS, found that a large majority of people with mental health conditions were not receiving any treatment.</p><p>“The helpline is an entry point. What matters is what happens after the call — whether there is a counsellor at the district hospital, whether the referral actually leads somewhere,” said a psychiatrist who works with the District Mental Health Programme in Karnataka.</p><p>Several states are also linking Tele-MANAS with college counselling services and with outreach in coaching hubs, where student suicides have prompted official guidelines on mental health support for students.</p>"
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "If you need help",
+            "body": "<p>Tele-MANAS offers free, confidential support around the clock on <b>14416</b> or 1-800-891-4416. In an emergency, call 112.</p>"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Tele-MANAS",
+          "publisher": "Ministry of Health and Family Welfare",
+          "url": "https://telemanas.mohfw.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Ministry of Health and Family Welfare",
+          "publisher": "Government of India",
+          "url": "https://www.mohfw.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "National Mental Health Survey",
+          "publisher": "NIMHANS",
+          "url": "https://nimhans.ac.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "gaganyaan-parachute-test-uncrewed-flight",
+      "headline": "Gaganyaan crew capsule clears another parachute test as ISRO readies uncrewed flight",
+      "standfirst": "A drop test over the sea checked the parachutes that will slow the capsule on its return. The first uncrewed orbital mission is the next big milestone before astronauts fly.",
+      "section": "science-tech",
+      "type": "news",
+      "authors": [
+        "siddharth-nair"
+      ],
+      "tags": [
+        "ISRO",
+        "Gaganyaan",
+        "Science"
+      ],
+      "featured": true,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 1.15,
+      "hero_caption": "An illustration of a cone-shaped crew capsule descending under three large orange-and-white parachutes towards a calm sea.",
+      "hero_alt": "Illustration of a space capsule descending under parachutes over the ocean.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>The Indian Space Research Organisation has completed another integrated air-drop test of the Gaganyaan crew module, checking the sequence of parachutes that will slow the capsule as it returns from orbit, the agency said this week. The test is one of a series designed to qualify the module's recovery systems before the first uncrewed orbital flight of India's human spaceflight programme.</p><p>In the test, a simulated crew module of representative mass was lifted by an Indian Air Force helicopter and released from a height of several kilometres. Its parachutes — small pilot chutes, drogues that stabilise and slow the capsule, and finally the large main parachutes — deployed in sequence before the module splashed down at sea, where it was recovered by the Navy.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>A senior scientist at the Vikram Sarabhai Space Centre in Thiruvananthapuram, which leads much of the crew module's development, said the parachute system was among the most safety-critical elements of the mission. “On the way up, the rocket is doing the work. On the way down, it is the parachutes and the heat shield. There is no second chance,” the scientist said.</p><p>Gaganyaan aims to send a crew of Indian astronauts into low Earth orbit and bring them back safely, which would make India the fourth country to do so independently, after the Soviet Union, the United States and China. Before that, ISRO plans at least one uncrewed orbital flight carrying Vyommitra, a humanoid robot designed to mimic human functions and monitor conditions inside the cabin.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The programme has advanced through a sequence of tests over the past few years: a test-vehicle flight that demonstrated the crew escape system, ground qualification of a human-rated version of the LVM3 launch vehicle, and repeated drop tests of the parachutes. Astronaut-designates drawn from the Indian Air Force have been training in India and abroad.</p><p>ISRO has indicated that it hopes to fly the first uncrewed mission in the coming months, though it has not committed to a firm date. The timeline has slipped repeatedly since the programme was announced, a delay officials attribute to the pandemic, the complexity of human-rating every system, and a deliberate decision to put safety ahead of speed.</p><p>Space policy analysts say the programme matters beyond national prestige. Human-rating rockets and life-support systems demands standards of reliability and testing that can benefit the wider space programme, and Gaganyaan is a stepping stone to ISRO's stated ambition of building an Indian space station.</p>"
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "What comes next",
+            "body": "<p>Further qualification tests of the crew module's systems, followed by the first uncrewed orbital mission. Data from that flight will feed into decisions on further uncrewed missions and, eventually, the first crewed flight.</p>"
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Gaganyaan programme",
+          "publisher": "Indian Space Research Organisation",
+          "url": "https://www.isro.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Department of Space",
+          "publisher": "Government of India",
+          "url": "https://www.dos.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "upi-next-problem-is-trust-not-scale",
+      "headline": "UPI's next problem is trust, not scale",
+      "standfirst": "India's real-time payment system handles billions of transactions a month and is still growing. Fraud, concentration and the question of who pays for it all now matter more than volume.",
+      "section": "science-tech",
+      "type": "analysis",
+      "authors": [
+        "siddharth-nair",
+        "meera-deshpande"
+      ],
+      "tags": [
+        "Digital Payments",
+        "Fraud",
+        "RBI",
+        "Technology Policy"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 4.9,
+      "hero_caption": "An illustration of a QR code on a tea stall counter, with a shadowy hand reaching towards a phone from the edge of the frame.",
+      "hero_alt": "Illustration of a QR code payment at a small shop, with a shadowy figure suggesting fraud.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>There is little left to prove about the Unified Payments Interface's capacity to grow. From vegetable stalls in Pune to toll plazas on national highways, UPI has become the default way Indians pay one another, handling billions of transactions every month — by the National Payments Corporation of India's published figures, more than any other real-time payment system in the world. The question now is not whether UPI can scale, but whether the trust that made it ubiquitous can be sustained.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "The fraud problem"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>As digital payments have grown, so have the scams that exploit them. Most UPI fraud does not involve breaking the system's technology; it involves persuading users to authorise payments themselves. Fraudsters pose as bank officials, delivery agents, customs officers or — in the now-notorious “digital arrest” scam — as police officers who claim the victim is under investigation and must transfer money to clear their name. Others send payment requests disguised as incoming money.</p><p>The Reserve Bank's annual reports have recorded a steep rise in the number of reported digital payment frauds over recent years, even though the average amount per incident is small. Losses are concentrated among those least able to absorb them: first-time digital users, older people and small traders.</p>"
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "1930",
+            "label": "the national helpline for reporting cyber financial fraud; reporting quickly improves the chance of freezing stolen funds",
+            "source": "Indian Cybercrime Coordination Centre, Ministry of Home Affairs"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "The mule-account economy"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Behind most frauds is a network of “mule” accounts — bank accounts opened or rented, often from poor or unwitting holders, through which stolen money is moved in quick succession before it is withdrawn. Regulators and banks have begun using machine-learning tools to flag suspicious account behaviour, and the Reserve Bank's innovation hub has developed a model for identifying mule accounts that banks can adopt. The payments network has also restricted features that fraudsters abuse, such as person-to-person collect requests.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "The system is secure. The user is the attack surface. That is a much harder thing to patch.",
+            "attribution": "A payments-security researcher in Bengaluru"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Concentration risk"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>A second worry is structural. Two apps account for the large majority of UPI transactions by volume. NPCI has proposed capping any single app's share, but the deadline for compliance has been deferred more than once, reflecting the difficulty of enforcing a cap without disrupting users. The concern is less about abuse of market power than about resilience: an outage at a dominant app affects a large share of the country's retail payments at once.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "Who pays?"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The third question is economic. Most UPI payments to merchants carry no merchant discount rate — a policy choice intended to drive adoption. It has worked spectacularly, but it means banks and payment apps earn little directly from the transactions they process, while bearing the cost of infrastructure, fraud monitoring and customer support. The government has provided incentive payments to offset some of these costs, but industry groups argue that the arrangement is not sustainable, particularly as fraud prevention grows more expensive.</p><p>Proposals to introduce a small charge for large merchants have been floated and withdrawn more than once, partly for fear that any fee would push small traders back to cash. Finding a model that pays for security without discouraging use may be the most consequential policy choice facing UPI.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "UPI's growth is no longer in doubt; sustaining user trust is the main challenge.",
+              "Most fraud relies on tricking users into authorising payments, routed through networks of mule accounts.",
+              "Two apps dominate volumes, raising resilience concerns; a proposed market-share cap keeps being deferred.",
+              "Zero-fee payments drove adoption but leave fraud prevention underfunded."
+            ]
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What would help"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Several measures command broad support among experts: faster coordination between banks and police to freeze stolen funds; clearer liability rules, so that victims of authorised-payment fraud know where they stand; deliberate friction, such as cooling-off periods for unusually large first-time transfers; and sustained public education in local languages.</p><p>None of this is as dramatic as the headline numbers. But UPI's success was built on the assumption that paying by phone is as safe as paying in cash. Keeping that assumption true is now the system's main job.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "UPI product statistics",
+          "publisher": "National Payments Corporation of India",
+          "url": "https://www.npci.org.in/",
+          "note": ""
+        },
+        {
+          "title": "Annual reports and payment system data",
+          "publisher": "Reserve Bank of India",
+          "url": "https://www.rbi.org.in/",
+          "note": ""
+        },
+        {
+          "title": "National Cyber Crime Reporting Portal",
+          "publisher": "Ministry of Home Affairs",
+          "url": "https://cybercrime.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "our-cities-are-not-built-for-the-heat",
+      "headline": "Our cities are not built for the heat they now face",
+      "standfirst": "Heat action plans have saved lives. But a city where millions sleep under tin roofs and work in the open sun needs more than advisories and water kiosks.",
+      "section": "opinion",
+      "type": "opinion",
+      "authors": [
+        "debashish-sen"
+      ],
+      "tags": [
+        "Climate",
+        "Urban India",
+        "Heatwave",
+        "Labour"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 5.2,
+      "hero_caption": "An illustration of a construction worker resting in the thin shade of a scaffold under a white-hot sky.",
+      "hero_alt": "Illustration of a labourer sheltering from harsh sun on a building site.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>There is a particular kind of silence that settles over an Indian city at three in the afternoon in May. Streets empty, shutters come halfway down, and the only people still out are those who have no choice: the construction worker on the eighth floor of an unfinished tower, the traffic constable, the woman selling cut fruit under a plastic sheet, the delivery rider racing a ten-minute promise. For them, the heat is not weather. It is a working condition.</p><p>We have become better, in some ways, at responding to it. Ahmedabad's heat action plan, the first of its kind in South Asia, showed more than a decade ago that early warnings, hospital preparedness and simple public messaging could reduce deaths during heatwaves. Dozens of cities and states now have similar plans, encouraged by the National Disaster Management Authority, and the India Meteorological Department issues heat warnings with far greater accuracy and lead time than it once did. These are real achievements, and the people who built them deserve credit.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>But a heat action plan is, at heart, an emergency protocol. It tells people when to take shelter and tells hospitals when to expect patients. It does not change the fact that a family in a one-room tenement with a tin roof has no cool place in which to shelter, or that a daily-wage worker who stops between noon and four loses a third of the day's wage. It does not cool the city.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A heat action plan tells people to stay indoors. It does not ask what indoors is like.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Three changes would make a larger difference. The first is to treat heat as a labour issue. Several states have issued advisories asking employers to shift outdoor work away from the hottest hours, but advisories are not enforceable, and those who ignore them face no penalty. A binding rule on working hours during declared heatwaves, with compensation for lost hours for the lowest-paid, would protect people far better than a poster asking them to drink water. Some women's cooperatives have experimented with insurance that pays out automatically when temperatures cross a threshold; such schemes deserve public support and wider trials.</p><p>The second is to build differently. Cool roofs — a coat of reflective paint, or a modular insulating layer — can bring indoor temperatures down by several degrees at very low cost. Telangana has adopted a cool-roof policy, and pilot programmes in Ahmedabad and elsewhere have shown what is possible. Building codes, which still treat heat as an afterthought, should require passive cooling in new construction, and slum-upgrading programmes should take roofs as seriously as toilets.</p><p>The third is to plan for shade and water as public goods. Our cities have been paving over lakes and felling trees for road-widening for decades, and every one of those decisions has made the city hotter. Restoring tree cover along streets where people walk and wait, protecting water bodies, and keeping public drinking-water points working through the summer are not luxuries. They are infrastructure.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>None of this is glamorous, and none of it fits neatly within a single department. Heat falls between the cracks of urban development, labour, health and disaster management, and so it is everyone's problem and nobody's responsibility. Some have argued that heatwaves should be formally notified as a disaster, which would unlock dedicated funds. That would help, but only if the money goes into prevention rather than relief after the fact.</p><p>Climate projections leave little doubt that hot days will become hotter and more frequent across much of India. We can keep responding to each summer as if it were a surprise, counting the dead and issuing advisories. Or we can start designing cities in which the people who keep them running can survive the afternoon.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Guidelines for preparation of heat action plans",
+          "publisher": "National Disaster Management Authority",
+          "url": "https://ndma.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Heatwave warnings",
+          "publisher": "India Meteorological Department",
+          "url": "https://www.imd.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "consent-is-not-enough-data-protection",
+      "headline": "Consent is not enough: the flaw at the heart of India's data protection rules",
+      "standfirst": "The new data protection regime asks individuals to read, understand and police how their data are used. That is a burden few can carry, and the law should not pretend otherwise.",
+      "section": "opinion",
+      "type": "opinion",
+      "authors": [
+        "siddharth-nair"
+      ],
+      "tags": [
+        "Data Protection",
+        "Privacy",
+        "Technology Policy"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 6.8,
+      "hero_caption": "An illustration of a hand hovering over an endless scroll of privacy terms on a phone screen, with an 'I agree' button at the bottom.",
+      "hero_alt": "Illustration of a phone showing a very long privacy notice and an agree button.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Somewhere in the settings of your phone are dozens of permissions you granted without reading: to a food-delivery app, a bank, a ride-hailing service, a game your child downloaded. Each came with a privacy notice you scrolled past. Under India's Digital Personal Data Protection Act and the rules that put it into effect, each of those taps is meant to carry legal weight. That is the problem.</p><p>The law is a genuine step forward. For the first time, Indians have a statutory right to know what personal data a company holds about them, to have it corrected or erased, and to complain to a Data Protection Board if their rights are violated. Companies that suffer breaches must report them, and penalties for failures can run into hundreds of crores. Children's data receive special protection, with verifiable parental consent required before processing. After years of drafts and delays, these are not small things.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>But the architecture of the law rests on consent, and consent, as it operates online, is something close to a fiction. Studies of how people interact with privacy notices consistently find that almost nobody reads them, and that those who try rarely understand them. A regime that treats a tick in a box as informed agreement places the burden of protection on the individual — the party with the least information and the least power in the transaction.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "We do not ask passengers to inspect the engine before boarding a plane. Why do we ask users to audit a data processor before opening an app?",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The rules attempt to address this with “consent managers”: registered intermediaries through which users can give, review and withdraw consent across services. The idea has merit, and India's experience with account aggregators in finance shows that such intermediaries can work. But consent managers make consent easier to manage, not more meaningful. If the choice is between agreeing to broad data use and not using a service at all, a better interface does not change the choice.</p><p>What is missing is a stronger set of obligations that apply regardless of consent. Well-regarded data protection laws elsewhere lean heavily on principles such as purpose limitation and data minimisation, which require companies to collect only what they need for a stated purpose and to use it only for that purpose. The Indian law gestures at these ideas, but the weight of enforcement falls on whether consent was obtained, not on whether the processing was reasonable.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Two other features deserve scrutiny. The first is the breadth of the exemptions available to the government. The state is the largest processor of personal data in the country, through its identity, welfare, tax and health systems, and the law allows the Centre to exempt its agencies from many obligations on grounds such as security and public order. Exemptions are not unusual in such laws, but they should be narrow, time-bound and subject to independent oversight.</p><p>The second is the Data Protection Board itself. Its members are appointed by the government, and its independence will depend heavily on how it is staffed and funded. A regulator that must adjudicate complaints against government departments needs to be visibly separate from them. Journalists and transparency campaigners have also warned that the law's amendment to the Right to Information Act could make it easier for officials to refuse information by citing privacy.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>None of this is an argument against the law. It is an argument for treating it as a beginning. The rules will be revised; the Board will issue decisions; courts will interpret its ambiguities. At each of those points, the guiding question should be whether protection depends on what an ordinary person can reasonably be expected to do. If it depends on reading privacy policies, it will not protect anyone.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Digital Personal Data Protection Act and Rules",
+          "publisher": "Ministry of Electronics and Information Technology",
+          "url": "https://www.meity.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Bill summary and analysis",
+          "publisher": "PRS Legislative Research",
+          "url": "https://prsindia.org/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "mumbai-local-trains-need-more-than-automatic-doors",
+      "headline": "Mumbai's lifeline needs more than automatic doors",
+      "standfirst": "Closing the doors on suburban trains will save some lives. The deaths will not stop until the railways tackle the crush that pushes people to the edge in the first place.",
+      "section": "opinion",
+      "type": "opinion",
+      "authors": [
+        "debashish-sen"
+      ],
+      "tags": [
+        "Transport",
+        "Mumbai",
+        "Urban India"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 3.4,
+      "hero_caption": "An illustration of a crowded Mumbai suburban train at a platform, commuters packed into the open doorway.",
+      "hero_alt": "Illustration of an overcrowded local train with passengers at the door.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Anyone who has taken a Mumbai local at 9.15 in the morning knows the choreography. You wait at the exact spot on the platform where the door will stop. You brace as the train pulls in, still moving. You are carried in by the crowd behind you, or you are not carried in at all, and you hang from the door frame with one hand and your bag clutched in the other, the wind tugging at your shirt as the train leans into a curve.</p><p>For millions of Mumbaikars this is not an adventure. It is the commute. The suburban network carries upwards of 70 lakh passenger journeys on a typical weekday, on rakes designed for a fraction of that load. The cost is measured in lives. For years, railway police records have counted deaths on the suburban tracks in the thousands every year — people falling from overcrowded trains, crossing tracks where no bridge exists, struck in the dark. The toll has declined from its worst, but every few months a single incident reminds the city how fragile the system remains.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>After the most recent such tragedy, the railways said new suburban rakes would come with automatic doors, and that existing non-air-conditioned rakes would be retrofitted where possible. This is welcome. Closed doors will prevent some falls, and there is no good argument for running trains with open doors in this century. But we should be clear about what automatic doors can and cannot do.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A closed door keeps people inside the train. It does nothing for the people left on the platform.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>On the busiest routes at peak hours, the crowd on the platforms of major stations already exceeds what a train can absorb. Doors that close will mean more people left behind, longer waits and heavier crowding on platforms and foot-overbridges, which carry risks of their own. Ventilation in non-AC trains with closed doors must be redesigned, or the cure will be worse than the disease in a Mumbai May. And none of this addresses deaths while crossing tracks, which have long made up a large share of the toll.</p><p>The real problem is capacity, and capacity is a decades-long project. Successive phases of the Mumbai Urban Transport Project have added lines, longer trains and new rakes, but implementation has repeatedly lagged behind schedule. Additional corridors to separate suburban from long-distance traffic, modern signalling that lets trains run closer together, and more fifteen-car services would each raise the number of people the system can carry safely. These are not new ideas. They have sat in reports for years.</p><p>There are cheaper levers too. Staggered office timings, which state and central government offices in the city could adopt tomorrow, would flatten the peak. Fencing and foot-overbridges at known crossing points would save lives at little cost. Better integration with the metro lines now opening across the city could draw passengers away from the most crowded stretches — but only if fares, ticketing and interchanges are designed for people switching modes, rather than as separate systems that happen to meet.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Air-conditioned trains, which come with automatic doors, deserve a word. They are popular with those who can afford them and resented by those who cannot, particularly when they replace ordinary services rather than adding to them. Safety should not become a premium product. Whatever is done must be done on the trains that most people actually ride.</p><p>Mumbai has learned to live with its local trains the way one learns to live with a chronic condition: with stoicism, humour and an elaborate set of coping habits. That resilience is admirable. It should not be mistaken for consent. The people who hang from the doors every morning are not taking a risk they chose. They are taking the only train there is.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Indian Railways",
+          "publisher": "Ministry of Railways",
+          "url": "https://indianrailways.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Mumbai Urban Transport Project",
+          "publisher": "Mumbai Railway Vikas Corporation",
+          "url": "https://mrvc.indianrailways.gov.in/",
+          "note": ""
+        }
+      ]
+    },
+    {
+      "slug": "let-parliament-do-its-homework",
+      "headline": "Let Parliament do its homework",
+      "standfirst": "A crowded legislative agenda is no excuse for skipping scrutiny. Committees exist to slow good bills down just enough to make them better.",
+      "section": "opinion",
+      "type": "editorial",
+      "authors": [
+        "editorial-board"
+      ],
+      "tags": [
+        "Parliament",
+        "Monsoon Session",
+        "Legislation"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 2.1,
+      "hero_caption": "An illustration of a committee room with members seated around a horseshoe table, bound reports stacked before them.",
+      "hero_alt": "Illustration of a parliamentary committee meeting around a horseshoe-shaped table.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>The government arrives at the monsoon session with a long list of bills and a short calendar. The opposition arrives with its own list of grievances. If past sessions are any guide, the outcome is predictable: days lost to adjournments, followed by a rush in the final week in which bills are passed in minutes, sometimes by voice vote amid protest. Both sides will then blame the other. Both will be partly right.</p><p>The casualty is scrutiny, and it is worth being precise about why that matters. Most laws are not passed to make headlines. They are technical instruments — on insolvency, cooperatives, shipping, the repeal of obsolete statutes — whose effects depend on definitions, exceptions and the powers they grant to officials. Errors in such details tend to surface years later, in courtrooms and in the lives of the people the law was meant to help. By then, correcting them requires another bill.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Parliament has a mechanism designed to catch those errors: its committees. Department-related standing committees and select committees can examine a bill clause by clause, take evidence from experts and affected groups, and propose amendments away from the theatre of the floor. Their proceedings are not televised, which allows members to change their minds without losing face. Many committee reports are models of careful, cross-party work.</p><p>Yet the share of bills referred to committees has fallen sharply over the past two decades, according to data compiled by PRS Legislative Research. Governments of different stripes have found it convenient to bypass a step that takes time and can produce awkward recommendations. That is a mistake, and not only on principle. Bills that have been through committee tend to be better drafted, command broader support and are less likely to be challenged in court.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A committee referral is not a delay. It is quality control.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>We would urge three things this session. The government should refer at least the more complex bills on its list to committees, even at the cost of passing them in a later session. The opposition should allow question hour and legislative business to proceed, and use the debates it has demanded to argue its case rather than to disrupt. And the presiding officers should use the discretion the rules give them to send bills to committees where the government does not.</p><p>None of this is beyond reach. Parliament has worked better than this in the past and can again. The legitimacy of a law rests not only on the number of votes it receives but on the quality of the deliberation that produced it. Voters are entitled to expect that their representatives have read what they are voting for.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Parliament and legislation data",
+          "publisher": "PRS Legislative Research",
+          "url": "https://prsindia.org/",
+          "note": "Trends in committee referrals"
+        }
+      ]
+    },
+    {
+      "slug": "bengaluru-water-warning-for-every-city",
+      "headline": "Bengaluru's water warning is meant for every city",
+      "standfirst": "The city's new rules on borewells and tankers are necessary. But the crisis they respond to is the product of decades of planning that treated water as someone else's problem.",
+      "section": "opinion",
+      "type": "editorial",
+      "authors": [
+        "editorial-board"
+      ],
+      "tags": [
+        "Water",
+        "Urban India",
+        "Bengaluru",
+        "Climate"
+      ],
+      "featured": false,
+      "ai_assisted": false,
+      "ai_note": "",
+      "days_ago": 2.6,
+      "hero_caption": "An illustration of a dried, cracked lake bed with apartment towers rising on its former shoreline.",
+      "hero_alt": "Illustration of a dry lake bed surrounded by high-rise buildings.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Bengaluru's water board has announced rules to meter borewells, regulate private tankers and require builders to use treated wastewater. These are sensible measures, and overdue. But they are also an admission. A city that pumps much of its drinking water uphill from a river roughly a hundred kilometres away, and fills the gap by drilling ever deeper into a falling water table, has been living beyond its means for a long time.</p><p>The story is not unique to Bengaluru. Chennai's taps ran dry within recent memory. Delhi's poorer neighbourhoods depend on tankers every summer. Smaller cities growing at breakneck speed, from Telangana to Gujarat to the Gangetic plain, are reproducing the same pattern: development first, pipes later, groundwater in between.</p>"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>That pattern has three features. Cities expand faster than their piped networks, so new neighbourhoods are built on borewells and tankers, which then become entrenched interests. The natural infrastructure that once stored and recharged water — lakes, wetlands, flood plains, open ground — is lost to construction, often with official sanction. And water is priced and measured so poorly that nobody, from the utility to the household, has an accurate picture of how much is used and how much is lost.</p><p>Each of these can be addressed. Metering, which Bengaluru is now extending to borewells, is the foundation: what is not measured cannot be managed. Treated wastewater, which most Indian cities still discharge into rivers and drains, can replace fresh water for construction, industry and landscaping on a large scale. Protecting and restoring water bodies is cheaper than building new reservoirs, and it reduces flooding in the monsoon — the other half of the urban water problem.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A city that cannot account for its water cannot claim to manage it.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The harder part is political. Water tariffs that reflect even a fraction of the cost of supply are unpopular; enforcement against errant tanker operators and illegal borewells antagonises powerful interests; protecting lakes means saying no to builders. Municipal bodies that have gone without elected councils for long periods, as many have, are especially poorly placed to make those choices with legitimacy.</p><p>None of this argues for waiting. Smart metering, wastewater reuse and lake restoration can begin within a single budget cycle, and they pay for themselves many times over in avoided tanker bills and flood damage. What they require is a municipal leadership willing to be accountable for water as a whole, rather than for pipes alone.</p><p>Bengaluru's new rules are a start. Every other growing city should read them not as a local story but as a forecast — and act before its own taps run dry.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Central Ground Water Board",
+          "publisher": "Ministry of Jal Shakti",
+          "url": "https://cgwb.gov.in/",
+          "note": ""
+        }
+      ]
+    }
+  ],
+  "about_page": {
+    "title": "About & AI policy",
+    "intro": "The Ledger is an analysis-led publication about India and its place in the world. We publish news, analysis, explainers, opinion and editorials, and we care more about context than speed. Please note that the site is currently running demonstration content: the articles and authors you see are illustrative examples written to show how the publication works, not reports of real events.",
+    "body": [
+      {
+        "type": "heading",
+        "value": "Who we are"
+      },
+      {
+        "type": "paragraph",
+        "value": "<p>The Ledger is an independent newsroom built on a simple idea: that readers are better served by understanding a story than by merely hearing about it first. We cover politics, the economy, cities, society, education, health, science and India's relations with the world, and we try to explain not just what happened but why it matters and what might happen next.</p><p>We are a small team of reporters, editors and columnists drawn from across the country. We have no affiliation with any political party, and our editorial decisions are made by our editors alone.</p>"
+      },
+      {
+        "type": "callout",
+        "value": {
+          "title": "Demonstration content",
+          "body": "<p>This site currently runs demonstration content. Bylines belong to fictional writers, people quoted are illustrative, and articles are written to show our formats and standards rather than to report specific real events. Real institutions are mentioned for context only, and nothing here should be cited as fact.</p>"
+        }
+      },
+      {
+        "type": "heading",
+        "value": "Our editorial standards"
+      },
+      {
+        "type": "paragraph",
+        "value": "<p>Every article we publish is reviewed by at least one editor before it goes live. We hold ourselves to a few non-negotiable principles:</p>"
+      },
+      {
+        "type": "key_points",
+        "value": {
+          "title": "Our principles",
+          "points": [
+            "Accuracy first: we check facts, figures and quotations before publication, and we say so when something cannot be verified.",
+            "Clear sourcing: we link to primary documents and official data wherever possible, and list our main sources at the end of each article.",
+            "Fairness: people and organisations we write about critically are given a reasonable opportunity to respond.",
+            "Anonymity is the exception: we grant it only when a source would face real harm for speaking, and we describe their role as precisely as we can.",
+            "Separation of news and opinion: our reporting does not take sides; our opinion pages and editorials are clearly labelled."
+          ]
+        }
+      },
+      {
+        "type": "heading",
+        "value": "Article types"
+      },
+      {
+        "type": "paragraph",
+        "value": "<p>Every article carries a label so that you know what kind of journalism you are reading.</p><ul><li><b>News</b> reports what has happened, as fully and fairly as we can establish it.</li><li><b>Analysis</b> goes behind the news to explain causes, consequences and trade-offs. It reflects the reporter's informed judgement but not a political position.</li><li><b>Explainer</b> sets out the background to a complex subject, often in question-and-answer form, so that readers can follow the debate.</li><li><b>Opinion</b> is a signed argument by a columnist or guest writer. It represents the writer's view, not The Ledger's.</li><li><b>Editorial</b> is the unsigned, collective view of our editorial board, and the only place where The Ledger itself takes a position.</li></ul>"
+      },
+      {
+        "type": "heading",
+        "value": "Our AI policy"
+      },
+      {
+        "type": "paragraph",
+        "value": "<p>We use artificial intelligence as a tool, in limited and clearly defined ways, and never as a substitute for reporting or editorial judgement.</p>"
+      },
+      {
+        "type": "key_points",
+        "value": {
+          "title": "What this means in practice",
+          "points": [
+            "AI may assist with transcription of interviews, summarising long documents such as reports and judgments, producing first drafts of translations, and checking data for errors and inconsistencies.",
+            "AI never writes our opinion columns or editorials.",
+            "We never use AI to generate photographs or images presented as real. Illustrations are labelled as illustrations.",
+            "Every article in which AI tools played a material role carries an “AI-assisted” badge and a short note explaining how they were used.",
+            "A human editor reviews everything we publish and is accountable for it, whatever tools were used along the way."
+          ]
+        }
+      },
+      {
+        "type": "paragraph",
+        "value": "<p>We review this policy regularly as the technology and our understanding of it change. If you believe an article falls short of these standards, we want to hear from you.</p>"
+      },
+      {
+        "type": "heading",
+        "value": "Corrections"
+      },
+      {
+        "type": "paragraph",
+        "value": "<p>We make mistakes, and when we do we correct them promptly and transparently. Corrections are noted at the foot of the article concerned, with a description of what was changed. Minor fixes to spelling or style are made without a note. To report an error, write to <a href=\"mailto:corrections@example.com\">corrections@example.com</a> with a link to the article and a description of the problem.</p>"
+      },
+      {
+        "type": "heading",
+        "value": "Contact"
+      },
+      {
+        "type": "paragraph",
+        "value": "<ul><li>General enquiries and feedback: <a href=\"mailto:editors@example.com\">editors@example.com</a></li><li>Letters for publication: <a href=\"mailto:letters@example.com\">letters@example.com</a></li><li>News tips (we protect our sources): <a href=\"mailto:tips@example.com\">tips@example.com</a></li><li>Corrections: <a href=\"mailto:corrections@example.com\">corrections@example.com</a></li></ul>"
+      }
+    ]
+  }
+}

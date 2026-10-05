@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Our journalists{% endblock %}
+{% block content %}
+<div class="container-wide pt-8">
+  <header class="border-b border-rule pb-5">
+    <h1 class="headline text-4xl sm:text-5xl">Our journalists</h1>
+    <p class="standfirst mt-2 max-w-2xl text-lg">The reporters, editors and columnists behind {{ settings.core.SiteSettings.site_name }}.</p>
+  </header>
+  <ul class="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
+    {% for author in authors %}
+      <li class="flex gap-4 border-b border-rule py-5">
+        {% include "news/includes/author_avatar.html" %}
+        <div>
+          <a class="headline text-lg hover:underline" href="{{ author.get_absolute_url }}">{{ author.name }}</a>
+          {% if author.role %}<p class="meta mt-0.5">{{ author.role }}</p>{% endif %}
+          <p class="meta mt-1">{{ author.article_count }} article{{ author.article_count|pluralize }}</p>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

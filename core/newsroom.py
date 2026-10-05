@@ -4,6 +4,9 @@ Used by the `bootstrap_site` management command (run on every container
 start) and by tests, so there is a single source of truth.
 """
 
+from urllib.parse import urlsplit
+
+from django.conf import settings
 from django.contrib.auth.models import Group, Permission
 from django.db import transaction
 from wagtail.models import (
@@ -81,13 +84,17 @@ def ensure_home_page():
             instance=HomePage(title="The Ledger", slug="home", intro="News, analysis and argument from India")
         )
         home.save_revision().publish()
+    # Match the Wagtail Site to SITE_BASE_URL so page.full_url (canonical
+    # links, sitemaps) points at the public origin, including the port.
+    base = urlsplit(settings.SITE_BASE_URL)
+    port = base.port or (443 if base.scheme == "https" else 80)
     site = Site.objects.filter(is_default_site=True).first()
     if site is None:
-        Site.objects.create(hostname="localhost", port=80, root_page=home, is_default_site=True, site_name="The Ledger")
-    elif site.root_page_id != home.pk:
-        site.root_page = home
-        site.site_name = "The Ledger"
-        site.save()
+        site = Site(is_default_site=True, site_name="The Ledger")
+    site.hostname = base.hostname or "localhost"
+    site.port = port
+    site.root_page = home
+    site.save()
     return home
 
 
