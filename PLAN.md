@@ -40,7 +40,7 @@ saved as AI-assisted drafts and submitted to Editor review. Agents never publish
 - [x] 17. `newsdesk` app: DeskAgent (style guide, model, effort), DeskFeedback
       (memory notes, per article type), DraftRequest (brief, sources, status,
       usage); migrations; anthropic SDK dependency and settings
-- [ ] 18. Prompt builder (house rules + desk style + desk memory, cached) and
+- [x] 18. Prompt builder (house rules + desk style + desk memory, cached) and
       structured ArticleDraft schema
 - [ ] 19. Writers: Anthropic writer (structured output, refusal fallback,
       error handling) and an offline "fake" writer for demos/tests
