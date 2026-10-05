@@ -6,6 +6,8 @@ style guide or the desk's memory, so repeated drafts from a desk reuse the
 cache.
 """
 
+from django.utils.html import strip_tags
+
 from news.models import ArticlePage
 
 TYPE_GUIDANCE = {
@@ -64,7 +66,61 @@ def build_system(desk, article_type):
     ]
 
 
+def _plain(rich_text):
+    return " ".join(strip_tags(getattr(rich_text, "source", str(rich_text))).split())
+
+
+def article_as_text(page):
+    """The article's latest saved content (including manual edits) as plain text."""
+    page = page.get_latest_revision_as_object()
+    lines = [f"Headline: {page.title}", f"Standfirst: {page.standfirst}", ""]
+    for block in page.body:
+        value = block.value
+        if block.block_type == "paragraph":
+            lines.append(_plain(value))
+        elif block.block_type == "heading":
+            lines.append(f"## {value}")
+        elif block.block_type == "pullquote":
+            lines.append(f"[Pull quote] {value['quote']} — {value['attribution']}")
+        elif block.block_type == "key_points":
+            lines.append(f"[Key points: {value['title']}]")
+            lines += [f"- {point}" for point in value["points"]]
+        elif block.block_type == "qa":
+            lines.append(f"Q: {value['question']}")
+            lines.append(f"A: {_plain(value['answer'])}")
+        elif block.block_type == "stat":
+            lines.append(f"[Key figure] {value['figure']} — {value['label']} (source: {value['source']})")
+        elif block.block_type == "callout":
+            lines.append(f"[Box: {value['title']}] {_plain(value['body'])}")
+        lines.append("")
+    sources = [f"- {b.value['title']}, {b.value['publisher']} {b.value['url']}".strip() for b in page.sources]
+    if sources:
+        lines += ["Sources:", *sources]
+    tags = ", ".join(tag.name for tag in page.tags.all())
+    if tags:
+        lines.append(f"Tags: {tags}")
+    return "\n".join(lines).strip()
+
+
+def build_revision_message(request):
+    label = request.get_article_type_display().lower()
+    return (
+        f"An editor has reviewed your {label} and asked for changes. Revise the draft below.\n"
+        "Follow the editor's instructions closely, keep what already works, and return the "
+        "complete revised article (not just the changed parts). All accuracy rules still apply: "
+        "use only the source material, and say in editor_notes what you changed and anything "
+        "you could not do.\n\n"
+        f"<editor_instructions>\n{request.instructions.strip()}\n</editor_instructions>\n\n"
+        f"<current_draft>\n{article_as_text(request.article)}\n</current_draft>\n\n"
+        f"Article type guidance: {TYPE_GUIDANCE.get(request.article_type, '')}\n\n"
+        f"<original_brief>\n{request.brief.strip()}\n</original_brief>\n\n"
+        f"<source_material>\n{request.source_material.strip()}\n</source_material>"
+    )
+
+
 def build_user_message(request):
+    if request.is_revision:
+        return build_revision_message(request)
     label = request.get_article_type_display().lower()
     article = "an" if label[0] in "aeiou" else "a"
     return (

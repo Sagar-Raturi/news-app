@@ -54,3 +54,18 @@ saved as AI-assisted drafts and submitted to Editor review. Agents never publish
       by bootstrap_site, demo feedback in seed_demo
 - [x] 24. Tests for all of the above (no real API calls); full suite green
 - [x] 25. Docker/README/DECISIONS updates; verify end to end in Docker
+
+## Phase 2b — "Revise with AI"
+
+An editor (or the draft's writer) can send an agent's draft back to the same
+desk agent with instructions; the agent rewrites that draft as a new revision
+of the same article and it returns to Editor review.
+
+- [x] 26. Revision commissions (revision_of + instructions); prompt carries the
+      current draft (latest revision, incl. manual edits) and the instructions;
+      fake writer supports revisions
+- [ ] 27. Apply a revision to the existing article (new page revision, slug,
+      byline and image kept) and resubmit to review; Celery task branch
+- [ ] 28. Admin: "Revise with AI" button on the article's edit screen and a
+      form prefilled with the latest "Request changes" comment; permissions
+- [ ] 29. Tests, README/DECISIONS, Docker verification

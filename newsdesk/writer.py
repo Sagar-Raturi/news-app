@@ -11,7 +11,7 @@ from dataclasses import dataclass
 import anthropic
 from django.conf import settings
 
-from .prompts import build_system, build_user_message
+from .prompts import article_as_text, build_system, build_user_message
 from .schema import ArticleDraft, DraftBlock, DraftSource
 
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
@@ -95,6 +95,33 @@ class FakeWriter:
     """Deterministic offline draft for demos and tests. Never calls an API."""
 
     def write(self, request):
+        if request.is_revision:
+            return self.revise(request)
+        return self.first_draft(request)
+
+    def revise(self, request):
+        page = request.article.get_latest_revision_as_object()
+        paragraphs = [line for line in article_as_text(page).splitlines()[3:] if line and not line.startswith(("Sources:", "Tags:", "- "))]
+        body = [
+            DraftBlock(
+                type="paragraph",
+                text=f"[Demo revision] The desk agent was asked: {' '.join(request.instructions.split())}",
+                detail="",
+                points=[],
+                source="",
+            )
+        ] + [DraftBlock(type="paragraph", text=p, detail="", points=[], source="") for p in paragraphs]
+        draft = ArticleDraft(
+            headline=page.title,
+            standfirst=page.standfirst,
+            body=body,
+            sources=[DraftSource(title="Material supplied by the editor", publisher="The Ledger", url="")],
+            tags=[tag.name for tag in page.tags.all()] or ["Demo"],
+            editor_notes="Demo revision: the fake writer only records the instructions.",
+        )
+        return DraftResult(draft=draft, model="fake")
+
+    def first_draft(self, request):
         brief = " ".join(request.brief.split())
         headline = brief.split(".")[0][:90] or "Untitled draft"
         draft = ArticleDraft(

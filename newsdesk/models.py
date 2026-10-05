@@ -187,6 +187,12 @@ class DraftRequest(models.Model):
         help_text="Leave blank to use your own author profile, or the desk's default author",
     )
 
+    # Set when this request asks the agent to revise an existing draft.
+    revision_of = models.ForeignKey(
+        "self", null=True, blank=True, on_delete=models.SET_NULL, related_name="revisions", editable=False
+    )
+    instructions = models.TextField(blank=True, editable=False, help_text="What the editor asked the agent to change")
+
     requested_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+", editable=False
     )
@@ -218,7 +224,21 @@ class DraftRequest(models.Model):
         verbose_name = "draft commission"
 
     def __str__(self):
-        return f"{self.desk} · {self.get_article_type_display()} · {Truncator(self.brief).chars(50)}"
+        kind = "Revision" if self.is_revision else self.get_article_type_display()
+        return f"{self.desk} · {kind} · {Truncator(self.instructions or self.brief).chars(50)}"
+
+    @property
+    def is_revision(self):
+        return self.revision_of_id is not None
+
+    @classmethod
+    def original_for(cls, page):
+        """The commission that first created this article, if an agent wrote it."""
+        return cls.objects.filter(article_id=page.pk, revision_of__isnull=True).select_related("desk").first()
+
+    @classmethod
+    def pending_for(cls, page):
+        return cls.objects.filter(article_id=page.pk, status__in=[cls.Status.QUEUED, cls.Status.WRITING]).exists()
 
     def clean(self):
         if self.article_type in ArticlePage.OPINION_TYPES:
@@ -234,11 +254,14 @@ class DraftRequest(models.Model):
     status_label.short_description = "Status"
 
     def type_label(self):
-        return self.get_article_type_display()
+        label = self.get_article_type_display()
+        return f"{label} (revision)" if self.is_revision else label
 
     type_label.short_description = "Type"
 
     def short_brief(self):
+        if self.is_revision:
+            return Truncator(f"Revise: {self.instructions}").chars(70)
         return Truncator(self.brief).chars(70)
 
     short_brief.short_description = "Brief"
