@@ -30,3 +30,27 @@ Work top to bottom. Tick each item when done and commit.
 - [x] 15. Verify `docker compose up` end-to-end from README; screenshots/smoke
       check of every page
 - [x] 16. README (setup, roles, workflow how-to) and final summary
+
+# Phase 2 — AI desk agents
+
+One writing agent per desk (section). Each desk has a style guide and a
+feedback memory; drafts are written by Claude from editor-supplied material,
+saved as AI-assisted drafts and submitted to Editor review. Agents never publish.
+
+- [ ] 17. `newsdesk` app: DeskAgent (style guide, model, effort), DeskFeedback
+      (memory notes, per article type), DraftRequest (brief, sources, status,
+      usage); migrations; anthropic SDK dependency and settings
+- [ ] 18. Prompt builder (house rules + desk style + desk memory, cached) and
+      structured ArticleDraft schema
+- [ ] 19. Writers: Anthropic writer (structured output, refusal fallback,
+      error handling) and an offline "fake" writer for demos/tests
+- [ ] 20. Draft → ArticlePage conversion (safe HTML, source-URL guard, byline,
+      AI disclosure) and submission to Newsroom review
+- [ ] 21. Celery task + enqueue on commission; failure handling
+- [ ] 22. Feedback capture: "Request changes" comments on AI drafts become
+      desk memory automatically
+- [ ] 23. Wagtail admin: "Newsdesk" menu (desks with inline memory,
+      commissions list/inspect), permissions for Writers/Editors, desks created
+      by bootstrap_site, demo feedback in seed_demo
+- [ ] 24. Tests for all of the above (no real API calls); full suite green
+- [ ] 25. Docker/README/DECISIONS updates; verify end to end in Docker
