@@ -15,6 +15,7 @@ from core.demo_images import illustration
 from core.models import SiteSettings
 from core.newsroom import bootstrap
 from news.models import ArticleAuthor, ArticlePage, Author, HomeFeaturedArticle, SectionPage
+from newsdesk.models import DeskAgent, DeskFeedback
 
 CONTENT_FILE = Path(__file__).resolve().parents[2] / "seed_data" / "demo_content.json"
 DEMO_COLLECTION = "Demo images"
@@ -25,6 +26,25 @@ DEMO_USERS = [
     ("admin", "admin", None, None, True),
     ("editor", "editor", "Editors", "ananya-iyer", False),
     ("writer", "writer", "Writers", "meera-deshpande", False),
+]
+
+# Default bylines for the AI desks, and example memory showing per-desk,
+# per-article-type feedback (a desk's notes only reach that desk's agent).
+DESK_AUTHORS = {
+    "politics": "ananya-iyer",
+    "international": "farhan-qureshi",
+    "local": "arjun-gowda",
+    "economy": "meera-deshpande",
+    "education": "harpreet-kaur",
+    "health": "priyanka-bora",
+    "science-tech": "siddharth-nair",
+}
+DESK_FEEDBACK = [
+    ("politics", "", "Always say what stage a bill is at and what must happen next for it to become law."),
+    ("politics", "analysis", "End analyses with a short 'What to watch' section naming the next two or three decision points."),
+    ("economy", "", "Lead with what the change means for a household budget before giving the headline figure."),
+    ("economy", "explainer", "Where the material allows, include one worked example using the material's own figures."),
+    ("health", "news", "Always name the health authority behind any advice, and link it if a URL is in the material."),
 ]
 
 REVIEW_DRAFT = {
@@ -62,6 +82,7 @@ class Command(BaseCommand):
             self.set_top_stories(site["home"], content["articles"], articles)
             self.fill_about_page(site["about"], content["about_page"])
             self.create_review_draft(sections, authors, users)
+            self.configure_desks(authors, users)
             self.configure_settings()
         self.stdout.write(
             self.style.SUCCESS(
@@ -194,6 +215,17 @@ class Command(BaseCommand):
         workflow = article.get_workflow()
         if workflow:
             workflow.start(article, writer)
+
+    def configure_desks(self, authors, users):
+        for desk in DeskAgent.objects.filter(default_author__isnull=True):
+            slug = DESK_AUTHORS.get(desk.slug)
+            if slug in authors:
+                desk.default_author = authors[slug]
+                desk.save(update_fields=["default_author"])
+        for desk_slug, article_type, note in DESK_FEEDBACK:
+            desk = DeskAgent.objects.filter(slug=desk_slug).first()
+            if desk and not desk.feedback.filter(note=note).exists():
+                DeskFeedback.objects.create(desk=desk, article_type=article_type, note=note, created_by=users["editor"])
 
     def configure_settings(self):
         site = Site.objects.get(is_default_site=True)

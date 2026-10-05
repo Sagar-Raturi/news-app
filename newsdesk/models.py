@@ -7,6 +7,7 @@ Claude for a structured draft, saves it as an AI-assisted ArticlePage draft and
 submits it to Editor review. Agents never publish.
 """
 
+from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -15,6 +16,7 @@ from django.utils.html import format_html
 from django.utils.text import Truncator
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
+from wagtail.admin.forms import WagtailAdminModelForm
 from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 
 from news.models import ArticlePage
@@ -95,6 +97,11 @@ class DeskAgent(ClusterableModel):
     def __str__(self):
         return self.name
 
+    def memory_size(self):
+        return self.feedback.filter(active=True).count()
+
+    memory_size.short_description = "Memory notes"
+
     def memory(self, article_type):
         """Active feedback notes that apply to this article type, oldest first."""
         notes = (
@@ -135,6 +142,24 @@ class DeskFeedback(models.Model):
 
     def __str__(self):
         return Truncator(self.note).chars(60)
+
+
+class CommissionForm(WagtailAdminModelForm):
+    """Records who commissioned the draft and offers only active desks."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if "desk" in self.fields:
+            self.fields["desk"].queryset = DeskAgent.objects.filter(active=True)
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if instance.requested_by_id is None and self.for_user is not None:
+            instance.requested_by = self.for_user
+        if commit:
+            instance.save()
+            self.save_m2m()
+        return instance
 
 
 class DraftRequest(models.Model):
@@ -178,8 +203,10 @@ class DraftRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    base_form_class = CommissionForm
+
     panels = [
-        FieldPanel("desk"),
+        FieldPanel("desk", widget=forms.Select),
         FieldPanel("article_type"),
         FieldPanel("brief"),
         FieldPanel("source_material"),
@@ -201,6 +228,16 @@ class DraftRequest(models.Model):
 
     # -- admin list helpers -------------------------------------------------
 
+    def status_label(self):
+        return self.get_status_display()
+
+    status_label.short_description = "Status"
+
+    def type_label(self):
+        return self.get_article_type_display()
+
+    type_label.short_description = "Type"
+
     def short_brief(self):
         return Truncator(self.brief).chars(70)
 
@@ -213,3 +250,7 @@ class DraftRequest(models.Model):
         return format_html('<a href="{}">{}</a>', url, self.article.title)
 
     article_link.short_description = "Draft"
+
+    def get_article_display(self):
+        """Used by the admin inspect view."""
+        return self.article_link() or "—"

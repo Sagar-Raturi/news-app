@@ -23,6 +23,8 @@ from wagtail.models import (
 
 from core.models import StandardPage
 from news.models import HomePage, SectionPage
+from newsdesk.desks import STARTER_DESKS
+from newsdesk.models import DeskAgent
 
 WRITERS = "Writers"
 EDITORS = "Editors"
@@ -61,12 +63,23 @@ EDITOR_COLLECTION_PERMS = WRITER_COLLECTION_PERMS + [
     ("wagtaildocs", "change_document"),
     ("wagtaildocs", "delete_document"),
 ]
-WRITER_MODEL_PERMS = [("wagtailadmin", "access_admin"), ("news", "view_author")]
+WRITER_MODEL_PERMS = [
+    ("wagtailadmin", "access_admin"),
+    ("news", "view_author"),
+    # Writers can commission AI drafts and read the desks' style guides.
+    ("newsdesk", "add_draftrequest"),
+    ("newsdesk", "view_draftrequest"),
+    ("newsdesk", "view_deskagent"),
+]
 EDITOR_MODEL_PERMS = WRITER_MODEL_PERMS + [
     ("news", "add_author"),
     ("news", "change_author"),
     ("news", "delete_author"),
     ("core", "change_sitesettings"),
+    # Editors configure the desk agents and their memory.
+    ("newsdesk", "add_deskagent"),
+    ("newsdesk", "change_deskagent"),
+    ("newsdesk", "delete_deskagent"),
 ]
 
 
@@ -173,6 +186,20 @@ def ensure_workflow(home, editors):
     return workflow
 
 
+def ensure_desks(sections):
+    """Create the starter desk agents once; editors' later changes are kept."""
+    by_slug = {s.slug: s for s in sections}
+    desks = []
+    for slug, name, section_slug, style_guide in STARTER_DESKS:
+        if section_slug not in by_slug:
+            continue
+        desk, _ = DeskAgent.objects.get_or_create(
+            slug=slug, defaults={"name": name, "section": by_slug[section_slug], "style_guide": style_guide}
+        )
+        desks.append(desk)
+    return desks
+
+
 @transaction.atomic
 def bootstrap():
     home = ensure_home_page()
@@ -180,7 +207,9 @@ def bootstrap():
     about = ensure_about_page(home)
     writers, editors = ensure_groups(home)
     workflow = ensure_workflow(home, editors)
+    desks = ensure_desks(sections)
     return {
+        "desks": desks,
         "home": home,
         "sections": sections,
         "about": about,
