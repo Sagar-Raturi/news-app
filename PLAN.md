@@ -53,4 +53,4 @@ saved as AI-assisted drafts and submitted to Editor review. Agents never publish
       commissions list/inspect), permissions for Writers/Editors, desks created
       by bootstrap_site, demo feedback in seed_demo
 - [x] 24. Tests for all of the above (no real API calls); full suite green
-- [ ] 25. Docker/README/DECISIONS updates; verify end to end in Docker
+- [x] 25. Docker/README/DECISIONS updates; verify end to end in Docker

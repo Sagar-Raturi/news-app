@@ -5,6 +5,10 @@ x-app-env: &app-env
   DJANGO_SECRET_KEY: dev-only-insecure-secret-key-change-me
   SITE_BASE_URL: http://localhost:8000
   WAGTAILADMIN_BASE_URL: http://localhost:8000
+  # AI desk agents: put ANTHROPIC_API_KEY in a .env file next to this one
+  # (see .env.example). NEWSDESK_WRITER=fake writes canned drafts instead.
+  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+  NEWSDESK_WRITER: ${NEWSDESK_WRITER:-anthropic}
 
 services:
   db:

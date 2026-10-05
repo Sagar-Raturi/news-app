@@ -18,6 +18,9 @@ core/              StandardPage (About & AI policy), site settings, navigation
                    commands (bootstrap_site, seed_demo), celery tasks
 news/              HomePage, SectionPage, ArticlePage, Author snippet, tags,
                    StreamField blocks, author/tag/search views, sitemaps, SEO
+newsdesk/          AI desk agents (phase 2): DeskAgent + DeskFeedback memory,
+                   DraftRequest commissions, prompts, Claude writer, Celery
+                   task, review-comment capture, Wagtail admin viewsets
 templates/         base.html, includes/, news/, core/, search/
 static/src/        Tailwind source (main.css) — edit this, then rebuild
 static/css/site.css  compiled Tailwind output (committed; do not hand-edit)
@@ -53,6 +56,9 @@ docker/            entrypoint script
   page needs a test. Run the full suite before each commit.
 - Commits: small, one PLAN.md item per commit, imperative subject line.
 - Ambiguities: pick the sensible default and log it in DECISIONS.md.
+- AI desk agents never publish and never write opinion/editorials; their drafts
+  are AI-assisted and go through Editor review. Tests must not call the real
+  Anthropic API (mock the client or use NEWSDESK_WRITER=fake).
 - Demo content must not invent quotes or claims attributed to real, named
   living people; use roles ("a senior finance ministry official") instead.
 

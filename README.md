@@ -79,6 +79,68 @@ Top stories*); empty slots fall back to the latest articles. Site name,
 tagline, Twitter handle, default share image and the demo-content notice are
 under *Settings → Site settings*.
 
+## AI desk agents (phase 2)
+
+Each news desk (Politics, Economy, Health, …) has its own **AI writing agent**:
+a style guide plus a **memory** of editors' feedback. Agents write drafts from
+material you supply; every draft is flagged *AI-assisted* and goes to **Editor
+review**. Agents never publish, and never write opinion or editorials.
+
+### Setup
+
+1. Get an API key from the Anthropic Console (https://platform.claude.com/).
+2. Copy `.env.example` to `.env` (next to `docker-compose.yml`) and set
+   `ANTHROPIC_API_KEY=...`. `.env` is git-ignored.
+3. Restart: `docker compose up --build`.
+
+No key yet? Set `NEWSDESK_WRITER=fake` in `.env` to try the whole flow with
+canned drafts (no API calls, no cost).
+
+### Commissioning a draft
+
+*Newsdesk AI → Commission a draft* (writers and editors):
+
+- **Desk**: picks the agent (and the section the draft is filed in).
+- **Type**: news, analysis or explainer.
+- **Brief**: the story and angle you want.
+- **Source material**: paste notes, statements, report extracts, data and links.
+  The agent is told to use **only** this material, and links it didn't get
+  from you are stripped.
+
+The draft appears under the desk's section a minute or so later, in Editor
+review, with the commissioning writer's byline (or the desk's default author).
+The commission's detail page shows the agent's **notes for the editor**
+(claims to check, gaps in the material) and token usage.
+
+### Teaching a desk (memory)
+
+*Newsdesk AI → Desk agents → (desk)* (editors):
+
+- **Style guide**: standing instructions for that desk.
+- **Memory: feedback for this desk**: add notes. Leave *Article type* blank
+  for "always", or pick one (e.g. only for Politics *analysis*). Untick
+  *Active* to make the agent forget a note.
+- **Automatic memory**: when an editor chooses **Request changes** on an
+  agent's draft and writes a comment, that comment is saved to the desk's
+  memory for that article type.
+
+Every note a desk has is included in its agent's instructions on every draft,
+and only that desk's agent sees it. Politics feedback never reaches the
+Economy agent.
+
+### Model and cost
+
+Desks default to Claude Opus 5.5 with *high* effort; editors can switch a
+desk to Claude Sonnet 5.5 (cheaper, faster). A typical draft costs roughly
+$0.10–0.30 on Opus 5.5, depending on length and how much material you paste.
+Repeated drafts from the same desk reuse cached instructions, which lowers the
+cost. Usage per draft is shown on each commission.
+
+How it works in code: `newsdesk/prompts.py` (house rules + desk style +
+memory), `newsdesk/writer.py` (Claude call with structured output),
+`newsdesk/publishing.py` (draft → article in review), `newsdesk/tasks.py`
+(Celery job), `newsdesk/signals.py` (review comments → memory).
+
 ## Common commands
 
 ```bash

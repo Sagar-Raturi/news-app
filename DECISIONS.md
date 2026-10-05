@@ -29,3 +29,18 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Docker image has no apt packages; a `wait_for_db` management command replaces `pg_isready` — faster builds, fewer moving parts. Entrypoint is run via `sh` so it works even if the executable bit is lost (bind mounts, Windows checkouts).
 - Writers get only Wagtail's `add_page` permission (create, then edit/delete their own drafts); Editors can edit anyone's — stops writers deleting colleagues' drafts in review (found in code review).
 - The homepage never repeats a story across top stories, opinion rail, explainers and section blocks; private (view-restricted) articles never appear in listings, sitemaps or tag pages.
+
+## Phase 2 — AI desk agents
+
+- One agent per news desk, as data (DeskAgent: style guide, model, effort) rather than separate programs — one tested code path; editors configure agents in the admin.
+- Memory is explicit, editable notes (DeskFeedback) injected into the prompt, scoped to one desk and optionally one article type — predictable, auditable and easy to "forget" (untick), unlike opaque learned memory.
+- "Request changes" comments on an agent's draft are saved to that desk's memory automatically — feedback is captured where editors already give it.
+- Agents write only news, analysis and explainers; opinion and editorials are blocked in the model, form and prompt — matches the published AI policy.
+- Agents must use only editor-supplied material; source URLs not present in that material are removed before saving — guards against invented links.
+- Model output is plain text, escaped into rich text by our code — the model can't inject HTML into pages.
+- Drafts are saved as the commissioning user and submitted to the existing Newsroom review workflow; byline is the commissioner's author profile, else the desk's default author — a human is accountable for every piece.
+- Default model Claude Opus 5.5 at high effort, switchable per desk to Sonnet 5.5; server-side refusal fallback enabled so a safety decline retries on a suitable model instead of failing.
+- System prompt is two cached blocks (house rules, then desk style + memory) — repeated drafts from a desk hit the prompt cache.
+- Calls run in the Celery worker, never in a web request — drafts take tens of seconds.
+- `NEWSDESK_WRITER=fake` produces canned drafts without an API key — lets the flow be demoed and tested offline; tests never call the real API.
+- Starter desks and style guides come from `bootstrap_site` (created once, never overwritten), example memory notes from `seed_demo`.
