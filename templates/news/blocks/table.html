@@ -1,0 +1,14 @@
+<figure class="overflow-x-auto">
+  <table>
+    {% if value.table_caption %}<caption class="mb-2 text-left font-sans text-xs text-muted">{{ value.table_caption }}</caption>{% endif %}
+    {% for row in value.data %}
+      {% if forloop.first and value.first_row_is_table_header %}
+        <thead><tr>{% for cell in row %}<th>{{ cell|default_if_none:"" }}</th>{% endfor %}</tr></thead><tbody>
+      {% else %}
+        {% if forloop.first %}<tbody>{% endif %}
+        <tr>{% for cell in row %}{% if forloop.first and value.first_col_is_header %}<th scope="row">{{ cell|default_if_none:"" }}</th>{% else %}<td>{{ cell|default_if_none:"" }}</td>{% endif %}{% endfor %}</tr>
+      {% endif %}
+    {% endfor %}
+    </tbody>
+  </table>
+</figure>

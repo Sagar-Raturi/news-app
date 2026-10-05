@@ -1,0 +1,8 @@
+<aside class="factbox not-prose">
+  <h3>{{ value.title }}</h3>
+  <ul class="space-y-2">
+    {% for point in value.points %}
+      <li class="flex gap-3"><span aria-hidden="true" class="mt-[0.6em] h-1.5 w-1.5 shrink-0 bg-accent"></span><span>{{ point }}</span></li>
+    {% endfor %}
+  </ul>
+</aside>

@@ -1,0 +1,7 @@
+<aside class="not-prose my-8 flex flex-col gap-1 border-y border-rule py-5 sm:flex-row sm:items-baseline sm:gap-6">
+  <p class="shrink-0 font-serif text-5xl font-semibold tracking-tight text-ink tabular-nums">{{ value.figure }}</p>
+  <div>
+    <p class="font-sans text-sm font-medium text-ink-soft">{{ value.label }}</p>
+    {% if value.source %}<p class="meta mt-1">Source: {{ value.source }}</p>{% endif %}
+  </div>
+</aside>

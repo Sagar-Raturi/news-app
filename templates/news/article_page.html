@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags ledger %}
+
+{% block body_class %}template-article type-{{ page.article_type }}{% endblock %}
+{% block meta_description %}{{ page.search_description|default:page.standfirst }}{% endblock %}
+{% block seo %}{% include "includes/seo_article.html" %}{% endblock %}
+
+{% block content %}
+<article class="pt-8 sm:pt-12">
+  <header class="container-read">
+    <div>{% include "news/includes/kicker.html" with article=page %}</div>
+    <h1 class="headline mt-2 text-[2rem] leading-[1.12] sm:text-[2.6rem] lg:text-5xl {% if page.is_opinion %}font-medium{% endif %}">{{ page.title }}</h1>
+    <p class="standfirst mt-4 text-xl sm:text-[1.4rem]">{{ page.standfirst }}</p>
+
+    <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-3 border-y border-rule py-3 font-sans text-sm">
+      {% if page.authors %}
+        <p class="flex items-center gap-2">
+          <span class="text-muted">By</span>
+          {% for author in page.authors %}
+            <a class="font-semibold hover:text-accent" href="{{ author.get_absolute_url }}">{{ author.name }}</a>{% if not forloop.last %}<span class="text-muted">{% if forloop.revcounter == 2 %}and{% else %},{% endif %}</span>{% endif %}
+          {% endfor %}
+        </p>
+      {% endif %}
+      <p class="text-muted">
+        <time datetime="{{ page.display_date|date:'c' }}">{{ page.display_date|date:"j F Y, H:i" }} IST</time>
+        <span aria-hidden="true"> · </span>{{ page.reading_time }} min read
+      </p>
+      {% if page.ai_assisted %}<a href="#ai-disclosure" class="badge-ai">AI-assisted</a>{% endif %}
+    </div>
+  </header>
+
+  {% if page.hero_image %}
+    <figure class="mx-auto mt-8 max-w-5xl sm:px-6">
+      {% image page.hero_image fill-1600x900 as hero %}
+      <img src="{{ hero.url }}" width="{{ hero.width }}" height="{{ hero.height }}" alt="{{ hero.alt }}" class="aspect-[16/9] w-full object-cover">
+      {% if page.hero_caption or page.hero_credit %}
+        <figcaption class="container-read mt-2 font-sans text-xs text-muted sm:px-0">
+          {{ page.hero_caption }}{% if page.hero_credit %} <span class="uppercase tracking-wider">{{ page.hero_credit }}</span>{% endif %}
+        </figcaption>
+      {% endif %}
+    </figure>
+  {% endif %}
+
+  <div class="container-read mt-8"><div class="prose-ledger">
+    {% for block in page.body %}
+      {% if forloop.first and block.block_type == "paragraph" %}
+        {% include_block block with dropcap=True %}
+      {% else %}
+        {% include_block block %}
+      {% endif %}
+    {% endfor %}
+  </div></div>
+
+  <footer class="container-read mt-10 space-y-8">
+    {% if page.ai_assisted %}
+      <aside id="ai-disclosure" class="border-l-2 border-accent bg-paper-dark px-5 py-4 font-sans text-sm text-ink-soft">
+        <p class="font-semibold text-ink">How AI was used in this article</p>
+        <p class="mt-1">{{ page.ai_note|default:"AI tools assisted in producing this article. A human editor reviewed and is accountable for everything published." }}</p>
+        {% if about_page %}<p class="mt-2"><a class="font-semibold text-accent hover:underline" href="{% pageurl about_page %}#our-ai-policy">Read our AI policy →</a></p>{% endif %}
+      </aside>
+    {% endif %}
+
+    {% if page.sources %}
+      <section aria-labelledby="sources-heading">
+        <h2 id="sources-heading" class="kicker-muted border-t-2 border-rule-strong pt-2">Sources &amp; references</h2>
+        <ol class="mt-3 list-decimal space-y-2 pl-5 font-sans text-sm text-ink-soft marker:text-muted">
+          {% for block in page.sources %}{% include_block block %}{% endfor %}
+        </ol>
+      </section>
+    {% endif %}
+
+    {% if page.tags.all %}
+      <section aria-label="Topics" class="flex flex-wrap items-center gap-2 font-sans text-xs">
+        <span class="kicker-muted mr-1">Topics</span>
+        {% for tag in page.tags.all %}
+          <a href="{% url 'news:tag_detail' tag.slug %}" class="border border-rule px-2.5 py-1 font-medium hover:border-ink">{{ tag.name }}</a>
+        {% endfor %}
+      </section>
+    {% endif %}
+
+    {% if page.authors %}
+      <section aria-label="About the author" class="space-y-5 border-t border-rule pt-6">
+        {% for author in page.authors %}
+          <div class="flex gap-4">
+            {% include "news/includes/author_avatar.html" with size="h-14 w-14 text-base" %}
+            <div>
+              <p class="font-sans text-sm"><a class="font-semibold hover:text-accent" href="{{ author.get_absolute_url }}">{{ author.name }}</a>{% if author.role %}<span class="text-muted"> · {{ author.role }}</span>{% endif %}</p>
+              {% if author.bio %}<p class="mt-1 text-[0.95rem] leading-snug text-ink-soft">{{ author.bio }}</p>{% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </section>
+    {% endif %}
+  </footer>
+</article>
+
+{% if related_articles %}
+  <section aria-labelledby="related-heading" class="container-wide mt-14">
+    <h2 id="related-heading" class="section-heading"><span>Read next</span></h2>
+    <div class="grid gap-6 sm:grid-cols-3 sm:gap-8">
+      {% for article in related_articles %}
+        <div class="{% if not forloop.first %}border-t border-rule pt-6 sm:border-t-0 sm:pt-0{% endif %}">
+          {% include "news/includes/teaser.html" with variant="feature" %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+{% endblock %}

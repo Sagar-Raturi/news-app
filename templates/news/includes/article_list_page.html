@@ -1,0 +1,16 @@
+{# One page of a story listing plus the HTMX "load more" control. #}
+{% for article in articles %}
+  {% include "news/includes/teaser.html" with variant="row" %}
+{% endfor %}
+{% if page_obj.has_next %}
+  <div id="load-more" class="text-center">
+    <a class="btn mt-2"
+       href="?{{ base_query }}page={{ page_obj.next_page_number }}"
+       hx-get="?{{ base_query }}page={{ page_obj.next_page_number }}"
+       hx-target="#load-more"
+       hx-swap="outerHTML"
+       hx-indicator="this">
+      Load more stories
+    </a>
+  </div>
+{% endif %}

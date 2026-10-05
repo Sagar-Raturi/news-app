@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block title %}{{ settings.core.SiteSettings.tagline }}{% endblock %}
+{% block body_class %}template-home{% endblock %}
+
+{% block content %}
+<div class="container-wide pt-6 sm:pt-8">
+  <h1 class="sr-only">{{ settings.core.SiteSettings.site_name }} — top stories</h1>
+
+  {# Top stories: lead + secondary grid, opinion and latest in the rail #}
+  <div class="grid gap-8 lg:grid-cols-12 lg:gap-0">
+    <section aria-label="Top stories" class="lg:col-span-8 lg:pr-8">
+      {% if lead %}
+        {% include "news/includes/teaser.html" with article=lead variant="lead" eager=True %}
+      {% else %}
+        <p class="py-16 text-center font-sans text-muted">No stories have been published yet.</p>
+      {% endif %}
+
+      {% if top_stories %}
+        <div class="mt-8 grid gap-6 sm:grid-cols-2 sm:gap-x-8">
+          {% for article in top_stories %}
+            <div class="border-t border-rule pt-5">
+              {% include "news/includes/teaser.html" with variant="stack" %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </section>
+
+    <aside class="lg:col-span-4 lg:border-l lg:border-rule lg:pl-8">
+      {% if opinion_articles %}
+        <section aria-labelledby="opinion-heading">
+          <h2 id="opinion-heading" class="section-heading">
+            <span>Opinion</span>
+            {% for section in nav_sections %}{% if section.slug == "opinion" %}<a class="font-medium normal-case tracking-normal text-muted" href="{% pageurl section %}">More&nbsp;→</a>{% endif %}{% endfor %}
+          </h2>
+          <div class="rule-list">
+            {% for article in opinion_articles %}
+              {% include "news/includes/teaser.html" with variant="opinion" %}
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% if latest %}
+        <section aria-labelledby="latest-heading" class="mt-10">
+          <h2 id="latest-heading" class="section-heading"><span>Latest</span></h2>
+          <ol class="rule-list">
+            {% for article in latest|slice:":6" %}
+              <li class="flex gap-3">
+                <time class="meta w-14 shrink-0 pt-0.5 tabular-nums" datetime="{{ article.display_date|date:'c' }}">{{ article.display_date|date:"H:i" }}<br><span class="text-[0.65rem]">{{ article.display_date|date:"j M" }}</span></time>
+                <a class="headline text-[0.98rem] leading-snug hover:underline" href="{{ article.url }}">{{ article.title }}</a>
+              </li>
+            {% endfor %}
+          </ol>
+        </section>
+      {% endif %}
+    </aside>
+  </div>
+
+  {# Explainers strip #}
+  {% if explainers %}
+    <section aria-labelledby="explainers-heading" class="mt-12">
+      <h2 id="explainers-heading" class="section-heading"><span>Explainers <span class="ml-2 font-serif text-sm font-normal normal-case italic tracking-normal text-muted">What you need to know</span></span></h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-rule">
+        {% for article in explainers %}
+          <div class="{% if not forloop.first %}border-t border-rule pt-6 sm:border-t-0 sm:pt-0{% endif %} lg:px-5 lg:first:pl-0 lg:last:pr-0">
+            {% include "news/includes/teaser.html" with variant="feature" %}
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  {# One block per section #}
+  {% if section_blocks %}
+    <div class="mt-12 grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+      {% for block in section_blocks %}
+        <section aria-labelledby="section-{{ block.section.slug }}">
+          <h2 id="section-{{ block.section.slug }}" class="section-heading">
+            <a href="{% pageurl block.section %}">{{ block.section.title }}</a>
+            <a class="font-medium normal-case tracking-normal text-muted" href="{% pageurl block.section %}">More&nbsp;→</a>
+          </h2>
+          <div class="rule-list">
+            {% for article in block.articles %}
+              {% if forloop.first %}
+                {% include "news/includes/teaser.html" with variant="feature" hide_section=True %}
+              {% else %}
+                {% include "news/includes/teaser.html" with variant="compact" hide_section=True %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </section>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

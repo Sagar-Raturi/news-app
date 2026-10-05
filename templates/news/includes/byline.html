@@ -1,0 +1,5 @@
+{% load ledger %}{# Compact byline used in teasers. #}
+<p class="meta mt-2">
+  {% if article.authors %}<span class="font-medium text-ink-soft">{% for author in article.authors %}<a class="hover:text-accent" href="{{ author.get_absolute_url }}">{{ author.name }}</a>{% if not forloop.last %}{% if forloop.revcounter == 2 %} and {% else %}, {% endif %}{% endif %}{% endfor %}</span>{% endif %}
+  {% if show_date %}{% if article.authors %}<span aria-hidden="true"> · </span>{% endif %}<time datetime="{{ article.display_date|date:'c' }}">{{ article.display_date|date:"j M Y" }}</time>{% endif %}
+</p>

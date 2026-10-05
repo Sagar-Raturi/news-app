@@ -17,7 +17,7 @@ Work top to bottom. Tick each item when done and commit.
       live, editor can reject; admin views)
 - [x] 8. Frontend tooling: Tailwind 4 build (package.json, main.css), vendored
       HTMX, base layout (masthead, section nav, footer)
-- [ ] 9. Page templates: homepage (top stories + section blocks), section
+- [x] 9. Page templates: homepage (top stories + section blocks), section
       page (HTMX load more), article page, StandardPage
 - [ ] 10. Author pages, tag pages, search (HTMX live results)
 - [ ] 11. SEO: Open Graph/Twitter tags, canonical, NewsArticle JSON-LD,

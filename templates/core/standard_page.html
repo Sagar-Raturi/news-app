@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-standard{% endblock %}
+
+{% block content %}
+<article class="pt-8 sm:pt-12">
+  <header class="container-read border-b border-rule pb-6">
+    <h1 class="headline text-4xl sm:text-5xl">{{ page.title }}</h1>
+    {% if page.intro %}<p class="standfirst mt-4 text-xl">{{ page.intro }}</p>{% endif %}
+  </header>
+  <div class="container-read mt-8"><div class="prose-ledger">
+    {% for block in page.body %}{% include_block block %}{% endfor %}
+  </div></div>
+</article>
+{% endblock %}

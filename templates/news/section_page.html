@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-section{% endblock %}
+
+{% block content %}
+<div class="container-wide pt-8">
+  <header class="border-b border-rule pb-5">
+    <h1 class="headline text-4xl sm:text-5xl">{{ page.title }}</h1>
+    {% if page.intro %}<p class="standfirst mt-2 max-w-2xl text-lg">{{ page.intro }}</p>{% endif %}
+    <nav aria-label="Filter by article type" class="no-scrollbar -mx-4 mt-5 overflow-x-auto px-4 sm:mx-0 sm:px-0">
+      <ul class="flex gap-1 font-sans text-xs font-semibold">
+        <li><a href="{% pageurl page %}" class="block whitespace-nowrap border px-3 py-1.5 {% if not article_type %}border-ink bg-ink text-paper{% else %}border-rule hover:border-ink{% endif %}">All</a></li>
+        {% for value, label in article_types %}
+          <li><a href="?type={{ value }}" class="block whitespace-nowrap border px-3 py-1.5 {% if article_type == value %}border-ink bg-ink text-paper{% else %}border-rule hover:border-ink{% endif %}">{{ label }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </header>
+
+  {% if articles %}
+    <div class="grid gap-8 pt-6 lg:grid-cols-12">
+      <div class="lg:col-span-8">
+        {% if page_obj.number == 1 %}
+          {% with lead=articles.0 %}
+            {% include "news/includes/teaser.html" with article=lead variant="lead" eager=True %}
+          {% endwith %}
+          <div class="rule-list mt-8 border-t border-rule pt-6">
+            {% include "news/includes/article_list_page.html" with articles=articles|slice:"1:" %}
+          </div>
+        {% else %}
+          <div class="rule-list">{% include "news/includes/article_list_page.html" %}</div>
+        {% endif %}
+      </div>
+      <aside class="hidden lg:col-span-4 lg:block lg:border-l lg:border-rule lg:pl-8">
+        <h2 class="section-heading"><span>Other sections</span></h2>
+        <ul class="rule-list font-sans text-sm font-semibold">
+          {% for section in nav_sections %}{% if section.pk != page.pk %}
+            <li><a class="hover:text-accent" href="{% pageurl section %}">{{ section.title }}</a>{% if section.intro %}<span class="mt-0.5 block font-serif text-sm font-normal text-muted">{{ section.intro }}</span>{% endif %}</li>
+          {% endif %}{% endfor %}
+        </ul>
+      </aside>
+    </div>
+  {% else %}
+    <p class="py-16 text-center font-sans text-muted">No {% if article_type %}{{ article_type }} {% endif %}stories in {{ page.title }} yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

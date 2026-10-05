@@ -1,0 +1,76 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% comment %}
+Story teaser. Variants:
+  lead     – big image, large headline, standfirst (homepage/section lead)
+  feature  – image on top, medium headline, standfirst
+  stack    – no image, medium headline, standfirst
+  row      – text left, thumbnail right (listings, search)
+  compact  – kicker + small headline only
+  opinion  – author first, italic-free serif headline (opinion rail)
+{% endcomment %}
+{% with url=article.url %}
+{% if variant == "lead" %}
+<article class="group">
+  {% if article.hero_image %}
+    <a href="{{ url }}" class="block overflow-hidden" tabindex="-1" aria-hidden="true">
+      {% image article.hero_image fill-1200x675 as img %}
+      <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" alt="{{ img.alt }}" class="aspect-[16/9] w-full object-cover" {% if not eager %}loading="lazy"{% endif %}>
+    </a>
+  {% endif %}
+  <div class="mt-4">{% include "news/includes/kicker.html" with show_ai=True %}</div>
+  <h2 class="headline mt-1.5 text-[1.85rem] sm:text-4xl lg:text-[2.6rem]"><a href="{{ url }}">{{ article.title }}</a></h2>
+  <p class="standfirst mt-3 text-lg sm:text-xl">{{ article.standfirst }}</p>
+  {% include "news/includes/byline.html" with show_date=True %}
+</article>
+
+{% elif variant == "feature" %}
+<article>
+  {% if article.hero_image %}
+    <a href="{{ url }}" class="mb-3 block" tabindex="-1" aria-hidden="true">
+      {% image article.hero_image fill-720x405 as img %}
+      <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" alt="{{ img.alt }}" class="aspect-[16/9] w-full object-cover" loading="lazy">
+    </a>
+  {% endif %}
+  {% include "news/includes/kicker.html" %}
+  <h3 class="headline mt-1 text-xl"><a href="{{ url }}">{{ article.title }}</a></h3>
+  <p class="standfirst mt-2 text-[0.98rem]">{{ article.standfirst }}</p>
+  {% include "news/includes/byline.html" %}
+</article>
+
+{% elif variant == "stack" %}
+<article>
+  {% include "news/includes/kicker.html" %}
+  <h3 class="headline mt-1 text-xl"><a href="{{ url }}">{{ article.title }}</a></h3>
+  <p class="standfirst mt-1.5 text-[0.98rem]">{{ article.standfirst }}</p>
+  {% include "news/includes/byline.html" %}
+</article>
+
+{% elif variant == "row" %}
+<article class="flex gap-4 sm:gap-6">
+  <div class="min-w-0 flex-1">
+    {% include "news/includes/kicker.html" with show_ai=True %}
+    <h3 class="headline mt-1 text-lg sm:text-[1.4rem]"><a href="{{ url }}">{{ article.title }}</a></h3>
+    <p class="standfirst mt-1.5 hidden text-base sm:block">{{ article.standfirst }}</p>
+    {% include "news/includes/byline.html" with show_date=True %}
+  </div>
+  {% if article.hero_image %}
+    <a href="{{ url }}" class="w-24 shrink-0 sm:w-48" tabindex="-1" aria-hidden="true">
+      {% image article.hero_image fill-480x320 as img %}
+      <img src="{{ img.url }}" width="{{ img.width }}" height="{{ img.height }}" alt="" class="aspect-[3/2] w-full object-cover" loading="lazy">
+    </a>
+  {% endif %}
+</article>
+
+{% elif variant == "opinion" %}
+<article>
+  <p class="font-sans text-xs font-semibold text-accent">{% if article.article_type == "editorial" %}Editorial{% else %}{% for author in article.authors %}{{ author.name }}{% if not forloop.last %} &amp; {% endif %}{% endfor %}{% endif %}</p>
+  <h3 class="headline mt-1 text-lg"><a href="{{ url }}">{{ article.title }}</a></h3>
+</article>
+
+{% else %}{# compact #}
+<article>
+  {% include "news/includes/kicker.html" %}
+  <h3 class="headline mt-0.5 text-[1.05rem] leading-snug"><a href="{{ url }}">{{ article.title }}</a></h3>
+</article>
+{% endif %}
+{% endwith %}
