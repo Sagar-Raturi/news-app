@@ -44,7 +44,7 @@ saved as AI-assisted drafts and submitted to Editor review. Agents never publish
       structured ArticleDraft schema
 - [x] 19. Writers: Anthropic writer (structured output, refusal fallback,
       error handling) and an offline "fake" writer for demos/tests
-- [ ] 20. Draft → ArticlePage conversion (safe HTML, source-URL guard, byline,
+- [x] 20. Draft → ArticlePage conversion (safe HTML, source-URL guard, byline,
       AI disclosure) and submission to Newsroom review
 - [ ] 21. Celery task + enqueue on commission; failure handling
 - [ ] 22. Feedback capture: "Request changes" comments on AI drafts become
