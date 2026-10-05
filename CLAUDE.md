@@ -55,3 +55,18 @@ docker/            entrypoint script
 - Ambiguities: pick the sensible default and log it in DECISIONS.md.
 - Demo content must not invent quotes or claims attributed to real, named
   living people; use roles ("a senior finance ministry official") instead.
+
+## Design direction
+Serious editorial newspaper look (spirit of The Economist / The Hindu, own identity).
+- Type: **Source Serif 4** for headlines and article body (`font-serif`),
+  **Inter** for UI text — nav, labels, bylines, buttons (`font-sans`).
+- One accent colour (`accent`, deep sindoor/terracotta) used sparingly:
+  kickers, the masthead rule, active states, drop caps. Everything else is ink
+  on paper (near-black on warm off-white) with greys.
+- Thin rule lines (`border-rule`) between stories; no cards, shadows or rounded
+  boxes for story lists.
+- Homepage: multi-column grid (1 col mobile → 12-col grid on desktop).
+- Article: narrow readable column (~680px), standfirst under the headline,
+  drop cap on the first paragraph, pull quotes; body uses the Tailwind
+  typography plugin (`prose`), customised in `static/src/main.css`.
+- Mobile-first: write base classes for small screens, add `md:`/`lg:` up.

@@ -11,3 +11,7 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Tag pages live at `/tags/<slug>/`, author pages at `/authors/<slug>/`.
 - "About & AI policy" is a single StandardPage at `/about/` with an `#ai-policy` anchor — the brief names one page.
 - Compiled Tailwind CSS is committed — `docker compose up` works without a Node build step; `npm run build:css` regenerates it.
+- Accent colour is a deep sindoor/terracotta (#B4441C) — Indian identity, distinct from The Economist red and The Hindu blue; used only for kickers, rules and drop caps.
+- Fonts loaded from Google Fonts (Source Serif 4 + Inter) with system serif/sans fallbacks — per the design brief; avoids vendoring font files.
+- Demo articles avoid fabricated quotes from real named people (roles instead) and link only to top-level official sites — realistic without inventing statements by real persons.
+- Hero images for demo articles are generated abstract illustrations (Pillow) — no licensing issues, no network needed at seed time.
