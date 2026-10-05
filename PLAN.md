@@ -22,7 +22,7 @@ Work top to bottom. Tick each item when done and commit.
 - [x] 10. Author pages, tag pages, search (HTMX live results)
 - [x] 11. SEO: Open Graph/Twitter tags, canonical, NewsArticle JSON-LD,
       sitemap.xml, Google News sitemap, robots.txt
-- [ ] 12. Page/view tests (home, section, article, author, tag, search, about,
+- [x] 12. Page/view tests (home, section, article, author, tag, search, about,
       sitemaps, structured data)
 - [ ] 13. Demo seed: `seed_demo` command, generated hero images, ~20 articles,
       authors, About & AI policy content, demo users (writer/editor/admin)
