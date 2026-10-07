@@ -78,7 +78,7 @@ editor chooses becomes a desk rule.
 - [x] 30. ArticleNote model (per-article memory) and "special instructions" on
       commissions; "Request changes" comments become article notes instead of
       desk memory; promoting a note to a desk rule
-- [ ] 31. Prompts: special instructions in first drafts, all active article
+- [x] 31. Prompts: special instructions in first drafts, all active article
       notes in every revision; fake writer shows them
 - [ ] 32. Admin: "Article notes" screen (add, forget, make desk rule),
       header button, notes on the Revise form plus an "also remember for the

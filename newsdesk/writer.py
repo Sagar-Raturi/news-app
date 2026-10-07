@@ -11,6 +11,7 @@ from dataclasses import dataclass
 import anthropic
 from django.conf import settings
 
+from .models import ArticleNote
 from .prompts import article_as_text, build_system, build_user_message
 from .schema import ArticleDraft, DraftBlock, DraftSource
 
@@ -111,7 +112,20 @@ class FakeWriter:
                 points=[],
                 source="",
             )
-        ] + [DraftBlock(type="paragraph", text=p, detail="", points=[], source="") for p in paragraphs]
+        ]
+        earlier = ArticleNote.standing(request.article, exclude=request.instructions)
+        if earlier:
+            notes = " / ".join(" ".join(note.note.split()) for note in earlier)
+            body.append(
+                DraftBlock(
+                    type="paragraph",
+                    text=f"[Demo revision] Earlier notes on this article it also followed: {notes}",
+                    detail="",
+                    points=[],
+                    source="",
+                )
+            )
+        body += [DraftBlock(type="paragraph", text=p, detail="", points=[], source="") for p in paragraphs]
         draft = ArticleDraft(
             headline=page.title,
             standfirst=page.standfirst,
@@ -148,7 +162,12 @@ class FakeWriter:
                         f"Desk: {request.desk.name}",
                         f"Article type: {request.get_article_type_display()}",
                         f"Feedback notes in memory: {len(request.desk.memory(request.article_type))}",
-                    ],
+                    ]
+                    + (
+                        [f"Special instructions: {' '.join(request.article_instructions.split())}"]
+                        if request.article_instructions.strip()
+                        else []
+                    ),
                     source="",
                 ),
             ],

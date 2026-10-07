@@ -1,14 +1,21 @@
-"""Builds each desk agent's prompt: house rules + desk style guide + desk memory.
+"""Builds each desk agent's prompt, from the widest instructions to the narrowest.
+
+1. House rules (whole newspaper)              - system, cached
+2. Desk style guide + desk memory              - system, cached
+3. Article notes / special instructions        - user message, this article only
+4. This revision's instructions                - user message, this run only
 
 The system prompt is split into two cached blocks. The house rules are the
 same for every desk; the desk block changes only when an editor edits the
 style guide or the desk's memory, so repeated drafts from a desk reuse the
-cache.
+cache. Anything about a single article stays out of the system prompt.
 """
 
 from django.utils.html import strip_tags
 
 from news.models import ArticlePage
+
+from .models import ArticleNote
 
 TYPE_GUIDANCE = {
     "news": "A news report of 350-500 words. Lead with what happened and why it matters. "
@@ -108,6 +115,19 @@ def article_as_text(page):
     return "\n".join(lines).strip()
 
 
+def article_notes_block(request):
+    """Earlier instructions for this article that still apply (not the current ones)."""
+    notes = ArticleNote.standing(request.article, exclude=request.instructions)
+    if not notes:
+        return ""
+    lines = "\n".join(f"- {' '.join(note.note.split())}" for note in notes)
+    return (
+        "Notes the editors have left on this article in earlier rounds. They still apply; "
+        "if one conflicts with the editor's instructions below, follow the instructions.\n"
+        f"<article_notes>\n{lines}\n</article_notes>\n\n"
+    )
+
+
 def build_revision_message(request):
     label = request.get_article_type_display().lower()
     return (
@@ -116,6 +136,7 @@ def build_revision_message(request):
         "complete revised article (not just the changed parts). All accuracy rules still apply: "
         "use only the source material, and say in editor_notes what you changed and anything "
         "you could not do.\n\n"
+        f"{article_notes_block(request)}"
         f"<editor_instructions>\n{request.instructions.strip()}\n</editor_instructions>\n\n"
         f"<current_draft>\n{article_as_text(request.article)}\n</current_draft>\n\n"
         f"Article type guidance: {TYPE_GUIDANCE.get(request.article_type, '')}\n\n"
@@ -129,9 +150,17 @@ def build_user_message(request):
         return build_revision_message(request)
     label = request.get_article_type_display().lower()
     article = "an" if label[0] in "aeiou" else "a"
+    special = request.article_instructions.strip()
+    special_block = (
+        "Special instructions from the editor for this article only (follow them unless they "
+        f"conflict with the accuracy rules):\n<article_instructions>\n{special}\n</article_instructions>\n\n"
+        if special
+        else ""
+    )
     return (
         f"Write {article} {label}.\n\n"
         f"Article type guidance: {TYPE_GUIDANCE.get(request.article_type, '')}\n\n"
         f"<brief>\n{request.brief.strip()}\n</brief>\n\n"
+        f"{special_block}"
         f"<source_material>\n{request.source_material.strip()}\n</source_material>"
     )

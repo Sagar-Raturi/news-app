@@ -115,6 +115,12 @@ class MemoryAndPromptTests(NewsdeskTestCase):
         self.assertIn("[Explainer] Use a worked example.", system[1]["text"])
         self.assertNotIn("worked example", build_system(self.economy, "news")[1]["text"])
 
+    def test_special_instructions_reach_the_first_draft_only_for_that_article(self):
+        message = build_user_message(self.make_request(article_instructions="Keep it under 600 words."))
+        self.assertIn("<article_instructions>\nKeep it under 600 words.\n</article_instructions>", message)
+        self.assertNotIn("Keep it under 600 words", build_system(self.economy, "news")[1]["text"])
+        self.assertNotIn("<article_instructions>", build_user_message(self.make_request()))
+
     def test_user_message_carries_brief_and_material(self):
         message = build_user_message(self.make_request(article_type="explainer"))
         self.assertTrue(message.startswith("Write an explainer."))
@@ -266,6 +272,8 @@ class TaskTests(NewsdeskTestCase):
         note = ArticleNote.objects.get()
         self.assertEqual((note.article_id, note.note, note.source), (request.article_id, "Keep it under 600 words.", ArticleNote.Source.COMMISSION))
         self.assertEqual(note.created_by, self.writer)
+        points = [b.value["points"] for b in request.article.specific.body if b.block_type == "key_points"][0]
+        self.assertIn("Special instructions: Keep it under 600 words.", points)
 
     def test_failure_is_recorded_for_editors(self):
         request = self.make_request()

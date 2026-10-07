@@ -6,7 +6,7 @@ from wagtail.models import WorkflowState
 
 from news.models import ArticlePage
 from newsdesk.models import ArticleNote, DeskFeedback, DraftRequest
-from newsdesk.prompts import article_as_text, build_user_message
+from newsdesk.prompts import article_as_text, build_system, build_user_message
 from newsdesk.publishing import apply_revision
 from newsdesk.schema import DraftSource
 from newsdesk.tasks import draft_article
@@ -56,6 +56,22 @@ class RevisionPromptTests(RevisionTestCase):
         self.assertIn(f"Headline: {self.article.title}", message)
         self.assertIn(MATERIAL, message)
         self.assertIn("complete revised article", message)
+
+    def test_revision_prompt_remembers_earlier_notes_for_this_article(self):
+        ArticleNote.remember(self.article, "Keep it under 600 words.", ArticleNote.Source.COMMISSION)
+        self.request_changes("Lead with what households pay.")
+        ArticleNote.objects.create(article=self.article, note="Forgotten note.", active=False)
+
+        message = build_user_message(self.make_revision("Lead with what households pay."))
+        self.assertIn("<article_notes>\n- Keep it under 600 words.\n</article_notes>", message)
+        # The current instructions appear once, as instructions, not again as a note.
+        self.assertEqual(message.count("Lead with what households pay."), 1)
+        self.assertNotIn("Forgotten note.", message)
+        # Article notes never reach the desk's (cached) system prompt.
+        self.assertNotIn("600 words", build_system(self.economy, "explainer")[1]["text"])
+
+    def test_revision_prompt_without_notes_has_no_notes_block(self):
+        self.assertNotIn("<article_notes>", build_user_message(self.make_revision()))
 
     def test_article_text_keeps_paragraphs_and_blocks(self):
         result = DraftResult(
@@ -133,6 +149,14 @@ class RevisionTaskTests(RevisionTestCase):
         latest = ArticlePage.objects.get(pk=self.article.pk).get_latest_revision_as_object()
         self.assertIn("[Demo revision]", latest.body[0].value.source)
         self.assertEqual(ArticlePage.objects.count(), 1)
+
+    def test_fake_writer_shows_earlier_notes(self):
+        ArticleNote.remember(self.article, "Keep it under 600 words.", ArticleNote.Source.COMMISSION)
+        revision = self.make_revision("Shorter, please.")
+        draft_article(revision.pk)
+        body = ArticlePage.objects.get(pk=self.article.pk).get_latest_revision_as_object().body
+        self.assertIn("asked: Shorter, please.", body[0].value.source)
+        self.assertIn("also followed: Keep it under 600 words.", body[1].value.source)
 
     def test_review_comments_still_recorded_with_revisions(self):
         self.make_revision()
