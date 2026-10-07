@@ -1,0 +1,50 @@
+{% extends "wagtailadmin/base.html" %}
+{% load static wagtailadmin_tags %}
+{% block titletag %}AI articles{% endblock %}
+{% block extra_css %}{{ block.super }}<link rel="stylesheet" href="{% static 'newsdesk/workspace.css' %}">{% endblock %}
+{% block content %}
+  {% url "newsdesk_articles:create" as create_url %}
+  {% if can_create %}
+    {% include "wagtailadmin/shared/header.html" with title="AI articles" icon="doc-full" action_url=create_url action_text="New article" %}
+  {% else %}
+    {% include "wagtailadmin/shared/header.html" with title="AI articles" icon="doc-full" %}
+  {% endif %}
+  <div class="nice-padding">
+    <nav class="nd-filters" aria-label="Filter by status">
+      <a href="?" {% if not status %}aria-current="page"{% endif %}>All</a>
+      {% for value, label, count in statuses %}
+        <a href="?status={{ value }}" {% if status == value %}aria-current="page"{% endif %}>{{ label }} <span class="nd-count">{{ count }}</span></a>
+      {% endfor %}
+      {% if suggested_topics %}
+        <a class="nd-filters__aside" href="{% url 'wagtailsnippets_newsdesk_topic:list' %}?status=suggested">{{ suggested_topics }} suggested topic{{ suggested_topics|pluralize }} to review</a>
+      {% endif %}
+    </nav>
+
+    {% if workspaces %}
+      <table class="listing">
+        <thead>
+          <tr><th>Article</th><th>Section</th><th>Type</th><th>Status</th><th>Versions</th><th>Cost</th><th>Updated</th></tr>
+        </thead>
+        <tbody>
+          {% for ws in workspaces %}
+            <tr>
+              <td class="title">
+                <div class="title-wrapper"><a href="{% url 'newsdesk_articles:detail' ws.pk %}">{{ ws.title }}</a></div>
+                {% if ws.current_version %}<div class="nd-muted nd-small">Topic: {{ ws.topic.title }}</div>{% endif %}
+              </td>
+              <td class="nd-nowrap">{{ ws.desk.section.title|default:ws.desk.name }}</td>
+              <td class="nd-nowrap">{{ ws.get_article_type_display }}</td>
+              <td><span class="nd-status nd-status--{{ ws.status }}">{{ ws.get_status_display }}</span></td>
+              <td>{{ ws.version_count }}</td>
+              <td>{% if ws.run_cost %}${{ ws.run_cost|floatformat:2 }}{% else %}—{% endif %}</td>
+              <td>{{ ws.updated_at|timesince }} ago</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="nd-empty">No articles {% if status %}with this status {% endif %}yet.
+        {% if can_create %}<a href="{{ create_url }}">Start one</a> from a topic and a short brief.{% endif %}</p>
+    {% endif %}
+  </div>
+{% endblock %}

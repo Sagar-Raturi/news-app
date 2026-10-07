@@ -1,0 +1,31 @@
+<h2 class="nd-panel__title">Versions</h2>
+{% if versions %}
+  <ol class="nd-versions">
+    {% for version in versions %}
+      <li class="nd-version{% if version.pk == workspace.current_version_id %} is-current{% endif %}{% if shown and version.pk == shown.pk %} is-shown{% endif %}">
+        <div class="nd-version__head">
+          <strong>Version {{ version.number }}</strong>
+          {% if version.pk == workspace.current_version_id %}<span class="nd-pill">Current</span>{% endif %}
+          {% if version.pk == workspace.approved_version_id %}<span class="nd-pill nd-pill--addressed">Approved</span>{% endif %}
+          {% if version.pk == workspace.published_version_id %}<span class="nd-pill nd-pill--live">Published</span>{% endif %}
+        </div>
+        <p class="nd-muted">
+          {{ version.get_origin_display }}{% if version.created_by %} ({{ version.created_by.get_full_name|default:version.created_by.get_username }}){% endif %},
+          {{ version.created_at|date:"j M Y, H:i" }} · {{ version.word_count }} words
+        </p>
+        {% if version.change_summary %}<p>{{ version.change_summary|linebreaksbr }}</p>{% endif %}
+        <p class="nd-version__actions">
+          <a href="?v={{ version.number }}&tab=versions">View</a>
+          {% if not forloop.last %}<a href="?compare={{ version.number }}&tab=versions">Changes</a>{% endif %}
+          {% if can_edit and version.pk != workspace.current_version_id %}
+            <form method="post" action="{% url 'newsdesk_articles:restore' workspace.pk version.number %}" class="nd-inline-form">
+              {% csrf_token %}<button type="submit" class="button button-small button-secondary">Restore</button>
+            </form>
+          {% endif %}
+        </p>
+      </li>
+    {% endfor %}
+  </ol>
+{% else %}
+  <p class="nd-empty">No versions yet.</p>
+{% endif %}

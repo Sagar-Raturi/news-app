@@ -1,0 +1,57 @@
+{% if draft %}
+  {% if not is_current %}
+    <p class="nd-banner">You are looking at version {{ shown.number }}.
+      <a href="?tab=versions">Back to the current version</a>
+      {% if can_edit %}
+        <form method="post" action="{% url 'newsdesk_articles:restore' workspace.pk shown.number %}" class="nd-inline-form">
+          {% csrf_token %}<button type="submit" class="button button-small button-secondary">Restore this version</button>
+        </form>
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {% if flags %}
+    <section class="nd-flags" aria-label="Fact-check flags">
+      <h2>Fact-check: {{ flags|length }} open flag{{ flags|length|pluralize }}</h2>
+      <ul>
+        {% for flag in flags %}
+          <li class="nd-flag nd-flag--{{ flag.severity }}">
+            <span class="nd-flag__severity">{{ flag.get_severity_display }}</span>
+            <q>{{ flag.claim }}</q>
+            <p>{{ flag.issue }}{% if flag.suggestion %} <em>Suggestion: {{ flag.suggestion }}</em>{% endif %}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <article class="nd-article" data-version="{{ shown.number }}">
+    <h1 class="nd-article__headline">{{ draft.headline }}</h1>
+    <p class="nd-article__dek">{{ draft.dek }}</p>
+    <div class="nd-article__body">
+      {% for block in draft.blocks %}
+        <div class="nd-block nd-block--{{ block.type }}" data-block-id="{{ block.id }}">{{ block.html }}</div>
+      {% endfor %}
+    </div>
+    {% if draft.sources %}
+      <section class="nd-sources">
+        <h2>Sources</h2>
+        <ol>
+          {% for source in draft.sources %}
+            <li id="source-{{ source.number }}" value="{{ source.number }}">
+              {% if source.url %}<a href="{{ source.url }}" target="_blank" rel="noopener noreferrer">{{ source.title }}</a>{% else %}{{ source.title }}{% endif %}{% if source.publisher %}, <span class="nd-muted">{{ source.publisher }}</span>{% endif %}
+              <small class="nd-muted">({{ source.get_origin_display|lower }}, {{ source.accessed_at|date:"j M Y" }})</small>
+            </li>
+          {% endfor %}
+        </ol>
+      </section>
+    {% endif %}
+    {% if shown.tags %}<p class="nd-tags">{% for tag in shown.tags %}<span>{{ tag }}</span>{% endfor %}</p>{% endif %}
+  </article>
+{% else %}
+  <div class="nd-empty nd-empty--draft">
+    <h2>No draft yet</h2>
+    <p>Check the brief on the right. When it says what you want, click <strong>Generate</strong> and the agents will
+      research, write and check a first draft. You can watch them work under <em>Agent activity</em>.</p>
+  </div>
+{% endif %}

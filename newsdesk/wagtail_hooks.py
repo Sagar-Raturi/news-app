@@ -1,14 +1,64 @@
 from django.urls import path, reverse
+from django.utils.functional import cached_property
+from django.utils.html import format_html
 from wagtail import hooks
 from wagtail.admin.action_menu import ActionMenuItem
+from wagtail.admin.menu import MenuItem
+from wagtail.admin.viewsets.base import ViewSet
 from wagtail.admin.widgets import PageListingButton
 from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet, SnippetViewSetGroup
 
 from news.models import ArticlePage
 
-from . import views
-from .models import DeskAgent, DraftRequest
+from . import views, workspace_views
+from .models import DeskAgent, DraftRequest, Topic
+
+
+class ArticlesMenuItem(MenuItem):
+    def is_shown(self, request):
+        return workspace_views.can_view(request.user)
+
+
+class ArticlesViewSet(ViewSet):
+    """The AI article workspaces: list, new article, and one page per article."""
+
+    name = "newsdesk_articles"
+    url_prefix = "newsdesk/articles"
+    menu_label = "AI articles"
+    menu_icon = "doc-full"
+
+    @cached_property
+    def menu_item_class(self):
+        return ArticlesMenuItem
+
+    def get_urlpatterns(self):
+        return [
+            path("", workspace_views.index, name="index"),
+            path("new/", workspace_views.create, name="create"),
+            path("<int:pk>/", workspace_views.detail, name="detail"),
+            path("<int:pk>/brief/", workspace_views.save_brief, name="brief"),
+            path("<int:pk>/versions/<int:number>/restore/", workspace_views.restore, name="restore"),
+        ]
+
+
+def topic_articles(topic):
+    count = topic.articles.count()
+    start = reverse("newsdesk_articles:create") + f"?topic={topic.pk}"
+    label = f"{count} article{'s' if count != 1 else ''}" if count else "No articles"
+    return format_html('{} · <a href="{}">Start an article</a>', label, start)
+
+
+topic_articles.short_description = "Articles"
+
+
+class TopicViewSet(SnippetViewSet):
+    model = Topic
+    icon = "tag"
+    menu_label = "Topics"
+    list_display = ["title", "desk", "status", "origin", topic_articles, "created_at"]
+    list_filter = ["status", "desk", "origin"]
+    search_fields = ["title", "description"]
 
 
 class DeskAgentViewSet(SnippetViewSet):
@@ -52,7 +102,7 @@ class NewsdeskGroup(SnippetViewSetGroup):
     menu_label = "Newsdesk AI"
     menu_icon = "draft"
     menu_order = 150
-    items = (DraftRequestViewSet, DeskAgentViewSet)
+    items = (ArticlesViewSet, TopicViewSet, DraftRequestViewSet, DeskAgentViewSet)
 
 
 register_snippet(NewsdeskGroup)

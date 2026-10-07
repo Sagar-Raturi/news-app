@@ -1,0 +1,23 @@
+{% extends "wagtailadmin/base.html" %}
+{% load static %}
+{% block titletag %}New AI article{% endblock %}
+{% block extra_css %}{{ block.super }}<link rel="stylesheet" href="{% static 'newsdesk/workspace.css' %}">{% endblock %}
+{% block content %}
+  {% include "wagtailadmin/shared/header.html" with title="New article" subtitle="Topic and brief" icon="doc-full" %}
+  <div class="nice-padding nd-narrow">
+    <p class="help-block help-info">
+      Pick a topic (or name a new one) and tell the agents what you want. Only the brief is required; the
+      rest sharpens the result. Nothing is generated until you click <strong>Generate</strong> on the next page,
+      and nothing is published without your approval.
+    </p>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="help-block help-critical">{{ form.non_field_errors }}</div>{% endif %}
+      {% for field in form %}
+        {% include "wagtailadmin/shared/field.html" %}
+      {% endfor %}
+      <button type="submit" class="button">Create article</button>
+      <a href="{% url 'newsdesk_articles:index' %}" class="button button-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

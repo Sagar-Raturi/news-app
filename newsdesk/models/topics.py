@@ -3,7 +3,20 @@
 from django.conf import settings
 from django.db import models
 from django.utils.text import Truncator
+from wagtail.admin.forms import WagtailAdminModelForm
 from wagtail.admin.panels import FieldPanel
+
+
+class TopicForm(WagtailAdminModelForm):
+    """Records who created the topic."""
+
+    def save(self, commit=True):
+        topic = super().save(commit=False)
+        if topic.created_by_id is None and self.for_user is not None:
+            topic.created_by = self.for_user
+        if commit:
+            topic.save()
+        return topic
 
 
 class Topic(models.Model):
@@ -39,6 +52,7 @@ class Topic(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    base_form_class = TopicForm
     panels = [FieldPanel("title"), FieldPanel("desk"), FieldPanel("description"), FieldPanel("status")]
 
     class Meta:

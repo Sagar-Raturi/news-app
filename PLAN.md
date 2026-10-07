@@ -97,7 +97,7 @@ items 36, 38 and 40.
       AgentDefinition, ModelPrice, NewsroomAISettings (house style),
       AgentRun / AgentStep / AgentEvent; agents and prices seeded by
       bootstrap_site; permissions; model tests
-- [ ] 35. Workspace page (static): topics and articles lists, new article
+- [x] 35. Workspace page (static): topics and articles lists, new article
       form, draft view, brief tab, versions tab with diff and restore
 - [ ] 36. Background job + single-agent generation end to end (Writer),
       version → page revision sync, hand edits imported as versions,

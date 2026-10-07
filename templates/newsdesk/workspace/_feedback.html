@@ -1,0 +1,19 @@
+<h2 class="nd-panel__title">Feedback</h2>
+<p class="nd-muted">Everything here belongs to this article only. The agents see this conversation, and nothing from other articles.</p>
+{% if messages_list %}
+  <ol class="nd-chat">
+    {% for message in messages_list %}
+      <li class="nd-chat__msg nd-chat__msg--{{ message.role }}">
+        <header>
+          <strong>{% if message.role == "editor" %}{{ message.created_by.get_full_name|default:message.created_by.get_username|default:"Editor" }}{% else %}{{ message.get_role_display }}{% endif %}</strong>
+          <time datetime="{{ message.created_at|date:'c' }}">{{ message.created_at|date:"j M, H:i" }}</time>
+          {% if message.pinned %}<span class="nd-pill">Applies to every revision</span>{% endif %}
+          {% if message.status %}<span class="nd-pill nd-pill--{{ message.status }}">{{ message.get_status_display }}</span>{% endif %}
+        </header>
+        <p>{{ message.content|linebreaksbr }}</p>
+      </li>
+    {% endfor %}
+  </ol>
+{% else %}
+  <p class="nd-empty">No conversation yet.</p>
+{% endif %}

@@ -1,0 +1,23 @@
+<div class="nd-diff">
+  <p class="nd-banner">
+    Changes in version {{ compare.new.number }} compared with version {{ compare.old.number }}:
+    {{ compare.diff.changed_blocks }} block{{ compare.diff.changed_blocks|pluralize }} changed.
+    <a href="?v={{ compare.new.number }}">View version {{ compare.new.number }}</a> ·
+    <a href="?tab=versions">Back</a>
+  </p>
+  {% if compare.new.change_summary %}<p class="nd-diff__summary">{{ compare.new.change_summary|linebreaksbr }}</p>{% endif %}
+  {% for row in compare.diff.top %}
+    <div class="nd-diff__meta{% if row.changed %} is-changed{% endif %}"><span class="nd-muted">{{ row.label }}</span> {{ row.html }}</div>
+  {% endfor %}
+  <div class="nd-article__body">
+    {% for row in compare.diff.blocks %}
+      <div class="nd-diff__block nd-diff__block--{{ row.status }}">
+        {% if row.status != "same" %}<span class="nd-diff__tag">{{ row.status }}</span>{% endif %}
+        {% if row.type == "heading" %}<h2>{{ row.html }}</h2>{% else %}<p>{{ row.html }}</p>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  {% for row in compare.diff.bottom %}
+    {% if row.changed %}<div class="nd-diff__meta is-changed"><span class="nd-muted">{{ row.label }}</span> {{ row.html }}</div>{% endif %}
+  {% endfor %}
+</div>

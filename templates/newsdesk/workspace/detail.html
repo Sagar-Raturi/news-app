@@ -1,0 +1,35 @@
+{% extends "wagtailadmin/base.html" %}
+{% load static %}
+{% block titletag %}{{ workspace.title }}{% endblock %}
+{% block extra_css %}{{ block.super }}<link rel="stylesheet" href="{% static 'newsdesk/workspace.css' %}">{% endblock %}
+{% block extra_js %}{{ block.super }}
+  <script src="{% static 'js/htmx.min.js' %}"></script>
+  <script src="{% static 'newsdesk/workspace.js' %}" defer></script>
+{% endblock %}
+{% block content %}
+  <div class="nd-workspace" data-workspace="{{ workspace.pk }}">
+    {% include "newsdesk/workspace/_topbar.html" %}
+    <div class="nd-layout">
+      <main class="nd-main" id="nd-draft">
+        {% if compare %}
+          {% include "newsdesk/workspace/_diff.html" %}
+        {% else %}
+          {% include "newsdesk/workspace/_draft.html" %}
+        {% endif %}
+      </main>
+      <aside class="nd-sidebar" aria-label="Article tools">
+        <nav class="nd-tabs" role="tablist">
+          {% for name in tabs %}
+            <a href="?tab={{ name }}" role="tab" data-tab="{{ name }}" aria-selected="{% if tab == name %}true{% else %}false{% endif %}">
+              {% if name == "brief" %}Brief{% elif name == "activity" %}Agent activity{% elif name == "feedback" %}Feedback{% else %}Versions{% endif %}
+            </a>
+          {% endfor %}
+        </nav>
+        <section class="nd-panel" data-panel="brief" {% if tab != "brief" %}hidden{% endif %}>{% include "newsdesk/workspace/_brief.html" %}</section>
+        <section class="nd-panel" data-panel="activity" {% if tab != "activity" %}hidden{% endif %}>{% include "newsdesk/workspace/_activity.html" %}</section>
+        <section class="nd-panel" data-panel="feedback" {% if tab != "feedback" %}hidden{% endif %}>{% include "newsdesk/workspace/_feedback.html" %}</section>
+        <section class="nd-panel" data-panel="versions" {% if tab != "versions" %}hidden{% endif %}>{% include "newsdesk/workspace/_versions.html" %}</section>
+      </aside>
+    </div>
+  </div>
+{% endblock %}

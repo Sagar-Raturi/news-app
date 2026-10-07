@@ -1,0 +1,16 @@
+<header class="nd-topbar">
+  <nav class="nd-crumbs"><a href="{% url 'newsdesk_articles:index' %}">AI articles</a> › {{ workspace.desk.section.title|default:workspace.desk.name }} › {{ workspace.topic.title }}</nav>
+  <div class="nd-topbar__row">
+    <h1 class="nd-topbar__title">{{ workspace.title }}</h1>
+    <span class="nd-status nd-status--{{ workspace.status }}" id="nd-status">{{ workspace.get_status_display }}</span>
+    {% if workspace.page and workspace.page.live %}<span class="nd-status nd-status--live">Live</span>{% endif %}
+  </div>
+  <div class="nd-topbar__row nd-topbar__meta">
+    <span>{{ workspace.get_article_type_display }}</span>
+    {% if workspace.current_version %}
+      <span>Version {{ workspace.current_version.number }}</span>
+      <span>{{ workspace.current_version.word_count }} words{% if workspace.target_words %} (target {{ workspace.target_words }}){% endif %}</span>
+    {% endif %}
+    {% if edit_page_url %}<a href="{{ edit_page_url }}">Open in page editor</a>{% endif %}
+  </div>
+</header>

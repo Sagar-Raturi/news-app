@@ -1,0 +1,17 @@
+<h2 class="nd-panel__title">Brief</h2>
+<p class="nd-muted">Topic: <strong>{{ workspace.topic.title }}</strong> · Section: {{ workspace.desk.section.title|default:workspace.desk.name }}</p>
+{% if can_edit %}
+  <form method="post" action="{% url 'newsdesk_articles:brief' workspace.pk %}" novalidate class="nd-brief-form">
+    {% csrf_token %}
+    {% for field in brief_form %}
+      {% include "wagtailadmin/shared/field.html" %}
+    {% endfor %}
+    <button type="submit" class="button">Save brief</button>
+  </form>
+{% else %}
+  <dl class="nd-brief-read">
+    {% for field in brief_form %}
+      {% if field.value %}<dt>{{ field.label }}</dt><dd>{{ field.value|linebreaksbr }}</dd>{% endif %}
+    {% endfor %}
+  </dl>
+{% endif %}
