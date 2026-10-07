@@ -49,7 +49,7 @@ def block_text(block):
     if kind == "pullquote":
         return " ".join(f"{value.get('quote', '')} — {value.get('attribution', '')}".split()).rstrip(" —")
     if kind == "key_points":
-        return "\n".join([value.get("title", "")] + [f"• {p}" for p in value.get("points", [])])
+        return "\n".join([value.get("title", "")] + [f"• {p}" for p in list_items(value.get("points"))])
     if kind == "qa":
         return f"{value.get('question', '')}\n\n{html_to_text(value.get('answer', ''))}"
     if kind == "stat":
@@ -58,6 +58,26 @@ def block_text(block):
     if kind == "callout":
         return f"{value.get('title', '')}\n\n{html_to_text(value.get('body', ''))}"
     return ""
+
+
+def list_items(items):
+    """ListBlock values come as plain strings or as Wagtail's {"type": "item", "value": ...} dicts."""
+    return [item.get("value", "") if isinstance(item, dict) else item for item in items or []]
+
+
+def normalise_block(block):
+    """Plain-string list items, so agent-written and Wagtail-saved blocks compare equal."""
+    if block.get("type") == "key_points" and isinstance(block.get("value"), dict):
+        block = {**block, "value": {**block["value"], "points": list_items(block["value"].get("points"))}}
+    return block
+
+
+def visible_signature(headline, dek, body, tags, source_numbers):
+    """What a reader sees: equal signatures mean no visible change (markup may differ)."""
+    blocks = tuple(
+        (b.get("type"), block_text(b) if b.get("type") in TEXT_BLOCK_TYPES else repr(b.get("value"))) for b in body
+    )
+    return (" ".join(headline.split()), " ".join(dek.split()), blocks, tuple(tags), tuple(source_numbers))
 
 
 def body_text(body):

@@ -11,6 +11,8 @@ from django.utils.html import escape, format_html, format_html_join
 from django.utils.safestring import mark_safe
 from wagtail.rich_text import expand_db_html
 
+from .content import list_items
+
 CITATION = re.compile(r"\[S(\d+)\]")
 BLOCK_LABELS = {"image": "Image", "embed": "Embed", "table": "Table"}
 
@@ -44,7 +46,7 @@ def block_html(block, known):
             value.get("attribution", ""),
         )
     if kind == "key_points":
-        items = format_html_join("", "<li>{}</li>", ((cite(escape(p), known),) for p in value.get("points", [])))
+        items = format_html_join("", "<li>{}</li>", ((cite(escape(p), known),) for p in list_items(value.get("points"))))
         return format_html('<aside class="nd-box"><h3>{}</h3><ul>{}</ul></aside>', value.get("title", ""), items)
     if kind == "qa":
         return format_html(

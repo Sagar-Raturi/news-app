@@ -1,2 +1,62 @@
-<h2 class="nd-panel__title">Agent activity</h2>
-<p class="nd-empty">No runs yet. Click <strong>Generate</strong> to start the agents.</p>
+{% load newsdesk_tags %}
+<div id="nd-activity"{% if active_run %} hx-get="{% url 'newsdesk_articles:activity' workspace.pk %}?watching=1" hx-trigger="every 2s" hx-swap="outerHTML"{% endif %}>
+  <h2 class="nd-panel__title">Agent activity</h2>
+  {% if article_usage.runs %}
+    <p class="nd-usage">This article so far: {{ article_usage.cost|usd }} estimated ·
+      {{ article_usage.tokens|tokens }} tokens · {{ article_usage.searches }} web search{{ article_usage.searches|pluralize:"es" }}
+      over {{ article_usage.runs }} run{{ article_usage.runs|pluralize }}</p>
+  {% endif %}
+  {% if runs %}
+    <ol class="nd-runs">
+      {% for run in runs %}
+        <li>
+          <details class="nd-run" {% if forloop.first %}open{% endif %}>
+            <summary>
+              <strong>{% if run.kind == "generate" %}{% if forloop.last %}First draft{% else %}Generate{% endif %}{% else %}Revision{% endif %}</strong>
+              <span class="nd-status nd-status--{% if run.status == 'running' or run.status == 'queued' %}working{% elif run.status == 'failed' %}attention{% elif run.status == 'succeeded' %}ready{% else %}brief{% endif %}">{{ run.get_status_display }}</span>
+              <span class="nd-muted nd-small">{{ run.created_at|date:"j M, H:i" }}{% if run.requested_by %} · {{ run.requested_by.get_full_name|default:run.requested_by.get_username }}{% endif %}</span>
+              <span class="nd-run__cost">{{ run.cost|usd }} · {{ run.total_tokens|tokens }} tok{% if run.duration %} · {{ run.duration|seconds }}{% endif %}</span>
+            </summary>
+            <div class="nd-run__body">
+              {% if run.error %}<p class="nd-error">{{ run.error }}</p>{% endif %}
+              {% if can_edit %}
+                <div class="nd-actions">
+                  {% if run.status == "failed" %}
+                    <form method="post" action="{% url 'newsdesk_articles:retry' workspace.pk run.pk %}">{% csrf_token %}<button class="button button-small">Retry from the failed step</button></form>
+                  {% elif run.is_active %}
+                    <form method="post" action="{% url 'newsdesk_articles:cancel' workspace.pk run.pk %}">{% csrf_token %}<button class="button button-small button-secondary">Stop after this step</button></form>
+                  {% endif %}
+                </div>
+              {% endif %}
+              {% if run.status == "queued" and not run.steps.all %}<p class="nd-muted">Waiting for a worker…</p>{% endif %}
+              <ol class="nd-steps">
+                {% for step in run.steps.all %}
+                  <li class="nd-step nd-step--{{ step.status }}">
+                    <div class="nd-step__head">
+                      <strong>{{ step.agent.name|default:step.role|capfirst }}</strong>
+                      <span class="nd-muted">{{ step.get_status_display }}</span>
+                      <span class="nd-step__meta">{% if step.model %}{{ step.model }} · {% endif %}{{ step.total_tokens|tokens }} tok · {{ step.cost|usd }}{% if step.web_searches %} · {{ step.web_searches }} search{{ step.web_searches|pluralize:"es" }}{% endif %}{% if step.duration %} · {{ step.duration|seconds }}{% endif %}{% if step.attempts > 1 %} · attempt {{ step.attempts }}{% endif %}</span>
+                    </div>
+                    {% if step.instructions %}<p class="nd-small nd-muted">{{ step.instructions }}</p>{% endif %}
+                    {% if step.summary %}<p class="nd-small">{{ step.summary }}</p>{% endif %}
+                    {% if step.error %}<p class="nd-small nd-error">{{ step.error }}</p>{% endif %}
+                    {% if step.status == "running" %}
+                      <ul class="nd-events" data-step-events="{{ step.pk }}">
+                        {% for event in step.events.all %}{% if event.kind != "step" %}<li>{{ event.message }}</li>{% endif %}{% endfor %}
+                      </ul>
+                      <div class="nd-stream" data-step-stream="{{ step.pk }}" hidden></div>
+                    {% elif step.output %}
+                      <details><summary class="nd-small">Output</summary><pre>{{ step.output|pretty_json }}</pre></details>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ol>
+            </div>
+          </details>
+        </li>
+      {% endfor %}
+    </ol>
+  {% else %}
+    <p class="nd-empty">No runs yet.{% if can_edit and not workspace.current_version %} Click <strong>Generate</strong> to start the agents.{% endif %}</p>
+  {% endif %}
+</div>

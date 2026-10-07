@@ -48,3 +48,27 @@ def draft_article(request_id):
     request.cache_read_tokens = result.cache_read_tokens
     request.save()
     return request.status
+
+
+RETRY_DELAYS = [30, 120, 300]
+
+
+@shared_task(bind=True, max_retries=len(RETRY_DELAYS))
+def run_agents(self, run_id):
+    """Run an article's agents. Transient API trouble is retried from the failed step."""
+    from .models import AgentRun
+    from .pipeline.llm import TransientAgentError
+    from .pipeline.runner import Pipeline, give_up, wait_for_retry
+
+    run = AgentRun.objects.select_related("workspace").filter(pk=run_id).first()
+    if run is None:
+        return None
+    try:
+        return Pipeline(run).execute()
+    except TransientAgentError as exc:
+        if self.request.retries < self.max_retries:
+            countdown = RETRY_DELAYS[self.request.retries]
+            wait_for_retry(run, str(exc), countdown)
+            raise self.retry(exc=exc, countdown=countdown)
+        give_up(run, f"{exc} Gave up after {self.max_retries} retries.")
+        return AgentRun.Status.FAILED

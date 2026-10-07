@@ -39,6 +39,14 @@ class ArticlesViewSet(ViewSet):
             path("<int:pk>/", workspace_views.detail, name="detail"),
             path("<int:pk>/brief/", workspace_views.save_brief, name="brief"),
             path("<int:pk>/versions/<int:number>/restore/", workspace_views.restore, name="restore"),
+            path("<int:pk>/generate/", workspace_views.generate, name="generate"),
+            path("<int:pk>/activity/", workspace_views.activity, name="activity"),
+            path("<int:pk>/runs/<int:run_id>/retry/", workspace_views.retry, name="retry"),
+            path("<int:pk>/runs/<int:run_id>/cancel/", workspace_views.cancel, name="cancel"),
+            path("<int:pk>/approve/", workspace_views.approve, name="approve"),
+            path("<int:pk>/publish/", workspace_views.publish, name="publish"),
+            path("<int:pk>/unpublish/", workspace_views.unpublish, name="unpublish"),
+            path("<int:pk>/flags/<int:flag_id>/accept/", workspace_views.accept_flag, name="accept_flag"),
         ]
 
 

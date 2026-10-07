@@ -99,7 +99,7 @@ items 36, 38 and 40.
       bootstrap_site; permissions; model tests
 - [x] 35. Workspace page (static): topics and articles lists, new article
       form, draft view, brief tab, versions tab with diff and restore
-- [ ] 36. Background job + single-agent generation end to end (Writer),
+- [x] 36. Background job + single-agent generation end to end (Writer),
       version → page revision sync, hand edits imported as versions,
       Approve / Publish / Unpublish (editors) — CHECK IN
 - [ ] 37. Live progress: ASGI (uvicorn), Redis pub/sub events, SSE activity

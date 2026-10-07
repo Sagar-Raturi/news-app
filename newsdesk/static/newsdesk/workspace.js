@@ -25,5 +25,11 @@
     showTab(tab.dataset.tab, true);
   });
 
+  // Confirm destructive or public actions (forms carry data-confirm).
+  root.addEventListener("submit", (event) => {
+    const message = event.target.dataset?.confirm;
+    if (message && !window.confirm(message)) event.preventDefault();
+  });
+
   window.ndWorkspace = { root, showTab };
 })();

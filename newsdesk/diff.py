@@ -45,7 +45,7 @@ def diff_versions(old, new):
         if op == "equal":
             for block_id in new_ids[j1:j2]:
                 before, after = block_text(old_blocks[block_id]), block_text(new_blocks[block_id])
-                status = "same" if before == after and old_blocks[block_id] == new_blocks[block_id] else "changed"
+                status = "same" if before == after else "changed"
                 rows.append(
                     {
                         "status": status,

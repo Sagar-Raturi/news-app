@@ -114,6 +114,11 @@ class ArticleWorkspace(models.Model):
             return self.flags.none()
         return self.flags.filter(version_id=self.current_version_id, status="open", severity="high")
 
+    def page_is_live(self):
+        from news.models import ArticlePage
+
+        return bool(self.page_id) and ArticlePage.objects.filter(pk=self.page_id, live=True).exists()
+
     def compute_status(self):
         from .runs import AgentRun
 
@@ -122,7 +127,7 @@ class ArticleWorkspace(models.Model):
         if not self.current_version_id:
             return self.Status.BRIEF
         current = self.current_version_id
-        if self.published_version_id == current and self.page_id and self.page.live:
+        if self.published_version_id == current and self.page_id and self.page_is_live():
             return self.Status.PUBLISHED
         if self.approved_version_id == current:
             return self.Status.APPROVED

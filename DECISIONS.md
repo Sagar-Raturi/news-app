@@ -80,3 +80,11 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Per-section auto-publish exists as a read-only setting, always off — nothing publishes without an editor's click in v1.
 - Sources are numbered per article and cited in the text as [S3] — citations stay valid across revisions and link claims to sources.
 - AI writing of opinion and editorials stays blocked; analysis may argue a thesis.
+- Agent runs are a Celery task (`run_agents`); transient API errors (rate limits, overload, network) are retried after 30 s, 2 min and 5 min, resuming from the failed step; other errors fail the run with a "Retry from the failed step" button.
+- Each step saves its output (including the working draft) as it finishes — a retry resumes where the run stopped, and if a run fails after a draft was written, that draft is still saved as a version marked as unfinished.
+- "Regenerate" writes a completely new draft (new blocks); changing part of a draft is what feedback is for, and the old draft stays in Versions.
+- Agent drafts are saved as page revisions but not submitted to the Wagtail "Newsroom review" workflow — the workspace's Approve and Publish (Editors only) replace it for AI articles; human-written articles keep the workflow.
+- Edits made to an AI article in the Wagtail page editor are imported as a new "Editor" version the next time the workspace is opened, a run starts, or someone approves or publishes — the workspace never overwrites hand edits, and edits after approval require approving again.
+- Versions are compared by visible content, not markup — Draftail re-serialises rich text on save, and a save without changes shouldn't create a version or a diff.
+- On the public page, citations [S3] become numbered links ([1], [2]…) to the source, numbered in the order the article cites them; importing a hand edit maps them back.
+- Until live streaming lands, the activity panel polls every 2 s while a run is active and reloads the page when it finishes.

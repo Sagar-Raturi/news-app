@@ -10,11 +10,15 @@ from django.db.models import Count, Sum
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils import timezone
 from django.views.decorators.http import require_POST
 
+from . import approval
 from .diff import diff_versions
 from .forms import BriefForm, NewArticleForm
-from .models import ArticleWorkspace, Topic
+from .jobs import ArticleBusy, cancel_run, retry_run, start_run
+from .models import AgentRun, ArticleWorkspace, FactCheckFlag, Topic
+from .pagesync import import_page_edits
 from .rendering import render_version
 from .versions import open_flags, restore_version
 
@@ -91,7 +95,29 @@ def create(request):
 
 
 def detail(request, pk):
-    return render_detail(request, get_workspace(request, pk))
+    workspace = get_workspace(request, pk)
+    if not workspace.active_run() and import_page_edits(workspace, request.user):
+        messages.info(request, "Edits made in the page editor were saved as a new version.")
+        workspace.refresh_from_db()
+    return render_detail(request, workspace)
+
+
+def activity_context(workspace):
+    runs = list(
+        workspace.runs.select_related("requested_by").prefetch_related("steps__agent", "steps__events")[:20]
+    )
+    totals = workspace.runs.aggregate(cost=Sum("cost"), searches=Sum("web_searches"), runs=Count("pk"))
+    tokens = sum(r.total_tokens for r in workspace.runs.all())
+    return {
+        "runs": runs,
+        "active_run": next((r for r in runs if r.is_active), None),
+        "article_usage": {
+            "cost": totals["cost"] or 0,
+            "searches": totals["searches"] or 0,
+            "runs": totals["runs"],
+            "tokens": tokens,
+        },
+    }
 
 
 def render_detail(request, workspace, tab=None, brief_form=None):
@@ -119,11 +145,18 @@ def render_detail(request, workspace, tab=None, brief_form=None):
             compare = {"old": old, "new": new, "diff": diff_versions(old, new)}
             shown = new
 
+    current = workspace.current_version
     return TemplateResponse(
         request,
         "newsdesk/workspace/detail.html",
         {
+            **activity_context(workspace),
             "workspace": workspace,
+            "can_approve_now": current is not None and workspace.approved_version_id != current.pk,
+            "can_publish_now": current is not None
+            and workspace.approved_version_id == current.pk
+            and workspace.published_version_id != current.pk,
+            "page_live": workspace.page_is_live(),
             "tab": tab,
             "tabs": TABS,
             "versions": versions,
@@ -165,3 +198,105 @@ def restore(request, pk, number):
     restored = restore_version(workspace, version, request.user)
     messages.success(request, f"Version {version.number} restored as version {restored.number}.")
     return redirect(workspace_url(workspace, tab="versions"))
+
+
+def back(workspace, tab=None):
+    return redirect(workspace_url(workspace, tab=tab))
+
+
+@require_POST
+def generate(request, pk):
+    workspace = get_workspace(request, pk, edit=True)
+    import_page_edits(workspace, request.user)
+    try:
+        start_run(workspace, AgentRun.Kind.GENERATE, request.user)
+    except ArticleBusy:
+        messages.warning(request, "The agents are already working on this article.")
+        return back(workspace, "activity")
+    if workspace.current_version_id:
+        messages.success(request, "The agents are writing a completely new draft. The current one stays in Versions.")
+    else:
+        messages.success(request, "The agents have started. Follow them under Agent activity.")
+    return back(workspace, "activity")
+
+
+@require_POST
+def retry(request, pk, run_id):
+    workspace = get_workspace(request, pk, edit=True)
+    run = get_object_or_404(workspace.runs, pk=run_id)
+    try:
+        retry_run(run, request.user)
+        messages.success(request, "Retrying from the failed step.")
+    except ArticleBusy:
+        messages.warning(request, "Another run is in progress on this article.")
+    return back(workspace, "activity")
+
+
+@require_POST
+def cancel(request, pk, run_id):
+    workspace = get_workspace(request, pk, edit=True)
+    run = get_object_or_404(workspace.runs, pk=run_id)
+    if cancel_run(run, request.user):
+        messages.info(request, "The run will stop after the current step.")
+    return back(workspace, "activity")
+
+
+def activity(request, pk):
+    """The activity panel on its own: polled while a run is active (and a full page without HTMX)."""
+    workspace = get_workspace(request, pk)
+    if request.headers.get("HX-Request") != "true":
+        return redirect(workspace_url(workspace, tab="activity"))
+    context = activity_context(workspace)
+    response = TemplateResponse(
+        request,
+        "newsdesk/workspace/_activity.html",
+        {**context, "workspace": workspace, "can_edit": can_edit(request.user)},
+    )
+    if request.GET.get("watching") and context["active_run"] is None:
+        # The run finished: reload the page so the new draft appears.
+        response["HX-Refresh"] = "true"
+    return response
+
+
+def _editorial(request, pk, action, success):
+    if not can_approve(request.user):
+        raise PermissionDenied
+    workspace = get_workspace(request, pk)
+    try:
+        action(workspace, request.user)
+    except approval.NotAllowed as exc:
+        messages.error(request, str(exc))
+    else:
+        messages.success(request, success)
+    return back(workspace)
+
+
+@require_POST
+def approve(request, pk):
+    return _editorial(request, pk, approval.approve, "Approved. Publish when you're ready.")
+
+
+@require_POST
+def publish(request, pk):
+    return _editorial(request, pk, approval.publish, "Published. The article is live.")
+
+
+@require_POST
+def unpublish(request, pk):
+    return _editorial(request, pk, approval.unpublish, "Unpublished. The article is no longer live.")
+
+
+@require_POST
+def accept_flag(request, pk, flag_id):
+    """The editor has checked a flagged claim and accepts it as it stands."""
+    if not can_approve(request.user):
+        raise PermissionDenied
+    workspace = get_workspace(request, pk)
+    flag = get_object_or_404(workspace.flags, pk=flag_id, status=FactCheckFlag.Status.OPEN)
+    flag.status = FactCheckFlag.Status.DISMISSED
+    flag.resolved_by = request.user
+    flag.resolved_at = timezone.now()
+    flag.save(update_fields=["status", "resolved_by", "resolved_at"])
+    workspace.refresh_status()
+    messages.success(request, "Flag marked as checked. The agents won't raise it again.")
+    return back(workspace)

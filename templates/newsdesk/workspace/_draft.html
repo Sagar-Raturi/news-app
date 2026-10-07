@@ -19,6 +19,11 @@
             <span class="nd-flag__severity">{{ flag.get_severity_display }}</span>
             <q>{{ flag.claim }}</q>
             <p>{{ flag.issue }}{% if flag.suggestion %} <em>Suggestion: {{ flag.suggestion }}</em>{% endif %}</p>
+            {% if can_approve and is_current %}
+              <form method="post" action="{% url 'newsdesk_articles:accept_flag' workspace.pk flag.pk %}" class="nd-flag__actions">
+                {% csrf_token %}<button type="submit" class="button button-small button-secondary">I've checked it: accept the claim</button>
+              </form>
+            {% endif %}
           </li>
         {% endfor %}
       </ul>

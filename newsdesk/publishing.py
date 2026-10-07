@@ -18,8 +18,13 @@ def paragraphs_html(text):
 
 
 def body_blocks(draft):
+    return raw_blocks(draft.body)
+
+
+def raw_blocks(draft_blocks):
+    """Agent blocks (DraftBlock) -> raw StreamField data. Text is escaped; the model never supplies HTML."""
     blocks = []
-    for block in draft.body:
+    for block in draft_blocks:
         text, detail = block.text.strip(), block.detail.strip()
         if block.type == "paragraph" and text:
             blocks.append({"type": "paragraph", "value": paragraphs_html(text)})

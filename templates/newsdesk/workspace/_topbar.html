@@ -3,7 +3,35 @@
   <div class="nd-topbar__row">
     <h1 class="nd-topbar__title">{{ workspace.title }}</h1>
     <span class="nd-status nd-status--{{ workspace.status }}" id="nd-status">{{ workspace.get_status_display }}</span>
-    {% if workspace.page and workspace.page.live %}<span class="nd-status nd-status--live">Live</span>{% endif %}
+    {% if page_live %}<span class="nd-status nd-status--live">Live</span>{% endif %}
+    <div class="nd-actions">
+      {% if can_edit %}
+        <form method="post" action="{% url 'newsdesk_articles:generate' workspace.pk %}"
+              {% if workspace.current_version %}data-confirm="Write a completely new draft from scratch? The current draft stays in Versions. To change part of it, use Feedback instead."{% endif %}>
+          {% csrf_token %}
+          <button type="submit" class="button {% if workspace.current_version %}button-secondary{% endif %}" {% if active_run %}disabled title="The agents are working"{% endif %}>
+            {% if workspace.current_version %}Regenerate{% else %}Generate{% endif %}
+          </button>
+        </form>
+      {% endif %}
+      {% if can_approve %}
+        {% if can_approve_now %}
+          <form method="post" action="{% url 'newsdesk_articles:approve' workspace.pk %}">{% csrf_token %}
+            <button type="submit" class="button" {% if active_run %}disabled{% endif %}>Approve version {{ workspace.current_version.number }}</button>
+          </form>
+        {% endif %}
+        {% if can_publish_now %}
+          <form method="post" action="{% url 'newsdesk_articles:publish' workspace.pk %}" data-confirm="Publish version {{ workspace.current_version.number }} on the site now?">{% csrf_token %}
+            <button type="submit" class="button">Publish</button>
+          </form>
+        {% endif %}
+        {% if page_live %}
+          <form method="post" action="{% url 'newsdesk_articles:unpublish' workspace.pk %}" data-confirm="Take this article off the site?">{% csrf_token %}
+            <button type="submit" class="button button-secondary no">Unpublish</button>
+          </form>
+        {% endif %}
+      {% endif %}
+    </div>
   </div>
   <div class="nd-topbar__row nd-topbar__meta">
     <span>{{ workspace.get_article_type_display }}</span>
@@ -11,6 +39,8 @@
       <span>Version {{ workspace.current_version.number }}</span>
       <span>{{ workspace.current_version.word_count }} words{% if workspace.target_words %} (target {{ workspace.target_words }}){% endif %}</span>
     {% endif %}
+    {% if workspace.approved_version and workspace.approved_version_id != workspace.current_version_id %}<span>Approved: version {{ workspace.approved_version.number }}</span>{% endif %}
     {% if edit_page_url %}<a href="{{ edit_page_url }}">Open in page editor</a>{% endif %}
+    {% if page_live and workspace.page %}<a href="{{ workspace.page.url }}" target="_blank" rel="noopener">View on site</a>{% endif %}
   </div>
 </header>
