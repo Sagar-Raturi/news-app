@@ -24,7 +24,8 @@ from wagtail.models import (
 from core.models import StandardPage
 from news.models import HomePage, SectionPage
 from newsdesk.desks import STARTER_DESKS
-from newsdesk.models import DeskAgent
+from newsdesk.models import AgentDefinition, DeskAgent, ModelPrice
+from newsdesk.roles import DEFAULT_MODEL, STARTER_AGENTS, starter_prices
 
 WRITERS = "Writers"
 EDITORS = "Editors"
@@ -70,6 +71,14 @@ WRITER_MODEL_PERMS = [
     ("newsdesk", "add_draftrequest"),
     ("newsdesk", "view_draftrequest"),
     ("newsdesk", "view_deskagent"),
+    # AI article workspaces: writers create topics and briefs and give feedback.
+    ("newsdesk", "add_topic"),
+    ("newsdesk", "change_topic"),
+    ("newsdesk", "view_topic"),
+    ("newsdesk", "add_articleworkspace"),
+    ("newsdesk", "change_articleworkspace"),
+    ("newsdesk", "view_articleworkspace"),
+    ("newsdesk", "view_agentdefinition"),
 ]
 EDITOR_MODEL_PERMS = WRITER_MODEL_PERMS + [
     ("news", "add_author"),
@@ -80,6 +89,13 @@ EDITOR_MODEL_PERMS = WRITER_MODEL_PERMS + [
     ("newsdesk", "add_deskagent"),
     ("newsdesk", "change_deskagent"),
     ("newsdesk", "delete_deskagent"),
+    # Only editors approve and publish AI articles, and configure the agents.
+    ("newsdesk", "approve_articleworkspace"),
+    ("newsdesk", "delete_topic"),
+    ("newsdesk", "change_agentdefinition"),
+    ("newsdesk", "view_modelprice"),
+    ("newsdesk", "change_modelprice"),
+    ("newsdesk", "change_newsroomaisettings"),
 ]
 
 
@@ -200,6 +216,44 @@ def ensure_desks(sections):
     return desks
 
 
+def ensure_agents():
+    """Create the pipeline's agents; refresh starter prompts nobody has edited."""
+    agents = []
+    for role, name, description, prompt, effort, max_tokens, search, fetch, uses in STARTER_AGENTS:
+        defaults = {
+            "name": name,
+            "description": description,
+            "system_prompt": prompt,
+            "model": DEFAULT_MODEL,
+            "effort": effort,
+            "max_tokens": max_tokens,
+            "web_search": search,
+            "web_fetch": fetch,
+            "max_web_uses": uses or 8,
+        }
+        agent, created = AgentDefinition.objects.get_or_create(role=role, defaults=defaults)
+        if not created and not agent.customised and agent.system_prompt != prompt:
+            agent.system_prompt = prompt
+            agent.description = description
+            agent.save(update_fields=["system_prompt", "description", "updated_at"])
+        agents.append(agent)
+    return agents
+
+
+def ensure_prices():
+    """Starter model prices for cost estimates; editors' changes are kept."""
+    for model, (inp, out, write, read) in starter_prices().items():
+        ModelPrice.objects.get_or_create(
+            model=model,
+            defaults={
+                "input_per_mtok": inp,
+                "output_per_mtok": out,
+                "cache_write_per_mtok": write,
+                "cache_read_per_mtok": read,
+            },
+        )
+
+
 @transaction.atomic
 def bootstrap():
     home = ensure_home_page()
@@ -208,7 +262,10 @@ def bootstrap():
     writers, editors = ensure_groups(home)
     workflow = ensure_workflow(home, editors)
     desks = ensure_desks(sections)
+    agents = ensure_agents()
+    ensure_prices()
     return {
+        "agents": agents,
         "desks": desks,
         "home": home,
         "sections": sections,

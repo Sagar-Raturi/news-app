@@ -84,3 +84,33 @@ editor chooses becomes a desk rule.
       header button, notes on the Revise form plus an "also remember for the
       desk" tickbox, special instructions on the commission form
 - [x] 33. Tests, README/DECISIONS/CLAUDE updates, end-to-end check
+
+# Phase 3 — AI article workspace
+
+Agents research, write and edit; the editor briefs, gives feedback in one
+place per article, approves and publishes. Check in with the editor after
+items 36, 38 and 40.
+
+- [x] 34. Data model: Topic, ArticleWorkspace (brief, status), ArticleVersion
+      (raw StreamField body with stable block ids), ArticleSession +
+      SessionMessage, InlineComment, Source / Finding / FactCheckFlag,
+      AgentDefinition, ModelPrice, NewsroomAISettings (house style),
+      AgentRun / AgentStep / AgentEvent; agents and prices seeded by
+      bootstrap_site; permissions; model tests
+- [ ] 35. Workspace page (static): topics and articles lists, new article
+      form, draft view, brief tab, versions tab with diff and restore
+- [ ] 36. Background job + single-agent generation end to end (Writer),
+      version → page revision sync, hand edits imported as versions,
+      Approve / Publish / Unpublish (editors) — CHECK IN
+- [ ] 37. Live progress: ASGI (uvicorn), Redis pub/sub events, SSE activity
+      feed with polling fallback
+- [ ] 38. Full pipeline: orchestrator plan, researcher (web search/fetch),
+      analyst, outliner, writer, fact-checker loop, editor, SEO; retry a
+      failed step — CHECK IN
+- [ ] 39. Feedback chat + targeted block-level revisions; session context and
+      summarisation; retire Commission / Revise with AI / Article notes and
+      migrate their data into workspaces
+- [ ] 40. Inline comments with re-anchoring across versions — CHECK IN
+- [ ] 41. Admin: editable agents, house style, section guidelines, prices
+- [ ] 42. Cost and usage display, topic scout, AI policy draft, polish,
+      README/DECISIONS/CLAUDE updates, full test run

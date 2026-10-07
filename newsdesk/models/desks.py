@@ -72,6 +72,11 @@ class DeskAgent(ClusterableModel):
         help_text="How hard the model thinks. Higher is slower and costs more.",
     )
     active = models.BooleanField(default=True)
+    auto_publish = models.BooleanField(
+        default=False,
+        help_text="Reserved for later: publish ready drafts from this section without an editor. "
+        "Not available yet: every article needs an editor's click to publish.",
+    )
 
     panels = [
         MultiFieldPanel(
@@ -81,6 +86,7 @@ class DeskAgent(ClusterableModel):
         FieldPanel("style_guide"),
         FieldPanel("default_author"),
         MultiFieldPanel([FieldPanel("model"), FieldPanel("effort")], heading="Model"),
+        FieldPanel("auto_publish", read_only=True),
         InlinePanel(
             "feedback",
             heading="Memory: feedback for this desk",

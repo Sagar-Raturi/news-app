@@ -65,3 +65,18 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - A note already contained in a longer note or in the current instructions is not repeated to the agent — typically a review comment the editor extended in the Revise form; the notes themselves are left untouched.
 - Writers can see, add and forget notes on their own drafts even while the draft is locked in review — notes are instructions to the agent, not page content.
 - Existing desk-memory notes captured from reviews before 2c are left as they are — removing them silently could lose real lessons; editors can untick them.
+
+## Phase 3 — AI article workspace
+
+- The spec's "Article" is a new `ArticleWorkspace`, not `ArticlePage` — a brief exists before any text, and Wagtail pages need a body and a place in the page tree; the page is created with the first draft and linked one-to-one.
+- `ArticleVersion` stores the body as raw StreamField JSON (the same shape as `ArticlePage.body`) and is mirrored to a Wagtail page revision — versions convert both ways without loss, so preview, page history and hand edits in the Wagtail editor keep working.
+- StreamField block ids are the unit of revision and of comment anchoring — an agent's revision replaces only the blocks it changes, so untouched passages and the comments on them survive.
+- Approval belongs to one version; any newer version needs approving again — an editor never publishes text they haven't approved.
+- One active run per article, enforced by a Postgres partial unique constraint — a second Generate or new feedback waits for the next run instead of racing the first.
+- Every agent defaults to Claude Opus 5.5; effort varies by role (low for SEO and summaries, high for research, writing and fact-checking) — editors can switch any agent to Sonnet 5.5 in the admin to cut cost.
+- Agent settings have effort and max tokens but no temperature — current Claude models reject sampling parameters; effort is the supported control.
+- bootstrap_site refreshes the starter prompt of agents nobody has edited (`customised` flag) — prompt improvements reach existing installs without overwriting an editor's work.
+- Topics also have a "Rejected" status — so the topic scout doesn't suggest a rejected idea again.
+- Per-section auto-publish exists as a read-only setting, always off — nothing publishes without an editor's click in v1.
+- Sources are numbered per article and cited in the text as [S3] — citations stay valid across revisions and link claims to sources.
+- AI writing of opinion and editorials stays blocked; analysis may argue a thesis.
