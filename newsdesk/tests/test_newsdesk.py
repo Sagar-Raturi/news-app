@@ -362,6 +362,15 @@ class ArticleNoteTests(NewsdeskTestCase):
         self.assertEqual(ArticleNote.standing(self.article), [a, b])
         self.assertEqual(ArticleNote.standing(self.article, exclude="Shorter,  please."), [a])
 
+    def test_standing_notes_skip_text_already_covered(self):
+        review = ArticleNote.remember(self.article, "Explain the wedding angle.", ArticleNote.Source.REVIEW)
+        extended = ArticleNote.remember(
+            self.article, "Explain the wedding angle. Also add the RBI figure.", ArticleNote.Source.REVISION
+        )
+        self.assertNotEqual(review, extended)
+        self.assertEqual(ArticleNote.standing(self.article), [extended])
+        self.assertEqual(ArticleNote.standing(self.article, exclude="explain the wedding angle. also add the RBI figure. And shorten it."), [])
+
     def test_notes_go_when_the_article_is_deleted(self):
         ArticleNote.remember(self.article, "Lead with households.", ArticleNote.Source.REVIEW)
         self.article.delete()

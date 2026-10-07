@@ -145,8 +145,12 @@ class DeskFeedback(models.Model):
         return Truncator(self.note).chars(60)
 
 
+def _normal(text):
+    return " ".join(text.split()).casefold()
+
+
 def _same_text(a, b):
-    return " ".join(a.split()) == " ".join(b.split())
+    return _normal(a) == _normal(b)
 
 
 class ArticleNote(models.Model):
@@ -195,9 +199,24 @@ class ArticleNote(models.Model):
 
     @classmethod
     def standing(cls, article, exclude=""):
-        """Active notes for the article, oldest first, minus any matching `exclude`."""
-        notes = cls.objects.filter(article_id=article.pk, active=True)
-        return [n for n in notes if not (exclude and _same_text(n.note, exclude))]
+        """Active notes for the article, oldest first, each said once.
+
+        A note is left out when `exclude` (the current instructions) or a longer
+        note already contains it, e.g. a review comment that the editor then
+        extended in "Revise with AI".
+        """
+        notes = list(cls.objects.filter(article_id=article.pk, active=True))
+        covering = [_normal(exclude)] if exclude.strip() else []
+        kept = []
+        for note in notes:
+            text = _normal(note.note)
+            longer = [_normal(other.note) for other in notes if len(_normal(other.note)) > len(text)]
+            if any(text in other for other in covering + longer):
+                continue
+            if any(_normal(k.note) == text for k in kept):
+                continue
+            kept.append(note)
+        return kept
 
     def promote(self, desk, article_type, user=None):
         """Make this note a desk rule for future drafts of this type (once)."""

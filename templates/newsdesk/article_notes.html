@@ -27,7 +27,7 @@
                 {% if note.desk_rule_id %}<br><small>Also a desk rule</small>{% endif %}
               </td>
               <td>
-                <form method="post">
+                <form method="post" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
                   {% csrf_token %}
                   <input type="hidden" name="note" value="{{ note.pk }}">
                   {% if note.active %}
