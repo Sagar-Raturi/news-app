@@ -80,7 +80,7 @@ editor chooses becomes a desk rule.
       desk memory; promoting a note to a desk rule
 - [x] 31. Prompts: special instructions in first drafts, all active article
       notes in every revision; fake writer shows them
-- [ ] 32. Admin: "Article notes" screen (add, forget, make desk rule),
+- [x] 32. Admin: "Article notes" screen (add, forget, make desk rule),
       header button, notes on the Revise form plus an "also remember for the
       desk" tickbox, special instructions on the commission form
 - [ ] 33. Tests, README/DECISIONS/CLAUDE updates, end-to-end check

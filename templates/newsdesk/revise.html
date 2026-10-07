@@ -5,9 +5,20 @@
   <div class="nice-padding">
     <p class="help-block help-info">
       The <strong>{{ desk.name }}</strong> agent will rewrite this draft as a new revision of the same article,
-      using its original source material, its style guide and its {{ memory_size }} memory note{{ memory_size|pluralize }}.
+      using its original source material, its style guide, its {{ memory_size }} desk memory note{{ memory_size|pluralize }}
+      and the {{ notes|length }} note{{ notes|length|pluralize }} on this article.
       The revised draft goes back to Editor review. The agent never publishes.
     </p>
+    {% if notes %}
+      <h2 class="w-h3">Notes on this article</h2>
+      <p>The agent follows these on every revision of this article, and nowhere else.
+        <a href="{{ notes_url }}">Manage notes</a></p>
+      <ul class="newsdesk-notes">
+        {% for note in notes %}<li>{{ note.note|linebreaksbr }} <small>({{ note.get_source_display|lower }})</small></li>{% endfor %}
+      </ul>
+    {% else %}
+      <p>No notes on this article yet. <a href="{{ notes_url }}">Add one</a></p>
+    {% endif %}
     <form method="post" novalidate>
       {% csrf_token %}
       {% for field in form %}

@@ -378,14 +378,22 @@ class AdminTests(NewsdeskTestCase):
             with self.captureOnCommitCallbacks(execute=True):
                 response = self.client.post(
                     self.add_url,
-                    {"desk": self.economy.pk, "article_type": "explainer", "brief": "Explain GST changes.", "source_material": MATERIAL, "byline": ""},
+                    {
+                        "desk": self.economy.pk,
+                        "article_type": "explainer",
+                        "brief": "Explain GST changes.",
+                        "article_instructions": "No named companies.",
+                        "source_material": MATERIAL,
+                        "byline": "",
+                    },
                 )
         self.assertEqual(response.status_code, 302)
         request = DraftRequest.objects.get()
-        self.assertEqual(request.requested_by, self.writer)
+        self.assertEqual((request.requested_by, request.article_instructions), (self.writer, "No named companies."))
         delay.assert_called_once_with(request.pk)
         inspect = self.client.get(reverse("wagtailsnippets_newsdesk_draftrequest:inspect", args=[request.pk]))
         self.assertContains(inspect, "Explain GST changes.")
+        self.assertContains(inspect, "No named companies.")
 
     def test_opinion_cannot_be_commissioned(self):
         self.client.force_login(self.writer)

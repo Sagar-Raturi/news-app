@@ -9,7 +9,7 @@ from wagtail.models import Page, TaskState
 
 from news.models import ArticlePage
 
-from .models import DraftRequest
+from .models import ArticleNote, DraftRequest
 
 
 class ReviseForm(forms.Form):
@@ -17,8 +17,42 @@ class ReviseForm(forms.Form):
         label="What should the agent change?",
         widget=forms.Textarea(attrs={"rows": 6}),
         help_text="Be specific. The agent rewrites the whole draft from its source material, "
-        "following these instructions and the desk's memory.",
+        "following these instructions, this article's notes and the desk's memory. "
+        "The instructions are kept as a note on this article for later rounds.",
     )
+    remember_for_desk = forms.BooleanField(
+        required=False,
+        help_text="Leave unticked for anything that only concerns this article.",
+    )
+
+    def __init__(self, *args, desk=None, article_type_label="", can_teach_desk=False, **kwargs):
+        super().__init__(*args, **kwargs)
+        if can_teach_desk:
+            self.fields["remember_for_desk"].label = (
+                f"Also remember this for all future {desk.name} {article_type_label.lower()} drafts"
+            )
+        else:
+            del self.fields["remember_for_desk"]
+
+
+class NoteForm(forms.Form):
+    note = forms.CharField(
+        label="Add a note for this article",
+        widget=forms.Textarea(attrs={"rows": 3}),
+        help_text="The desk agent follows it on every revision of this article, and nowhere else.",
+    )
+
+
+def can_teach_desk(user):
+    """Only editors (who manage desks) can turn an instruction into a desk-wide rule."""
+    return user.has_perm("newsdesk.change_deskagent")
+
+
+def can_manage_notes(page, user):
+    """Agent-written articles this user may edit (locks don't matter: notes aren't page content)."""
+    if not page.permissions_for_user(user).can_edit():
+        return False
+    return DraftRequest.original_for(page) is not None
 
 
 def can_revise(page, user):
@@ -57,8 +91,20 @@ def revise_article(request, page_id):
         messages.warning(request, "The desk agent is already working on this draft.")
         return redirect(edit_url)
 
-    form = ReviseForm(request.POST or None, initial={"instructions": latest_review_comment(page)})
+    teach = can_teach_desk(request.user)
+    form = ReviseForm(
+        request.POST or None,
+        initial={"instructions": latest_review_comment(page)},
+        desk=original.desk,
+        article_type_label=original.get_article_type_display(),
+        can_teach_desk=teach,
+    )
     if request.method == "POST" and form.is_valid():
+        instructions = form.cleaned_data["instructions"]
+        # Saved before the commission so the agent's run sees the same notes and memory.
+        note = ArticleNote.remember(page, instructions, ArticleNote.Source.REVISION, request.user)
+        if teach and form.cleaned_data.get("remember_for_desk") and note:
+            note.promote(original.desk, original.article_type, request.user)
         DraftRequest.objects.create(
             desk=original.desk,
             article_type=original.article_type,
@@ -67,7 +113,7 @@ def revise_article(request, page_id):
             byline=original.byline,
             revision_of=original,
             article=page,
-            instructions=form.cleaned_data["instructions"],
+            instructions=instructions,
             requested_by=request.user,
         )
         messages.success(
@@ -80,5 +126,69 @@ def revise_article(request, page_id):
     return TemplateResponse(
         request,
         "newsdesk/revise.html",
-        {"page": page, "desk": original.desk, "form": form, "edit_url": edit_url, "memory_size": original.desk.memory_size()},
+        {
+            "page": page,
+            "desk": original.desk,
+            "form": form,
+            "edit_url": edit_url,
+            "memory_size": len(original.desk.memory(original.article_type)),
+            "notes": ArticleNote.standing(page),
+            "notes_url": reverse("newsdesk_article_notes", args=[page.pk]),
+        },
+    )
+
+
+def article_notes(request, page_id):
+    """One article's memory: list, add, forget/restore, and promote to a desk rule."""
+    page = get_object_or_404(ArticlePage, pk=page_id)
+    original = DraftRequest.original_for(page)
+    if original is None or not can_manage_notes(page, request.user):
+        raise PermissionDenied
+    url = reverse("newsdesk_article_notes", args=[page.pk])
+    teach = can_teach_desk(request.user)
+    form = NoteForm()
+
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "add":
+            form = NoteForm(request.POST)
+            if form.is_valid():
+                ArticleNote.remember(page, form.cleaned_data["note"], ArticleNote.Source.MANUAL, request.user)
+                messages.success(request, "Note added. The agent will follow it on every revision of this article.")
+                return redirect(url)
+        else:
+            note = get_object_or_404(ArticleNote, pk=request.POST.get("note"), article_id=page.pk)
+            if action == "forget":
+                note.active = False
+                note.save(update_fields=["active"])
+                messages.success(request, "The agent will no longer see this note.")
+            elif action == "restore":
+                note.active = True
+                note.save(update_fields=["active"])
+                messages.success(request, "The agent will follow this note again.")
+            elif action == "promote":
+                if not teach:
+                    raise PermissionDenied
+                note.promote(original.desk, original.article_type, request.user)
+                messages.success(
+                    request,
+                    f"Added to the {original.desk.name}'s memory for all future "
+                    f"{original.get_article_type_display().lower()} drafts.",
+                )
+            return redirect(url)
+
+    return TemplateResponse(
+        request,
+        "newsdesk/article_notes.html",
+        {
+            "page": page,
+            "desk": original.desk,
+            "type_label": original.get_article_type_display(),
+            "notes": ArticleNote.objects.filter(article_id=page.pk).select_related("created_by", "desk_rule"),
+            "form": form,
+            "can_teach": teach,
+            "edit_url": reverse("wagtailadmin_pages:edit", args=[page.pk]),
+            "revise_url": reverse("newsdesk_revise", args=[page.pk]) if can_revise(page, request.user) else "",
+            "desk_url": reverse("wagtailsnippets_newsdesk_deskagent:edit", args=[original.desk.pk]) if teach else "",
+        },
     )

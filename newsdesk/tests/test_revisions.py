@@ -1,5 +1,6 @@
 from unittest import mock
 
+from django.contrib.auth import get_user_model
 from django.test import override_settings
 from django.urls import reverse
 from wagtail.models import WorkflowState
@@ -7,7 +8,7 @@ from wagtail.models import WorkflowState
 from news.models import ArticlePage
 from newsdesk.models import ArticleNote, DeskFeedback, DraftRequest
 from newsdesk.prompts import article_as_text, build_system, build_user_message
-from newsdesk.publishing import apply_revision
+from newsdesk.publishing import apply_revision, create_article
 from newsdesk.schema import DraftSource
 from newsdesk.tasks import draft_article
 from newsdesk.views import can_revise, latest_review_comment
@@ -215,3 +216,117 @@ class ReviseViewTests(RevisionTestCase):
         response = self.client.get(reverse("wagtailadmin_pages:edit", args=[self.article.pk]))
         self.assertContains(response, self.url())
         self.assertContains(response, "Revise with AI")
+
+
+class ReviseFormMemoryTests(RevisionTestCase):
+    def url(self):
+        return reverse("newsdesk_revise", args=[self.article.pk])
+
+    def post(self, user, data):
+        self.client.force_login(user)
+        with mock.patch("newsdesk.tasks.draft_article.delay"):
+            with self.captureOnCommitCallbacks(execute=True):
+                return self.client.post(self.url(), data)
+
+    def test_desk_tickbox_only_for_editors(self):
+        self.request_changes()
+        self.client.force_login(self.editor)
+        self.assertContains(self.client.get(self.url()), "Also remember this for all future Economy desk explainer drafts")
+        self.client.force_login(self.writer)
+        response = self.client.get(self.url())
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "Also remember this")
+
+    def test_instructions_stay_with_the_article_by_default(self):
+        self.request_changes("Lead with what households pay.")
+        self.post(self.editor, {"instructions": "Lead with what households pay."})
+        # Same text as the review comment: one note, no desk rule.
+        self.assertEqual(list(ArticleNote.objects.values_list("note", flat=True)), ["Lead with what households pay."])
+        self.assertFalse(DeskFeedback.objects.exists())
+
+    def test_ticked_instructions_also_become_a_desk_rule(self):
+        self.request_changes()
+        self.post(self.editor, {"instructions": "Always say who pays.", "remember_for_desk": "on"})
+        rule = DeskFeedback.objects.get()
+        self.assertEqual((rule.desk, rule.article_type, rule.note), (self.economy, "explainer", "Always say who pays."))
+        self.assertEqual(ArticleNote.objects.get(note="Always say who pays.").desk_rule, rule)
+
+    def test_writer_cannot_teach_the_desk_by_posting_the_tickbox(self):
+        self.request_changes()
+        self.post(self.writer, {"instructions": "Always say who pays.", "remember_for_desk": "on"})
+        self.assertTrue(DraftRequest.objects.filter(revision_of=self.original).exists())
+        self.assertFalse(DeskFeedback.objects.exists())
+
+    def test_form_lists_the_articles_notes(self):
+        ArticleNote.remember(self.article, "Keep it under 600 words.", ArticleNote.Source.COMMISSION)
+        self.request_changes()
+        self.client.force_login(self.editor)
+        response = self.client.get(self.url())
+        self.assertContains(response, "Keep it under 600 words.")
+        self.assertContains(response, reverse("newsdesk_article_notes", args=[self.article.pk]))
+
+
+class ArticleNotesViewTests(RevisionTestCase):
+    def url(self, page=None):
+        return reverse("newsdesk_article_notes", args=[(page or self.article).pk])
+
+    def test_editor_adds_forgets_restores_and_promotes(self):
+        self.client.force_login(self.editor)
+        self.assertContains(self.client.get(self.url()), "No notes on this article yet.")
+
+        self.assertRedirects(self.client.post(self.url(), {"action": "add", "note": "Keep it under 600 words."}), self.url())
+        note = ArticleNote.objects.get()
+        self.assertEqual((note.source, note.created_by), (ArticleNote.Source.MANUAL, self.editor))
+        self.assertContains(self.client.get(self.url()), "Make desk rule")
+
+        self.client.post(self.url(), {"action": "forget", "note": note.pk})
+        note.refresh_from_db()
+        self.assertFalse(note.active)
+        self.client.post(self.url(), {"action": "restore", "note": note.pk})
+        note.refresh_from_db()
+        self.assertTrue(note.active)
+
+        self.client.post(self.url(), {"action": "promote", "note": note.pk})
+        note.refresh_from_db()
+        self.assertEqual(note.desk_rule.desk, self.economy)
+        self.assertContains(self.client.get(self.url()), "Also a desk rule")
+
+    def test_empty_note_is_rejected(self):
+        self.client.force_login(self.editor)
+        response = self.client.post(self.url(), {"action": "add", "note": "  "})
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(ArticleNote.objects.exists())
+
+    def test_writer_manages_notes_on_own_draft_but_cannot_make_desk_rules(self):
+        note = ArticleNote.remember(self.article, "Name the regulator.", ArticleNote.Source.REVIEW)
+        self.client.force_login(self.writer)
+        response = self.client.get(self.url())
+        self.assertContains(response, "Name the regulator.")
+        self.assertNotContains(response, "Make desk rule")
+        self.client.post(self.url(), {"action": "promote", "note": note.pk})
+        self.assertFalse(DeskFeedback.objects.exists())
+        self.client.post(self.url(), {"action": "forget", "note": note.pk})
+        note.refresh_from_db()
+        self.assertFalse(note.active)
+
+    def test_only_agent_drafts_users_who_can_edit_and_own_notes(self):
+        human = ArticlePage(title="Human story", standfirst="s", body=[], live=False, owner=self.writer)
+        self.economy.section.add_child(instance=human)
+        self.client.force_login(self.editor)
+        self.assertRedirects(self.client.get(self.url(human)), reverse("wagtailadmin_home"))
+
+        outsider = get_user_model().objects.create_user("intern", "i@example.com", "pass")
+        outsider.groups.add(self.site["writers"])  # a writer, but not this draft's owner
+        self.client.force_login(outsider)
+        self.assertRedirects(self.client.get(self.url()), reverse("wagtailadmin_home"))
+
+        other = create_article(self.make_request(), DraftResult(make_draft(), "m"))
+        foreign = ArticleNote.remember(other, "Other article.", ArticleNote.Source.REVIEW)
+        self.client.force_login(self.editor)
+        self.assertEqual(self.client.post(self.url(), {"action": "forget", "note": foreign.pk}).status_code, 404)
+
+    def test_button_on_edit_screen(self):
+        self.client.force_login(self.writer)
+        response = self.client.get(reverse("wagtailadmin_pages:edit", args=[self.article.pk]))
+        self.assertContains(response, self.url())
+        self.assertContains(response, "Article notes")

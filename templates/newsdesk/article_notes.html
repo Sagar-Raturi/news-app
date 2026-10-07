@@ -1,0 +1,63 @@
+{% extends "wagtailadmin/base.html" %}
+{% block titletag %}Article notes: {{ page.title }}{% endblock %}
+{% block content %}
+  {% include "wagtailadmin/shared/header.html" with title="Article notes" subtitle=page.title icon="list-ul" %}
+  <div class="nice-padding">
+    <p class="help-block help-info">
+      Notes here are this article's own memory. The <strong>{{ desk.name }}</strong> agent follows every active note
+      each time it revises <em>this</em> article; other drafts never see them. "Request changes" comments,
+      special instructions from the commission and "Revise with AI" instructions are added automatically.
+      {% if can_teach %}Use <strong>Make desk rule</strong> when a note should apply to every future
+      {{ desk.name }} {{ type_label|lower }} draft.{% endif %}
+    </p>
+
+    {% if notes %}
+      <table class="listing">
+        <thead>
+          <tr><th>Note</th><th>From</th><th>Added</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody>
+          {% for note in notes %}
+            <tr{% if not note.active %} class="unpublished"{% endif %}>
+              <td>{{ note.note|linebreaksbr }}</td>
+              <td>{{ note.get_source_display }}</td>
+              <td>{{ note.created_at|date:"j M Y, H:i" }}{% if note.created_by %}<br><small>{{ note.created_by.get_full_name|default:note.created_by.get_username }}</small>{% endif %}</td>
+              <td>
+                {% if note.active %}Active{% else %}Forgotten{% endif %}
+                {% if note.desk_rule_id %}<br><small>Also a desk rule</small>{% endif %}
+              </td>
+              <td>
+                <form method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="note" value="{{ note.pk }}">
+                  {% if note.active %}
+                    <button type="submit" name="action" value="forget" class="button button-small button-secondary">Forget</button>
+                    {% if can_teach and not note.desk_rule_id %}
+                      <button type="submit" name="action" value="promote" class="button button-small button-secondary">Make desk rule</button>
+                    {% endif %}
+                  {% else %}
+                    <button type="submit" name="action" value="restore" class="button button-small button-secondary">Remember again</button>
+                  {% endif %}
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No notes on this article yet.</p>
+    {% endif %}
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="action" value="add">
+      {% for field in form %}
+        {% include "wagtailadmin/shared/field.html" %}
+      {% endfor %}
+      <button type="submit" class="button">Add note</button>
+      <a href="{{ edit_url }}" class="button button-secondary">Back to the article</a>
+      {% if revise_url %}<a href="{{ revise_url }}" class="button button-secondary">Revise with AI</a>{% endif %}
+      {% if desk_url %}<a href="{{ desk_url }}" class="button button-secondary">{{ desk.name }} memory</a>{% endif %}
+    </form>
+  </div>
+{% endblock %}

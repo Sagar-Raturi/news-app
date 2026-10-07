@@ -34,7 +34,9 @@ class DraftRequestViewSet(SnippetViewSet):
         "article",
         "editor_notes",
         "error",
+        "instructions",
         "brief",
+        "article_instructions",
         "source_material",
         "byline",
         "requested_by",
@@ -58,11 +60,14 @@ register_snippet(NewsdeskGroup)
 
 @hooks.register("register_admin_urls")
 def register_newsdesk_urls():
-    return [path("newsdesk/revise/<int:page_id>/", views.revise_article, name="newsdesk_revise")]
+    return [
+        path("newsdesk/revise/<int:page_id>/", views.revise_article, name="newsdesk_revise"),
+        path("newsdesk/notes/<int:page_id>/", views.article_notes, name="newsdesk_article_notes"),
+    ]
 
 
 @hooks.register("register_page_header_buttons")
-def revise_with_ai_button(page, user, view_name, next_url=None):
+def newsdesk_buttons(page, user, view_name, next_url=None):
     specific = page.specific
     if isinstance(specific, ArticlePage) and views.can_revise(specific, user):
         yield PageListingButton(
@@ -70,6 +75,13 @@ def revise_with_ai_button(page, user, view_name, next_url=None):
             url=reverse("newsdesk_revise", args=[page.pk]),
             icon_name="draft",
             priority=35,
+        )
+    if isinstance(specific, ArticlePage) and views.can_manage_notes(specific, user):
+        yield PageListingButton(
+            "Article notes",
+            url=reverse("newsdesk_article_notes", args=[page.pk]),
+            icon_name="list-ul",
+            priority=36,
         )
 
 
