@@ -13,7 +13,7 @@ from wagtail.models import WorkflowState
 from core.newsroom import bootstrap
 from news.models import ArticlePage, Author
 from newsdesk.desks import STARTER_DESKS
-from newsdesk.models import DeskAgent, DeskFeedback, DraftRequest
+from newsdesk.models import ArticleNote, DeskAgent, DeskFeedback, DraftRequest
 from newsdesk.prompts import HOUSE_RULES, build_system, build_user_message
 from newsdesk.publishing import body_blocks, create_article, safe_sources
 from newsdesk.schema import ArticleDraft, DraftBlock, DraftSource
@@ -259,6 +259,14 @@ class TaskTests(NewsdeskTestCase):
         draft_article(request.pk)
         self.assertEqual(ArticlePage.objects.count(), 1)
 
+    def test_special_instructions_become_the_articles_first_note(self):
+        request = self.make_request(article_instructions="  Keep it under 600 words.  ")
+        draft_article(request.pk)
+        request.refresh_from_db()
+        note = ArticleNote.objects.get()
+        self.assertEqual((note.article_id, note.note, note.source), (request.article_id, "Keep it under 600 words.", ArticleNote.Source.COMMISSION))
+        self.assertEqual(note.created_by, self.writer)
+
     def test_failure_is_recorded_for_editors(self):
         request = self.make_request()
         with mock.patch.object(FakeWriter, "write", side_effect=DraftError("The model declined.")):
@@ -276,18 +284,33 @@ class ReviewFeedbackTests(NewsdeskTestCase):
         task_state = state.current_task_state
         task_state.task.specific.on_action(task_state, self.editor, "reject", comment=comment)
 
-    def test_request_changes_comment_becomes_desk_memory(self):
+    def test_request_changes_comment_stays_with_the_article(self):
         request = self.make_request(article_type="explainer")
         draft_article(request.pk)
         request.refresh_from_db()
         self.reject(request.article.specific, "Explain who pays the levy before the numbers.")
 
-        note = DeskFeedback.objects.get()
-        self.assertEqual(note.desk, self.economy)
-        self.assertEqual(note.article_type, "explainer")
-        self.assertEqual(note.source, DeskFeedback.Source.REVIEW)
+        note = ArticleNote.objects.get()
+        self.assertEqual(note.article_id, request.article_id)
+        self.assertEqual(note.source, ArticleNote.Source.REVIEW)
         self.assertEqual(note.created_by, self.editor)
-        self.assertIn("Explain who pays the levy", build_system(self.economy, "explainer")[1]["text"])
+        # Not desk memory: other Economy drafts never see it.
+        self.assertFalse(DeskFeedback.objects.exists())
+        self.assertNotIn("Explain who pays the levy", build_system(self.economy, "explainer")[1]["text"])
+
+    def test_promoted_note_becomes_a_desk_rule_once(self):
+        request = self.make_request(article_type="explainer")
+        draft_article(request.pk)
+        request.refresh_from_db()
+        self.reject(request.article.specific, "Explain who pays the levy before the numbers.")
+        note = ArticleNote.objects.get()
+
+        rule = note.promote(self.economy, "explainer", self.editor)
+        self.assertEqual(note.promote(self.economy, "explainer", self.editor), rule)
+        self.assertEqual(DeskFeedback.objects.count(), 1)
+        self.assertEqual((rule.desk, rule.article_type, rule.source), (self.economy, "explainer", DeskFeedback.Source.REVIEW))
+        self.assertEqual((rule.article_id, rule.created_by), (request.article_id, self.editor))
+        self.assertIn("[Explainer] Explain who pays the levy", build_system(self.economy, "explainer")[1]["text"])
         self.assertNotIn("Explain who pays the levy", build_system(self.politics, "explainer")[1]["text"])
 
     def test_empty_comment_or_human_article_adds_nothing(self):
@@ -300,7 +323,41 @@ class ReviewFeedbackTests(NewsdeskTestCase):
         human.save_revision(user=self.writer)
         self.site["workflow"].start(human, self.writer)
         self.reject(human, "Tighten the intro.")
+        self.assertFalse(ArticleNote.objects.exists())
         self.assertFalse(DeskFeedback.objects.exists())
+
+
+@override_settings(NEWSDESK_WRITER="fake")
+class ArticleNoteTests(NewsdeskTestCase):
+    def setUp(self):
+        self.request = self.make_request()
+        draft_article(self.request.pk)
+        self.request.refresh_from_db()
+        self.article = self.request.article.specific
+
+    def test_remember_skips_blank_and_duplicate_notes(self):
+        first = ArticleNote.remember(self.article, "Name the regulator.", ArticleNote.Source.REVIEW, self.editor)
+        self.assertEqual(ArticleNote.remember(self.article, " Name  the regulator. ", ArticleNote.Source.REVISION), first)
+        self.assertIsNone(ArticleNote.remember(self.article, "   ", ArticleNote.Source.MANUAL))
+        self.assertEqual(ArticleNote.objects.count(), 1)
+        first.active = False
+        first.save()
+        # A forgotten note can be given again.
+        self.assertNotEqual(ArticleNote.remember(self.article, "Name the regulator.", ArticleNote.Source.MANUAL), first)
+
+    def test_standing_notes_are_active_own_article_and_skip_current(self):
+        other = create_article(self.make_request(), DraftResult(make_draft(), "m"))
+        a = ArticleNote.remember(self.article, "Lead with households.", ArticleNote.Source.REVIEW)
+        ArticleNote.objects.create(article=self.article, note="Forgotten.", active=False)
+        b = ArticleNote.remember(self.article, "Shorter, please.", ArticleNote.Source.REVISION)
+        ArticleNote.remember(other, "Other article.", ArticleNote.Source.REVIEW)
+        self.assertEqual(ArticleNote.standing(self.article), [a, b])
+        self.assertEqual(ArticleNote.standing(self.article, exclude="Shorter,  please."), [a])
+
+    def test_notes_go_when_the_article_is_deleted(self):
+        ArticleNote.remember(self.article, "Lead with households.", ArticleNote.Source.REVIEW)
+        self.article.delete()
+        self.assertFalse(ArticleNote.objects.exists())
 
 
 class AdminTests(NewsdeskTestCase):

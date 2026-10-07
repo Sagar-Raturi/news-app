@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from wagtail.signals import task_rejected
 
-from .models import DeskFeedback, DraftRequest
+from .models import ArticleNote, DraftRequest
 
 
 @receiver(post_save, sender=DraftRequest)
@@ -17,21 +17,16 @@ def enqueue_draft(sender, instance, created, **kwargs):
 
 @receiver(task_rejected)
 def remember_review_feedback(sender, instance, user=None, **kwargs):
-    """'Request changes' on an agent's draft becomes a memory note for that desk."""
+    """'Request changes' on an agent's draft becomes a note on that article.
+
+    It reaches every later revision of the article, but not other drafts from
+    the desk, until an editor chooses "Make desk rule".
+    """
     comment = (instance.comment or "").strip()
     if not comment:
         return
     page = instance.workflow_state.content_object
-    request = (
-        DraftRequest.objects.filter(article_id=getattr(page, "pk", None)).select_related("desk").first()
-    )
-    if request is None:
+    article_id = getattr(page, "pk", None)
+    if article_id is None or not DraftRequest.objects.filter(article_id=article_id).exists():
         return
-    DeskFeedback.objects.create(
-        desk=request.desk,
-        article_type=request.article_type,
-        note=comment,
-        source=DeskFeedback.Source.REVIEW,
-        article_id=request.article_id,
-        created_by=user,
-    )
+    ArticleNote.remember(page, comment, ArticleNote.Source.REVIEW, user)

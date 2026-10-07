@@ -86,7 +86,8 @@ class DeskAgent(ClusterableModel):
             heading="Memory: feedback for this desk",
             label="Feedback note",
             help_text="Every note here is given to this desk's agent on every draft. "
-            "Pick an article type to apply a note only to that type.",
+            "Pick an article type to apply a note only to that type. Review comments stay "
+            "with their article until an editor chooses 'Make desk rule'.",
         ),
     ]
 
@@ -144,6 +145,76 @@ class DeskFeedback(models.Model):
         return Truncator(self.note).chars(60)
 
 
+def _same_text(a, b):
+    return " ".join(a.split()) == " ".join(b.split())
+
+
+class ArticleNote(models.Model):
+    """Memory for one article: instructions that apply to it alone, round after round.
+
+    Desk memory (DeskFeedback) reaches every future draft from a desk; an
+    article note reaches only revisions of its own article. Editors can
+    promote a note to a desk rule when it turns out to apply more widely.
+    """
+
+    class Source(models.TextChoices):
+        COMMISSION = "commission", "Special instructions"
+        REVIEW = "review", "Review comment"
+        REVISION = "revision", "Revise with AI"
+        MANUAL = "manual", "Added by hand"
+
+    article = models.ForeignKey("news.ArticlePage", on_delete=models.CASCADE, related_name="agent_notes")
+    note = models.TextField()
+    active = models.BooleanField(default=True)
+    source = models.CharField(max_length=12, choices=Source.choices, default=Source.MANUAL)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    desk_rule = models.ForeignKey(
+        DeskFeedback, null=True, blank=True, on_delete=models.SET_NULL, related_name="+",
+        help_text="Set when an editor made this note a rule for the whole desk",
+    )
+
+    class Meta:
+        ordering = ["created_at", "pk"]
+
+    def __str__(self):
+        return Truncator(self.note).chars(60)
+
+    @classmethod
+    def remember(cls, article, note, source, user=None):
+        """Add a note to the article unless an identical active one is already there."""
+        note = (note or "").strip()
+        if not note:
+            return None
+        for existing in cls.objects.filter(article_id=article.pk, active=True):
+            if _same_text(existing.note, note):
+                return existing
+        return cls.objects.create(article_id=article.pk, note=note, source=source, created_by=user)
+
+    @classmethod
+    def standing(cls, article, exclude=""):
+        """Active notes for the article, oldest first, minus any matching `exclude`."""
+        notes = cls.objects.filter(article_id=article.pk, active=True)
+        return [n for n in notes if not (exclude and _same_text(n.note, exclude))]
+
+    def promote(self, desk, article_type, user=None):
+        """Make this note a desk rule for future drafts of this type (once)."""
+        if self.desk_rule_id:
+            return self.desk_rule
+        self.desk_rule = DeskFeedback.objects.create(
+            desk=desk,
+            article_type=article_type,
+            note=self.note,
+            source=DeskFeedback.Source.REVIEW,
+            article_id=self.article_id,
+            created_by=user,
+        )
+        self.save(update_fields=["desk_rule"])
+        return self.desk_rule
+
+
 class CommissionForm(WagtailAdminModelForm):
     """Records who commissioned the draft and offers only active desks."""
 
@@ -177,6 +248,13 @@ class DraftRequest(models.Model):
     source_material = models.TextField(
         help_text="Paste the reporting the agent may use: notes, statements, report extracts, "
         "data, links. The agent is told to use only this material."
+    )
+    article_instructions = models.TextField(
+        "special instructions for this article",
+        blank=True,
+        help_text="Optional. Applies to this article only and is remembered on every revision "
+        "(e.g. 'keep it under 600 words', 'no named companies'). Rules for every draft from "
+        "this desk belong in the desk's memory instead.",
     )
     byline = models.ForeignKey(
         "news.Author",
@@ -215,6 +293,7 @@ class DraftRequest(models.Model):
         FieldPanel("desk", widget=forms.Select),
         FieldPanel("article_type"),
         FieldPanel("brief"),
+        FieldPanel("article_instructions"),
         FieldPanel("source_material"),
         FieldPanel("byline"),
     ]

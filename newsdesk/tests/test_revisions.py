@@ -5,7 +5,7 @@ from django.urls import reverse
 from wagtail.models import WorkflowState
 
 from news.models import ArticlePage
-from newsdesk.models import DeskFeedback, DraftRequest
+from newsdesk.models import ArticleNote, DeskFeedback, DraftRequest
 from newsdesk.prompts import article_as_text, build_user_message
 from newsdesk.publishing import apply_revision
 from newsdesk.schema import DraftSource
@@ -134,11 +134,12 @@ class RevisionTaskTests(RevisionTestCase):
         self.assertIn("[Demo revision]", latest.body[0].value.source)
         self.assertEqual(ArticlePage.objects.count(), 1)
 
-    def test_review_comment_memory_still_recorded_with_revisions(self):
+    def test_review_comments_still_recorded_with_revisions(self):
         self.make_revision()
         self.request_changes("Name the regulator.")
-        note = DeskFeedback.objects.get(note="Name the regulator.")
-        self.assertEqual((note.desk, note.article_type), (self.economy, "explainer"))
+        note = ArticleNote.objects.get(note="Name the regulator.")
+        self.assertEqual(note.article_id, self.article.pk)
+        self.assertFalse(DeskFeedback.objects.exists())
 
 
 class ReviseViewTests(RevisionTestCase):

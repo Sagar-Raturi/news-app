@@ -6,6 +6,8 @@ from django.utils.text import Truncator, slugify
 
 from news.models import ArticleAuthor, ArticlePage
 
+from .models import ArticleNote
+
 MAX_TAGS = 4
 
 
@@ -113,6 +115,7 @@ def create_article(request, result):
 
     section.add_child(instance=article)
     article.save_revision(user=user)
+    ArticleNote.remember(article, request.article_instructions, ArticleNote.Source.COMMISSION, user)
     workflow = article.get_workflow()
     if workflow:
         workflow.start(article, user)

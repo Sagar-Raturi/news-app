@@ -69,3 +69,18 @@ of the same article and it returns to Editor review.
 - [x] 28. Admin: "Revise with AI" button on the article's edit screen and a
       form prefilled with the latest "Request changes" comment; permissions
 - [x] 29. Tests, README/DECISIONS, Docker verification
+
+## Phase 2c — Article notes (per-article memory)
+
+Instructions meant for one article stay with that article; only what an
+editor chooses becomes a desk rule.
+
+- [x] 30. ArticleNote model (per-article memory) and "special instructions" on
+      commissions; "Request changes" comments become article notes instead of
+      desk memory; promoting a note to a desk rule
+- [ ] 31. Prompts: special instructions in first drafts, all active article
+      notes in every revision; fake writer shows them
+- [ ] 32. Admin: "Article notes" screen (add, forget, make desk rule),
+      header button, notes on the Revise form plus an "also remember for the
+      desk" tickbox, special instructions on the commission form
+- [ ] 33. Tests, README/DECISIONS/CLAUDE updates, end-to-end check
