@@ -83,4 +83,4 @@ editor chooses becomes a desk rule.
 - [x] 32. Admin: "Article notes" screen (add, forget, make desk rule),
       header button, notes on the Revise form plus an "also remember for the
       desk" tickbox, special instructions on the commission form
-- [ ] 33. Tests, README/DECISIONS/CLAUDE updates, end-to-end check
+- [x] 33. Tests, README/DECISIONS/CLAUDE updates, end-to-end check

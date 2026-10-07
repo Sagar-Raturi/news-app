@@ -103,6 +103,9 @@ canned drafts (no API calls, no cost).
 - **Desk**: picks the agent (and the section the draft is filed in).
 - **Type**: news, analysis or explainer.
 - **Brief**: the story and angle you want.
+- **Special instructions for this article** (optional): rules for this piece
+  only, e.g. "keep it under 600 words". They are saved as the article's first
+  note and followed on every revision.
 - **Source material**: paste notes, statements, report extracts, data and links.
   The agent is told to use **only** this material, and links it didn't get
   from you are stripped.
@@ -121,32 +124,55 @@ next to the title. The form is prefilled with your latest comment; adjust it
 and submit.
 
 The same desk agent rewrites the draft as a **new revision of the same
-article**. It gets your instructions, the current text (including any edits
-made by hand), the original brief and source material, and the desk's memory.
-The slug, byline and image are kept. A minute or so later the article is back
-in **Editor review** with the revised text; the old version stays in the
-page's *History*. Because "Request changes" comments also go into the desk's
-memory, future drafts from that desk avoid the same problem.
+article**. It gets your instructions, the article's notes from earlier rounds,
+the current text (including any edits made by hand), the original brief and
+source material, and the desk's memory. The slug, byline and image are kept.
+A minute or so later the article is back in **Editor review** with the revised
+text; the old version stays in the page's *History*.
+
+Editors also see a tickbox, **"Also remember this for all future … drafts"**.
+Tick it only when the instruction is a lesson for the whole desk; leave it
+unticked for anything about this one article.
 
 Who can use it: editors, and the draft's own writer once changes have been
 requested. Not available for published articles or human-written ones, or
 while the agent is already working on that draft.
 
-### Teaching a desk (memory)
+### Memory: desk rules and article notes
 
-*Newsdesk AI → Desk agents → (desk)* (editors):
+The agent's instructions are layered, from the widest to the narrowest:
+
+```
+House rules (whole newspaper)
+  └─ Desk style guide + desk memory (every draft from this desk)
+       └─ Desk memory for one type (e.g. Economy *news* only)
+            └─ Article notes (this article only, every revision)
+                 └─ This revision's instructions
+```
+
+**Desk memory**: *Newsdesk AI → Desk agents → (desk)* (editors):
 
 - **Style guide**: standing instructions for that desk.
 - **Memory: feedback for this desk**: add notes. Leave *Article type* blank
   for "always", or pick one (e.g. only for Politics *analysis*). Untick
   *Active* to make the agent forget a note.
-- **Automatic memory**: when an editor chooses **Request changes** on an
-  agent's draft and writes a comment, that comment is saved to the desk's
-  memory for that article type.
 
-Every note a desk has is included in its agent's instructions on every draft,
-and only that desk's agent sees it. Politics feedback never reaches the
+Only that desk's agent sees its memory. Politics feedback never reaches the
 Economy agent.
+
+**Article notes**: on an agent's draft, open the **⋯** menu next to the title
+and choose **Article notes** (editors, and the draft's writer):
+
+- Added automatically: the commission's special instructions, every
+  **Request changes** comment, and every **Revise with AI** instruction.
+- **Add note** for anything else about this article.
+- **Forget** stops the agent seeing a note (**Remember again** undoes it).
+- **Make desk rule** (editors) copies a note into the desk's memory for that
+  article type, when it turns out to apply to every future draft.
+
+Article notes never reach other articles or the desk's memory unless an
+editor promotes them. Comments that were saved to desk memory before this
+change are still there; untick any that were really about one article.
 
 ### Model and cost
 
@@ -159,8 +185,9 @@ cost. Usage per draft is shown on each commission.
 How it works in code: `newsdesk/prompts.py` (house rules + desk style +
 memory), `newsdesk/writer.py` (Claude call with structured output),
 `newsdesk/publishing.py` (draft → article in review, revisions),
-`newsdesk/views.py` ("Revise with AI" screen), `newsdesk/tasks.py`
-(Celery job), `newsdesk/signals.py` (review comments → memory).
+`newsdesk/views.py` ("Revise with AI" and "Article notes" screens),
+`newsdesk/tasks.py` (Celery job), `newsdesk/signals.py` (review comments →
+article notes).
 
 ## Common commands
 
@@ -206,5 +233,5 @@ All settings come from environment variables (see `config/settings.py`):
 ## Project docs
 
 - `CLAUDE.md` — conventions and layout
-- `PLAN.md` — phase 1 checklist
+- `PLAN.md` — checklists for phase 1 and the AI desk agents (2, 2b, 2c)
 - `DECISIONS.md` — choices made where the brief was ambiguous

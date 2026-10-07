@@ -34,7 +34,7 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 
 - One agent per news desk, as data (DeskAgent: style guide, model, effort) rather than separate programs — one tested code path; editors configure agents in the admin.
 - Memory is explicit, editable notes (DeskFeedback) injected into the prompt, scoped to one desk and optionally one article type — predictable, auditable and easy to "forget" (untick), unlike opaque learned memory.
-- "Request changes" comments on an agent's draft are saved to that desk's memory automatically — feedback is captured where editors already give it.
+- "Request changes" comments on an agent's draft are saved to that desk's memory automatically — feedback is captured where editors already give it. (Superseded in phase 2c: they now become article notes.)
 - Agents write only news, analysis and explainers; opinion and editorials are blocked in the model, form and prompt — matches the published AI policy.
 - Agents must use only editor-supplied material; source URLs not present in that material are removed before saving — guards against invented links.
 - Model output is plain text, escaped into rich text by our code — the model can't inject HTML into pages.
@@ -54,3 +54,14 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Revision is a deliberate button, not automatic on "Request changes" — each run costs money and the editor may prefer the writer to fix it.
 - Available to editors, and to the draft's writer once changes are requested (it's locked to them while in review); never for published or human-written articles, nor while a run is pending.
 - Links in a revision are kept only if they appear in the source material or the editor's instructions.
+
+## Phase 2c — Article notes
+
+- "Request changes" comments become notes on that article, not desk memory — most review comments are about one story; saving them desk-wide made the agent apply one-off instructions to unrelated drafts.
+- An instruction becomes a desk rule only when an editor says so ("Make desk rule", or the tickbox on "Revise with AI") — desk memory is shared by every future draft, so promoting is a deliberate editorial choice; writers can't, as they can't edit desks either.
+- Article notes are a separate table with a plain foreign key, not page content (not an InlinePanel) — they are added outside page edits (review signal, Revise form), so storing them in page revisions would let an older revision overwrite them.
+- Article notes go in the user message, never the system prompt — the cached desk block stays identical across a desk's drafts.
+- Every revision gets all of the article's active notes; on conflict the current instructions win — earlier rounds aren't forgotten, but editors can still change their minds.
+- A note already contained in a longer note or in the current instructions is not repeated to the agent — typically a review comment the editor extended in the Revise form; the notes themselves are left untouched.
+- Writers can see, add and forget notes on their own drafts even while the draft is locked in review — notes are instructions to the agent, not page content.
+- Existing desk-memory notes captured from reviews before 2c are left as they are — removing them silently could lose real lessons; editors can untick them.
