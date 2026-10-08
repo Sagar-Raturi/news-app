@@ -6,6 +6,9 @@ it returns queued responses per role and records every request it receives.
 """
 
 import re
+import time
+
+from django.conf import settings
 
 from newsdesk.schema import DraftBlock
 
@@ -40,7 +43,18 @@ class FakeCaller:
         if request.on_event:
             request.on_event("progress", f"[demo] The {request.agent.name.lower()} is working (no API call).")
         parsed = handler(request, _user_text(request))
+        self.stream(request, parsed)
         return AgentResponse(parsed=parsed, text="", model="fake", usage=Usage())
+
+    def stream(self, request, parsed):
+        """Play the output back word by word, so the live feed has something to show in demos."""
+        delay = settings.NEWSDESK_FAKE_DELAY
+        if not request.on_event or delay <= 0:
+            return
+        words = readable(parsed).split(" ")
+        for i in range(0, len(words), 4):
+            request.on_event("text", " ".join(words[i : i + 4]) + " ")
+            time.sleep(delay)
 
     def writer(self, request, text):
         brief_text = _tag(text, "brief")
@@ -67,6 +81,16 @@ class FakeCaller:
             tags=["Demo"],
             notes="Demo draft: switch NEWSDESK_WRITER to anthropic for real research and writing.",
         )
+
+
+def readable(parsed):
+    """Plain text of a structured output, for the demo stream."""
+    if isinstance(parsed, FullDraft):
+        parts = [parsed.headline, parsed.standfirst]
+        for block in parsed.body:
+            parts += [block.text, block.detail, *block.points]
+        return " ".join(p for p in parts if p)
+    return parsed.model_dump_json()
 
 
 class ScriptedCaller:

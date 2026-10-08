@@ -1,5 +1,5 @@
 {% load newsdesk_tags %}
-<div id="nd-activity"{% if active_run %} hx-get="{% url 'newsdesk_articles:activity' workspace.pk %}?watching=1" hx-trigger="every 2s" hx-swap="outerHTML"{% endif %}>
+<div id="nd-activity"{% if active_run %} hx-get="{% url 'newsdesk_articles:activity' workspace.pk %}?watching=1" hx-trigger="every 2s[!window.ndLive]" hx-swap="outerHTML"{% endif %}>
   <h2 class="nd-panel__title">Agent activity</h2>
   {% if article_usage.runs %}
     <p class="nd-usage">This article so far: {{ article_usage.cost|usd }} estimated ·

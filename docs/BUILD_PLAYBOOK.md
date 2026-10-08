@@ -28,7 +28,7 @@ Contents
 |---|---|
 | 1 — Site (Wagtail news site, SEO, demo content) | Done |
 | 2 — Desk agents (commission → draft → review, article notes) | Done; being retired into the workspace at item 39 |
-| 3 — AI article workspace | Items 34–36 done (data model, workspace page, background generation with the writer agent, approve/publish). Next: 37 |
+| 3 — AI article workspace | Items 34–37 done (data model, workspace page, background generation with the writer agent, approve/publish, live activity feed over SSE). Next: 38 |
 | 4 — Ship it (production, accounts, paywall, payments, images, ads, live blog, legal) | Planned in `PLAN.md` and `docs/DEPLOYMENT.md` |
 
 The owner has **no Anthropic API key yet**: everything is built and demoed with
@@ -113,8 +113,16 @@ Generate (workspace_views.generate)
   hand edits in Wagtail become "human" versions).
 - UI: `newsdesk/workspace_views.py`, URLs in `wagtail_hooks.ArticlesViewSet`
   (namespace `newsdesk_articles:`), templates in `templates/newsdesk/workspace/`,
-  CSS/JS in `newsdesk/static/newsdesk/`. Activity tab polls every 2 s
-  (`_activity.html`, `HX-Refresh` when the run ends).
+  CSS/JS in `newsdesk/static/newsdesk/`.
+- Live feed: `pipeline/events.emit()` stores an `AgentEvent` and publishes it on
+  Redis channel `newsdesk:ws:<id>`; streamed text is published in chunks
+  (`TextBuffer`), not stored. `newsdesk/live.py` is an async SSE view at
+  `/newsdesk/live/<id>/events/?after=<last event id>` (outside the Wagtail
+  admin URLs, own permission check) that replays stored events then relays
+  Redis. `workspace.js` subscribes while a run is active, appends lines and
+  text, redraws the activity panel on step changes and reloads on `run_end`.
+  The 2 s HTMX polling pauses while the stream is connected (`window.ndLive`).
+  The web container runs uvicorn (ASGI) with polling file watching.
 
 ## 4. Invariants — don't break these
 
@@ -136,7 +144,7 @@ Generate (workspace_views.generate)
 
 Each item: what to build, where it plugs in, tests, done when. Numbers match `PLAN.md`.
 
-### 37. Live progress (SSE)
+### 37. Live progress (SSE) — done
 - **Build:** `config/asgi.py`; serve web with uvicorn in Docker
   (`uvicorn config.asgi:application --reload --host 0.0.0.0 --port 8000` in
   dev; gunicorn + uvicorn workers in prod). Add `uvicorn[standard]` to requirements.

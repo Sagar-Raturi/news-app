@@ -85,6 +85,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
+ASGI_APPLICATION = "config.asgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(
@@ -148,6 +149,10 @@ CELERY_TIMEZONE = TIME_ZONE
 # API (demos, tests).
 NEWSDESK_WRITER = os.environ.get("NEWSDESK_WRITER", "anthropic")
 NEWSDESK_MAX_TOKENS = int(os.environ.get("NEWSDESK_MAX_TOKENS", "16000"))
+# Live activity feed over Redis pub/sub (off in tests unless a test turns it on).
+NEWSDESK_LIVE_EVENTS = env_bool("NEWSDESK_LIVE_EVENTS", "test" not in sys.argv)
+# Fake agents pause this many seconds between streamed chunks so demos look live.
+NEWSDESK_FAKE_DELAY = float(os.environ.get("NEWSDESK_FAKE_DELAY", "0"))
 
 # Emails go to the console in dev (workflow notifications).
 EMAIL_BACKEND = os.environ.get(

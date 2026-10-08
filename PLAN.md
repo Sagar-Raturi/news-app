@@ -102,7 +102,7 @@ items 36, 38 and 40.
 - [x] 36. Background job + single-agent generation end to end (Writer),
       version → page revision sync, hand edits imported as versions,
       Approve / Publish / Unpublish (editors) — CHECK IN
-- [ ] 37. Live progress: ASGI (uvicorn), Redis pub/sub events, SSE activity
+- [x] 37. Live progress: ASGI (uvicorn), Redis pub/sub events, SSE activity
       feed with polling fallback
 - [ ] 38. Full pipeline: orchestrator plan, researcher (web search/fetch),
       analyst, outliner, writer, fact-checker loop, editor, SEO; retry a

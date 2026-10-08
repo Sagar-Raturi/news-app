@@ -19,7 +19,7 @@ from newsdesk.versions import create_version
 
 from . import drafts
 from .context import brief_block, build_system, draft_block, record_editor_sources, sources_block, target_length
-from .events import emit
+from .events import RUN_END, TextBuffer, emit
 from .llm import AgentError, AgentRequest, TransientAgentError, estimate_cost, get_caller
 from .schemas import FullDraft
 
@@ -63,7 +63,7 @@ class Pipeline:
             draft = self.run_steps()
             self.finish(draft)
         except RunCancelled:
-            emit(run, "status", "Run cancelled")
+            emit(run, RUN_END, "Run cancelled")
             self.workspace.refresh_status()
         except TransientAgentError:
             raise  # the Celery task decides whether to retry
@@ -154,26 +154,31 @@ class Pipeline:
         agent = AgentDefinition.for_role(role)
         step.agent, step.model = agent, agent.model
         step.input_summary = input_summary
-        words = {"count": 0}
+        text = TextBuffer(self.run, step)
 
         def on_event(kind, message, data=None):
             if kind == "text":
-                words["count"] += len(message.split())
-                emit(self.run, "text", message, step=step, persist=False)
+                text.add(message)
             else:
+                text.flush()
                 emit(self.run, kind, message, step=step, data=data)
 
-        response = self.caller.call(
-            AgentRequest(
-                agent=agent,
-                system=build_system(agent, self.workspace),
-                messages=messages,
-                output_format=output_format,
-                tools=list(tools),
-                tool_handlers=tool_handlers or {},
-                on_event=on_event,
-            )
+        request = AgentRequest(
+            agent=agent,
+            system=build_system(agent, self.workspace),
+            messages=messages,
+            output_format=output_format,
+            tools=list(tools),
+            tool_handlers=tool_handlers or {},
+            on_event=on_event,
         )
+        try:
+            response = self.caller.call(request)
+        finally:
+            text.flush()
+        return self._record(step, response)
+
+    def _record(self, step, response):
         usage = response.usage
         step.model = response.model
         step.input_tokens += usage.input_tokens
@@ -268,7 +273,7 @@ class Pipeline:
             version=version,
             run=run,
         )
-        emit(run, "status", f"Finished: version {version.number} saved" if version else "Finished: no changes")
+        emit(run, RUN_END, f"Finished: version {version.number} saved" if version else "Finished: no changes")
         self.workspace.refresh_status()
 
     def fail(self, error):
@@ -296,7 +301,7 @@ class Pipeline:
             run=run,
             version=saved,
         )
-        emit(run, "error", f"Run failed: {error}")
+        emit(run, RUN_END, f"Run failed: {error}", data={"failed": True})
         self.workspace.refresh_status()
 
 

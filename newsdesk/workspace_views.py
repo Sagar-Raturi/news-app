@@ -6,7 +6,7 @@ redirect); the page's JavaScript only switches tabs and refreshes panels.
 
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
-from django.db.models import Count, Sum
+from django.db.models import Count, Max, Sum
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -17,7 +17,7 @@ from . import approval
 from .diff import diff_versions
 from .forms import BriefForm, NewArticleForm
 from .jobs import ArticleBusy, cancel_run, retry_run, start_run
-from .models import AgentRun, ArticleWorkspace, FactCheckFlag, Topic
+from .models import AgentEvent, AgentRun, ArticleWorkspace, FactCheckFlag, Topic
 from .pagesync import import_page_edits
 from .rendering import render_version
 from .versions import open_flags, restore_version
@@ -107,10 +107,12 @@ def activity_context(workspace):
         workspace.runs.select_related("requested_by").prefetch_related("steps__agent", "steps__events")[:20]
     )
     totals = workspace.runs.aggregate(cost=Sum("cost"), searches=Sum("web_searches"), runs=Count("pk"))
+    last_event = AgentEvent.objects.filter(run__workspace=workspace).aggregate(last=Max("pk"))["last"]
     tokens = sum(r.total_tokens for r in workspace.runs.all())
     return {
         "runs": runs,
         "active_run": next((r for r in runs if r.is_active), None),
+        "last_event_id": last_event or 0,
         "article_usage": {
             "cost": totals["cost"] or 0,
             "searches": totals["searches"] or 0,

@@ -7,7 +7,9 @@
   <script src="{% static 'newsdesk/workspace.js' %}" defer></script>
 {% endblock %}
 {% block content %}
-  <div class="nd-workspace" data-workspace="{{ workspace.pk }}">
+  <div class="nd-workspace" data-workspace="{{ workspace.pk }}"
+       data-activity="{% url 'newsdesk_articles:activity' workspace.pk %}"
+       {% if active_run %}data-events="{% url 'newsdesk_live_events' workspace.pk %}?after={{ last_event_id }}"{% endif %}>
     {% include "newsdesk/workspace/_topbar.html" %}
     <div class="nd-layout">
       <main class="nd-main" id="nd-draft">

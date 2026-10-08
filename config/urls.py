@@ -9,11 +9,14 @@ from wagtail.documents import urls as wagtaildocs_urls
 
 from news.sitemaps import AuthorSitemap, TagSitemap
 from news.views import robots_txt
+from newsdesk.live import workspace_events
 
 SITEMAPS = {"pages": PageSitemap, "authors": AuthorSitemap, "tags": TagSitemap}
 
 urlpatterns = [
     path("django-admin/", admin.site.urls),
+    # Live agent activity (async, so outside the Wagtail admin URLs).
+    path("newsdesk/live/<int:pk>/events/", workspace_events, name="newsdesk_live_events"),
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("sitemap.xml", sitemap, {"sitemaps": SITEMAPS}, name="sitemap"),

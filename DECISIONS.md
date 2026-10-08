@@ -101,3 +101,7 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Photos from Pexels and Wikimedia Commons (files can be stored, licence recorded) until a wire subscription; Unsplash is skipped because its terms require hotlinking. One image per article, enforced.
 - Live blogs are free to read and carry ads; every agent-drafted update needs an editor's approval, even during breaking news — speed comes from a one-click mobile queue, not from skipping review.
 - Ads are shown only to readers without a subscription — ad-free reading is part of what subscribers pay for.
+- Live activity uses server-sent events from an async Django view, fed by Redis pub/sub (Redis is already there for Celery) — one-way updates don't need WebSockets or Channels; polling stays as the fallback.
+- The dev web server is uvicorn (ASGI) with `--reload` and forced polling file watching — Django's runserver is WSGI, and file-change events don't cross Windows bind mounts.
+- Streamed model text is published but not stored; step, tool and status events are stored so the feed survives reconnects.
+- Fake agents replay their demo text with a small delay (NEWSDESK_FAKE_DELAY, 0.15 s in Docker, 0 in tests) so offline demos show the live feed working.
