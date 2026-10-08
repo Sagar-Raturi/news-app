@@ -6,7 +6,8 @@ analysis, explainers, opinion and editorials.
 ## Stack
 - Python 3.12 (Docker) / 3.11+ locally, Django 5.2 LTS, Wagtail 7.0 LTS
 - PostgreSQL 16 (Wagtail database search backend = Postgres full-text)
-- Celery + Redis (configured, no real tasks yet — `core.tasks.ping` only)
+- Celery + Redis: runs the AI agents (`newsdesk.tasks`); restart the worker
+  after Python changes (`docker compose restart worker`)
 - Django templates + HTMX 2 + Tailwind CSS 4 (compiled CSS is committed)
 - Docker Compose for local development
 
@@ -65,6 +66,19 @@ docker/            entrypoint script
   Anthropic API (mock the client or use NEWSDESK_WRITER=fake).
 - Demo content must not invent quotes or claims attributed to real, named
   living people; use roles ("a senior finance ministry official") instead.
+
+## AI newsroom direction (phase 3, set by the owner)
+- Agents do the work: they **suggest topics** (topic scout) and **research,
+  write and edit** articles. The human editor's job is to **approve and
+  publish**, with optional feedback. Design every flow so the default is
+  "agents propose, editor clicks approve"; nothing publishes without that click.
+- Writing style should be **highly personal** (a distinctive authorial voice).
+  Exactly what that means is still to be agreed with the owner — it must not
+  mean invented first-person experiences or quotes, and it has to be squared
+  with the house style, the "no AI opinion/editorials" rule and the public AI
+  policy before the prompts change.
+- No Anthropic API key yet: develop, test and demo with `NEWSDESK_WRITER=fake`.
+  Every agent role needs offline fake output (`newsdesk/pipeline/fake.py`).
 
 ## Design direction
 Serious editorial newspaper look (spirit of The Economist / The Hindu, own identity).
