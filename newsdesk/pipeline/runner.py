@@ -1,5 +1,10 @@
 """Run one AgentRun: its plan, step by step, then a new version of the article.
 
+Every run starts with the orchestrator, which plans the remaining steps
+(planning.py checks the plan; steps.py holds what each agent does). The plan
+can grow while the run goes: the fact-checker sends serious flags back to the
+writer for a limited number of rounds.
+
 Each step's output (including the working draft) is saved as it finishes, so
 a run that fails part-way can be retried from the failed step, and a
 finished draft is never lost: if the run cannot complete, the latest draft is
@@ -12,16 +17,15 @@ from django.db import transaction
 from django.db.models import F
 from django.utils import timezone
 
-from newsdesk.content import word_count
 from newsdesk.models import AgentDefinition, AgentRun, AgentStep, SessionMessage
 from newsdesk.pagesync import import_page_edits, sync_page
 from newsdesk.versions import create_version
 
-from . import drafts
-from .context import brief_block, build_system, draft_block, record_editor_sources, sources_block, target_length
+from . import drafts, planning
+from .context import build_system, record_editor_sources
 from .events import RUN_END, TextBuffer, emit
 from .llm import AgentError, AgentRequest, TransientAgentError, estimate_cost, get_caller
-from .schemas import FullDraft
+from .steps import AgentSteps
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +34,7 @@ class RunCancelled(Exception):
     pass
 
 
-class Pipeline:
+class Pipeline(AgentSteps):
     def __init__(self, run, caller=None):
         self.run = run
         self.workspace = run.workspace
@@ -78,41 +82,31 @@ class Pipeline:
     # -- planning --------------------------------------------------------------
 
     def make_plan(self):
-        if self.run.kind == AgentRun.Kind.GENERATE:
-            fresh = self.workspace.current_version_id is None
-            return [
-                {
-                    "role": "writer",
-                    "task": "write",
-                    "instructions": "Write the first draft from the brief and the material."
-                    if fresh
-                    else "Write a completely new draft from scratch, as the editor asked.",
-                }
-            ]
-        raise AgentError("This kind of run is not available yet.")
+        """Every run starts with the orchestrator, which plans the rest."""
+        return [planning.item("plan", "Plan the work.")]
 
-    def steps(self):
-        existing = {s.sequence: s for s in self.run.steps.all()}
-        steps = []
-        for sequence, item in enumerate(self.run.plan, start=1):
-            step = existing.get(sequence)
-            if step is None:
-                step = AgentStep.objects.create(
-                    run=self.run, sequence=sequence, role=item["role"], instructions=item.get("instructions", "")
-                )
-            steps.append(step)
-        return steps
+    def step_for(self, sequence):
+        step = self.run.steps.filter(sequence=sequence).first()
+        if step is None:
+            item = self.run.plan[sequence - 1]
+            step = AgentStep.objects.create(
+                run=self.run, sequence=sequence, role=item["role"], instructions=item.get("instructions", "")
+            )
+        return step
 
     def run_steps(self):
+        """Run the plan in order. The plan may grow as steps run (orchestrator, fix rounds)."""
         draft = drafts.from_version(self.workspace.current_version)
-        for step in self.steps():
+        sequence = 1
+        while sequence <= len(self.run.plan):
+            step = self.step_for(sequence)
             if step.status == AgentStep.Status.SUCCEEDED:
                 draft = (step.output or {}).get("draft", draft)
-                continue
-            if step.status == AgentStep.Status.SKIPPED:
-                continue
-            self.check_cancelled()
-            draft = self.run_step(step, draft)
+            elif step.status != AgentStep.Status.SKIPPED:
+                self.check_cancelled()
+                draft = self.run_step(step, draft)
+            self.run.refresh_from_db(fields=["plan"])
+            sequence += 1
         return draft
 
     def check_cancelled(self):
@@ -123,7 +117,8 @@ class Pipeline:
     # -- steps -----------------------------------------------------------------
 
     def run_step(self, step, draft):
-        handler = getattr(self, f"step_{self.run.plan[step.sequence - 1].get('task', step.role)}", None)
+        task = self.run.plan[step.sequence - 1].get("task", step.role)
+        handler = getattr(self, f"step_{task}", None)
         if handler is None:
             raise AgentError(f"No handler for the {step.role} step.")
         step.status = AgentStep.Status.RUNNING
@@ -131,7 +126,8 @@ class Pipeline:
         step.started_at = timezone.now()
         step.error = ""
         step.save(update_fields=["status", "attempts", "started_at", "error"])
-        emit(self.run, "step", f"{step.role.replace('_', ' ').capitalize()} started", step=step)
+        label = planning.LABELS.get(task, task)
+        emit(self.run, "step", f"{step.role.replace('_', ' ').capitalize()}: {label} started", step=step)
         try:
             draft = handler(step, draft)
         except AgentError as exc:
@@ -200,31 +196,6 @@ class Pipeline:
         self.run.refresh_from_db()
         return response
 
-    def known_sources(self):
-        return set(self.workspace.sources.values_list("number", flat=True))
-
-    def step_write(self, step, draft):
-        """Writer: a complete article (first draft, or a full rewrite on request)."""
-        ws = self.workspace
-        message = (
-            f"{brief_block(ws)}\n\n{sources_block(ws)}\n\n"
-            f"Task from the orchestrator: {step.instructions}\n\n"
-            f"Write the complete article. Target length: {target_length(ws)} "
-            "Cite the sources above by their markers, e.g. [S2], after each claim they support; "
-            "use no facts beyond them. If the material is thin, write a shorter piece and say what is "
-            "missing in your notes."
-        )
-        response = self.call(
-            step, "writer", [{"role": "user", "content": message}], output_format=FullDraft, input_summary="Brief and sources"
-        )
-        try:
-            new = drafts.from_full_draft(response.parsed, self.known_sources(), previous=draft)
-        except ValueError as exc:
-            raise AgentError(str(exc))
-        step.output = {"notes": response.parsed.notes}
-        step.summary = f"Wrote “{new['headline']}” ({word_count(new['body'])} words, {len(new['source_numbers'])} sources cited)."
-        return new
-
     # -- finishing -------------------------------------------------------------
 
     def notes(self):
@@ -259,11 +230,18 @@ class Pipeline:
     def finish(self, draft):
         self.check_cancelled()
         version = self.save_version(draft, self.change_summary())
+        flags = self.save_flags(version)
         run = self.run
         run.status = AgentRun.Status.SUCCEEDED
         run.finished_at = timezone.now()
         run.save(update_fields=["status", "finished_at"])
         lines = [f"Version {version.number} is ready for your review." if version else "No changes were needed."]
+        high = sum(1 for f in flags if f.severity == "high")
+        if flags:
+            lines.append(
+                f"The fact-checker raised {len(flags)} flag{'s' if len(flags) != 1 else ''}"
+                + (f", {high} serious: please check {'them' if high > 1 else 'it'} before approving." if high else ".")
+            )
         for role, note in self.notes():
             lines.append(f"\n{role.replace('_', ' ').capitalize()} notes: {note}")
         SessionMessage.objects.create(

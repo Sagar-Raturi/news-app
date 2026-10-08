@@ -55,3 +55,28 @@ class WorkspaceTestCase(TestCase):
         workspace.current_version = version
         workspace.save(update_fields=["current_version", "updated_at"])
         return version
+
+
+def plan(*tasks, message="On it.", blocks=()):
+    """An orchestrator plan for tests (fact-checking is added by the pipeline)."""
+    from newsdesk.pipeline.schemas import Plan, PlanStep
+
+    return Plan(
+        message_to_editor=message,
+        steps=[PlanStep(task=task, instructions=f"Do the {task}.", blocks=list(blocks)) for task in tasks],
+    )
+
+
+def clean_check():
+    from newsdesk.pipeline.schemas import FactCheck
+
+    return FactCheck(summary="The draft checks out.", flags=[])
+
+
+def writer_only(*writer_responses, checks=None):
+    """A ScriptedCaller script for a run the orchestrator plans as 'write' only."""
+    return {
+        "orchestrator": [plan("write")],
+        "writer": list(writer_responses),
+        "fact_checker": list(checks) if checks is not None else [clean_check()],
+    }

@@ -28,7 +28,7 @@ Contents
 |---|---|
 | 1 — Site (Wagtail news site, SEO, demo content) | Done |
 | 2 — Desk agents (commission → draft → review, article notes) | Done; being retired into the workspace at item 39 |
-| 3 — AI article workspace | Items 34–37 done (data model, workspace page, background generation with the writer agent, approve/publish, live activity feed over SSE). Next: 38 |
+| 3 — AI article workspace | Items 34–38 done (data model, workspace page, background runs, approve/publish, live activity feed, the full eight-agent pipeline with fact-check fix loop). Next: 38a (topic scout) |
 | 4 — Ship it (production, accounts, paywall, payments, images, ads, live blog, legal) | Planned in `PLAN.md` and `docs/DEPLOYMENT.md` |
 
 The owner has **no Anthropic API key yet**: everything is built and demoed with
@@ -88,13 +88,18 @@ Generate (workspace_views.generate)
   → jobs.start_run()  [IntegrityError → ArticleBusy]  → on_commit: tasks.run_agents.delay
   → Pipeline(run).execute()                 newsdesk/pipeline/runner.py
       import_page_edits(); record_editor_sources()
-      plan = make_plan()                     today: [{"role":"writer","task":"write",...}]
-      for each AgentStep: handler = Pipeline.step_<task>(step, draft) -> draft
+      plan = make_plan()                     [plan] → the orchestrator's step_plan appends the real steps
+      for each plan item (plan can grow):   handler = AgentSteps.step_<task>(step, draft) -> draft
+          tasks: plan, research, analyse, outline, write, revise, edit, fact_check, seo (pipeline/steps.py)
+          planning.validate(): only active agents; new drafts always write, in order; fact_check
+              inserted after the last text change; fix loop inserts revise + fact_check (max_fix_rounds)
           self.call(step, role, messages, output_format=PydanticModel)
               → caller.call(AgentRequest)    llm.AnthropicCaller | fake.FakeCaller | fake.ScriptedCaller
               → usage + cost on step and run (F() updates)
           step.output["draft"] saved after each step (resume point)
       finish(): versions.create_version() → pagesync.sync_page() (page revision, never published)
+                → save_flags(): latest fact-check that saw the final text → FactCheckFlag rows;
+                  no fact-check this run → carry flags on unchanged blocks from the previous version
                 → SessionMessage from orchestrator → workspace.refresh_status()
   TransientAgentError → task retries at 30s/2m/5m from the failed step
   AgentError → fail(): saves any finished draft as a version, run failed, "Retry" button
@@ -162,7 +167,13 @@ Each item: what to build, where it plugs in, tests, done when. Numbers match `PL
   events view replays persisted events and requires login.
 - **Done when:** clicking Generate in fake mode shows lines appearing without polling.
 
-### 38. Full multi-agent pipeline + fact-checker
+### 38. Full multi-agent pipeline + fact-checker — done
+Built as specified below: `pipeline/planning.py`, `pipeline/steps.py`,
+schemas in `pipeline/schemas.py`, `drafts.apply_edits()`, fake outputs for
+all eight roles, tests in `newsdesk/tests/test_pipeline.py`. Revision runs
+(kind=revise with a `trigger` SessionMessage) already plan from the
+feedback; item 39 adds the chat UI around them.
+
 - **Orchestrator** (`step_plan`, runs first): output schema `Plan { message_to_editor,
   steps: [{task: research|analyse|outline|write|revise|edit|seo, instructions,
   blocks: [B-refs]}] }`. Code validates: only active agents; content-changing

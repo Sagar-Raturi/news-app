@@ -27,7 +27,7 @@ from newsdesk.roles import DEFAULT_HOUSE_STYLE
 from newsdesk.schema import DraftBlock
 from newsdesk.tasks import run_agents
 
-from .base import WorkspaceTestCase
+from .base import WorkspaceTestCase, clean_check, writer_only
 
 MATERIAL = "https://agmarknet.gov.in/ Agmarknet daily prices\nPrices up 30% in a month, says a trader body."
 
@@ -57,7 +57,7 @@ class GenerationTestCase(WorkspaceTestCase):
         self.ws = self.make_workspace(sources_to_use=MATERIAL, target_words=700)
 
     def run_pipeline(self, *responses, kind=AgentRun.Kind.GENERATE, usage=None):
-        caller = ScriptedCaller({"writer": list(responses)}, usage=usage)
+        caller = ScriptedCaller(writer_only(*responses), usage=usage)
         with mock.patch("newsdesk.jobs._enqueue"):
             run = start_run(self.ws, kind, self.editor)
         Pipeline(run, caller=caller).execute()
@@ -106,19 +106,20 @@ class FirstDraftTests(GenerationTestCase):
         self.assertEqual(len(draft_page.sources), 2)
         self.assertEqual(page.get_parent().specific, self.economy.section.specific)
 
-        step = run.steps.get()
-        self.assertEqual((step.role, step.status, step.input_tokens), ("writer", "succeeded", 10_000))
+        step = run.steps.get(role="writer")
+        self.assertEqual((step.status, step.input_tokens), ("succeeded", 10_000))
         self.assertEqual(step.cost, Decimal("0.08"))  # 10k in at $4/M + 2k out at $20/M
-        self.assertEqual(run.cost, step.cost)
+        self.assertEqual(run.cost, sum(s.cost for s in run.steps.all()))
+        self.assertEqual(list(run.steps.values_list("role", flat=True)), ["orchestrator", "writer", "fact_checker"])
 
-        message = self.ws.session.messages.get(role=SessionMessage.Role.ORCHESTRATOR)
+        message = self.ws.session.messages.filter(role=SessionMessage.Role.ORCHESTRATOR).last()
         self.assertIn("Version 1 is ready", message.content)
         self.assertIn("Could not find official arrivals data", message.content)
 
     def test_writer_gets_brief_sources_house_style_and_section_rules(self):
         DeskFeedback.objects.create(desk=self.economy, note="Always give figures in crore.")
         _run, caller = self.run_pipeline(full_draft())
-        request = caller.requests[0]
+        request = next(r for r in caller.requests if r.agent.role == "writer")
         system = "\n".join(block["text"] for block in request.system)
         self.assertIn(DEFAULT_HOUSE_STYLE[:80], system)
         self.assertIn(self.economy.style_guide[:40], system)
@@ -143,7 +144,7 @@ class FailureTests(GenerationTestCase):
     def test_failed_step_is_reported_and_can_be_retried(self):
         run, _ = self.run_pipeline(AgentError("The model declined this task."))
         self.assertEqual(run.status, AgentRun.Status.FAILED)
-        self.assertEqual(run.steps.get().status, AgentStep.Status.FAILED)
+        self.assertEqual(run.steps.get(role="writer").status, AgentStep.Status.FAILED)
         self.assertEqual(self.ws.status, ArticleWorkspace.Status.BRIEF)
         self.assertIn("The run failed", self.ws.session.messages.get(role="system").content)
 
@@ -151,13 +152,15 @@ class FailureTests(GenerationTestCase):
             retry_run(run, self.editor)
         run.refresh_from_db()
         self.assertEqual(run.status, AgentRun.Status.QUEUED)
-        Pipeline(run, caller=ScriptedCaller({"writer": [full_draft()]})).execute()
+        retry = ScriptedCaller({"writer": [full_draft()], "fact_checker": [clean_check()]})
+        Pipeline(run, caller=retry).execute()
         run.refresh_from_db()
         self.assertEqual(run.status, AgentRun.Status.SUCCEEDED)
-        self.assertEqual(run.steps.get().attempts, 2)
+        self.assertEqual(run.steps.get(role="writer").attempts, 2)
+        self.assertNotIn("orchestrator", retry.roles())  # the finished plan step isn't redone
 
     def test_transient_errors_are_retried_by_the_task(self):
-        caller = ScriptedCaller({"writer": [TransientAgentError("Rate limited."), full_draft()]})
+        caller = ScriptedCaller(writer_only(TransientAgentError("Rate limited."), full_draft()))
         with mock.patch("newsdesk.jobs._enqueue"):
             run = start_run(self.ws, AgentRun.Kind.GENERATE, self.editor)
         with mock.patch("newsdesk.pipeline.runner.get_caller", return_value=caller):
@@ -167,7 +170,7 @@ class FailureTests(GenerationTestCase):
         self.assertTrue(run.events.filter(message__contains="Retrying in").exists())
 
     def test_task_gives_up_after_repeated_transient_errors(self):
-        caller = ScriptedCaller({"writer": [TransientAgentError("Overloaded.")] * 4})
+        caller = ScriptedCaller(writer_only(*[TransientAgentError("Overloaded.")] * 4))
         with mock.patch("newsdesk.jobs._enqueue"):
             run = start_run(self.ws, AgentRun.Kind.GENERATE, self.editor)
         with mock.patch("newsdesk.pipeline.runner.get_caller", return_value=caller):

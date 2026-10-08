@@ -104,7 +104,7 @@ items 36, 38 and 40.
       Approve / Publish / Unpublish (editors) — CHECK IN
 - [x] 37. Live progress: ASGI (uvicorn), Redis pub/sub events, SSE activity
       feed with polling fallback
-- [ ] 38. Full pipeline: orchestrator plan, researcher (web search/fetch),
+- [x] 38. Full pipeline: orchestrator plan, researcher (web search/fetch),
       analyst, outliner, writer, fact-checker loop, editor, SEO; retry a
       failed step — CHECK IN
 - [ ] 38a. Topic scout (core, per the owner): scheduled and on-demand topic

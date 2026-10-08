@@ -7,7 +7,7 @@ seo), so it can be stored in a step's output and resumed after a failure.
 
 import re
 
-from newsdesk.content import block_text, ensure_ids, visible_signature
+from newsdesk.content import TEXT_BLOCK_TYPES, block_text, ensure_ids, visible_signature
 from newsdesk.publishing import raw_blocks
 
 CITATION = re.compile(r"\s?\[S(\d+)\]")
@@ -75,6 +75,60 @@ def from_full_draft(full, known, previous=None):
         "seo": dict(previous["seo"]) if previous else {},
     }
     return finish(draft, known)
+
+
+def apply_edits(draft, edits, known):
+    """Apply an agent's block edits; blocks it didn't mention stay exactly as they were.
+
+    Returns (new draft, notes about edits that couldn't be applied). A replaced
+    block keeps its id, so inline comments can re-anchor when their text
+    survives; inserted blocks get new ids. Non-text blocks (images, embeds,
+    tables) can't be edited by agents.
+    """
+    refs = {f"B{i}": i - 1 for i in range(1, len(draft["body"]) + 1)}
+    body = [dict(b) for b in draft["body"]]
+    replaced, deleted, inserts, skipped = {}, set(), {}, []
+    for edit in edits.edits:
+        ref = edit.block.strip().upper()
+        if edit.op == "insert_after" and ref == "B0":
+            index = -1
+        elif ref in refs:
+            index = refs[ref]
+        else:
+            skipped.append(f"{edit.op} {edit.block}: no such block")
+            continue
+        if index >= 0 and body[index]["type"] not in TEXT_BLOCK_TYPES and edit.op != "insert_after":
+            skipped.append(f"{edit.op} {edit.block}: agents can't change {body[index]['type']} blocks")
+            continue
+        if edit.op == "delete":
+            deleted.add(index)
+            continue
+        new = raw_blocks([edit.new_block])
+        if not new:
+            skipped.append(f"{edit.op} {edit.block}: the new block was empty")
+            continue
+        new = strip_unknown_citations(new[0], known)
+        if edit.op == "replace":
+            new["id"] = body[index]["id"]
+            replaced[index] = new
+        else:
+            inserts.setdefault(index, []).append(ensure_ids([new])[0])
+
+    result = list(inserts.get(-1, []))
+    for index, block in enumerate(body):
+        if index not in deleted:
+            result.append(replaced.get(index, block))
+        result.extend(inserts.get(index, []))
+    if not result:
+        raise ValueError("The edits would leave the article empty.")
+
+    new_draft = {**draft, "body": result}
+    if edits.headline.strip():
+        new_draft["headline"] = CITATION.sub("", edits.headline).strip()
+    if edits.standfirst.strip():
+        new_draft["dek"] = strip_unknown_citations(edits.standfirst.strip(), known)
+    new_draft["source_numbers"] = cited_numbers(result, known)
+    return new_draft, skipped
 
 
 def signature(draft):

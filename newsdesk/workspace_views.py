@@ -19,6 +19,7 @@ from .forms import BriefForm, NewArticleForm
 from .jobs import ArticleBusy, cancel_run, retry_run, start_run
 from .models import AgentEvent, AgentRun, ArticleWorkspace, FactCheckFlag, Topic
 from .pagesync import import_page_edits
+from .pipeline.planning import LABELS
 from .rendering import render_version
 from .versions import open_flags, restore_version
 
@@ -106,6 +107,9 @@ def activity_context(workspace):
     runs = list(
         workspace.runs.select_related("requested_by").prefetch_related("steps__agent", "steps__events")[:20]
     )
+    for run in runs:
+        done = len(run.steps.all())
+        run.upcoming = [LABELS.get(item.get("task"), item.get("task")) for item in run.plan[done:]] if run.is_active else []
     totals = workspace.runs.aggregate(cost=Sum("cost"), searches=Sum("web_searches"), runs=Count("pk"))
     last_event = AgentEvent.objects.filter(run__workspace=workspace).aggregate(last=Max("pk"))["last"]
     tokens = sum(r.total_tokens for r in workspace.runs.all())

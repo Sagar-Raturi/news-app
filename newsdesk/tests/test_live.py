@@ -16,7 +16,7 @@ from newsdesk.pipeline.fake import FakeCaller, ScriptedCaller
 from newsdesk.pipeline.llm import AgentRequest
 from newsdesk.pipeline.runner import Pipeline
 
-from .base import WorkspaceTestCase
+from .base import WorkspaceTestCase, writer_only
 from .test_generation import full_draft
 
 
@@ -90,7 +90,7 @@ class PublishTests(WorkspaceTestCase):
     def test_a_finished_run_tells_the_page_to_reload(self):
         with mock.patch("newsdesk.jobs._enqueue"):
             run = start_run(self.make_workspace(self.make_topic("Other")), AgentRun.Kind.GENERATE, self.editor)
-        Pipeline(run, caller=ScriptedCaller({"writer": [full_draft()]})).execute()
+        Pipeline(run, caller=ScriptedCaller(writer_only(full_draft()))).execute()
         self.assertTrue(run.events.filter(kind=events.RUN_END).exists())
 
 

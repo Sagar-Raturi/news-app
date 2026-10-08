@@ -50,6 +50,9 @@
                     {% endif %}
                   </li>
                 {% endfor %}
+                {% for label in run.upcoming %}
+                  <li class="nd-step nd-step--pending"><div class="nd-step__head"><span class="nd-muted">Up next: {{ label }}</span></div></li>
+                {% endfor %}
               </ol>
             </div>
           </details>

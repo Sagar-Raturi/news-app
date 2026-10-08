@@ -105,3 +105,9 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - The dev web server is uvicorn (ASGI) with `--reload` and forced polling file watching — Django's runserver is WSGI, and file-change events don't cross Windows bind mounts.
 - Streamed model text is published but not stored; step, tool and status events are stored so the feed survives reconnects.
 - Fake agents replay their demo text with a small delay (NEWSDESK_FAKE_DELAY, 0.15 s in Docker, 0 in tests) so offline demos show the live feed working.
+- Every run starts with the orchestrator, but code enforces what must not go wrong: only active agents, new drafts always include the writer in research → analysis → outline → write → edit → SEO order, and a fact-check after the last change to the text — the orchestrator plans, the rules aren't left to the model.
+- The fact-checker sends serious flags back to the writer for targeted fixes at most `max_fix_rounds` times (default 2); anything still serious leaves the article "Needs attention" for the editor rather than looping.
+- Research findings are kept only if the researcher actually retrieved the page (it appears in its web search or fetch results) or the editor supplied it — invented links are dropped and counted in the activity log.
+- Revisions and the editor work by block edits (replace / insert after / delete); a replaced block keeps its id so comments and diffs stay attached; images, embeds and tables can't be changed by agents.
+- Claims an editor has accepted are given to the fact-checker and never flagged again on that article.
+- A run with no fact-check (e.g. headline only) carries forward flags on paragraphs whose text didn't change.
