@@ -111,3 +111,17 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Revisions and the editor work by block edits (replace / insert after / delete); a replaced block keeps its id so comments and diffs stay attached; images, embeds and tables can't be changed by agents.
 - Claims an editor has accepted are given to the fact-checker and never flagged again on that article.
 - A run with no fact-check (e.g. headline only) carries forward flags on paragraphs whose text didn't change.
+
+## Item 43 — Production hardening
+
+- `DJANGO_ENV` (development / staging / production) drives the defaults: staging and production turn DEBUG off and refuse to start without a real secret key, allowed hosts and an https `SITE_BASE_URL`; production also refuses `NEWSDESK_WRITER=fake`, so placeholder text can never be generated on the live site.
+- Web server: gunicorn managing uvicorn workers (`uvicorn-worker` package — uvicorn's own `uvicorn.workers` module is deprecated), behind Caddy. Caddy gets HTTPS certificates automatically and needs no extra service; it flushes server-sent events by itself.
+- `/healthz/` is answered by the first middleware, before host validation and the HTTPS redirect, so Docker and uptime monitors can call it by IP over plain HTTP. It checks the database and Redis and returns 503 if either is down.
+- Login rate limiting with django-axes: 5 failed logins for one username from one address lock that pair out for an hour. Locking by username alone would let anyone lock the editor out; by address alone, offices sharing one IP lock each other out. The address comes from Caddy's `X-Real-IP` (Cloudflare's `CF-Connecting-IP`, trusted only from Cloudflare's published ranges).
+- Staff two-factor authentication: put Cloudflare Access (Zero Trust, free up to 50 users) in front of `/admin/`, `/django-admin/` and `/newsdesk/` rather than adding an in-app 2FA package — Wagtail 7 has no maintained 2FA add-on, and Access adds a one-time email code before the login page is even reachable. Revisit when there are many staff.
+- Media: object storage (S3 / DigitalOcean Spaces via django-storages) when `AWS_STORAGE_BUCKET_NAME` is set; otherwise files stay on a Docker volume that Caddy serves at `/media/`. Disk is fine for a soft launch if the volume is backed up; move to a bucket before the server ever needs rebuilding.
+- Database: managed PostgreSQL is still the recommendation; `docker-compose.prod.yml` also has an opt-in `bundled-db` profile for staging or a budget start, with backups the owner's responsibility.
+- Celery takes one task at a time per process (prefetch 1) and agent runs have a 30-minute soft limit (they then fail with a Retry button). Late acknowledgement is not turned on: a redelivered run that is already "running" would be skipped by `Pipeline.execute`, so it would gain nothing until runs can be resumed after a worker crash. No `beat` service until there is a scheduled task (topic scout, item 38a).
+- `seed_demo` refuses to run when deployed (made-up articles, public demo passwords); staging's robots.txt disallows everything.
+- Images run as an unprivileged user; static files are collected at build time. `static/src` (Tailwind source) is excluded from collectstatic — its `@import "tailwindcss"` broke the hashed-name step, so production static files had never built before this.
+- `.env` files are kept out of the Docker image (`.dockerignore`) and out of git.

@@ -126,11 +126,13 @@ items 36, 38 and 40.
 The playbook is `docs/DEPLOYMENT.md` (sections 5, 9 and 10). Items 44–48 can be
 built and tested without an Anthropic API key.
 
-- [ ] 43. Production hardening: docker-compose.prod.yml (caddy, gunicorn +
+- [x] 43. Production hardening: docker-compose.prod.yml (caddy, gunicorn +
       uvicorn ASGI, worker, beat, redis), production settings (security
       headers, Redis cache, SMTP email, Sentry, logging), media on object
       storage, /healthz/, Celery limits and beat, seed_demo blocked in
       production, staff 2FA, auth rate limits
+      (owner chose a soft launch first: 43, 48, 49, 50 before 38a–47; beat
+      arrives with 38a; staff 2FA = Cloudflare Access; see DECISIONS.md)
 - [ ] 44. Reader accounts: django-allauth (email login + verification,
       password reset, Google sign-in), account page, readers kept out of the
       admin, data export and deletion

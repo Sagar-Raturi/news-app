@@ -16,7 +16,8 @@ session, follow `docs/BUILD_PLAYBOOK.md` (the `newsroom-build` skill in
   after Python changes (`docker compose restart worker`)
 - Django templates + HTMX 2 + Tailwind CSS 4 (compiled CSS is committed)
 - Anthropic Python SDK (Claude Opus 5.5 by default; models are set per agent in admin)
-- Docker Compose for local development; production plan in `docs/DEPLOYMENT.md`
+- Docker Compose for local development; production is `docker-compose.prod.yml`
+  (Caddy + gunicorn/uvicorn + Celery + Redis), run as in `docs/DEPLOYMENT.md`
 
 ## Layout
 ```
@@ -44,7 +45,7 @@ templates/         base.html, includes/, news/, core/, search/, newsdesk/
 static/src/        Tailwind source (main.css) — edit this, then rebuild
 static/css/site.css  compiled Tailwind output (committed; do not hand-edit)
 static/js/         vendored htmx.min.js
-docker/            entrypoint script
+docker/            entrypoint script, Caddyfile, gunicorn.conf.py (production)
 docs/              DEPLOYMENT.md (shipping playbook), BUILD_PLAYBOOK.md
                    (how to continue the build), specs/, screenshots
 .claude/skills/    newsroom-build: how a new session resumes the build
@@ -94,8 +95,9 @@ docs/              DEPLOYMENT.md (shipping playbook), BUILD_PLAYBOOK.md
 
 ## Conventions
 - Settings come from environment variables only (`config/settings.py`); never
-  hard-code secrets. Defaults are safe for local dev; production must set
-  `DJANGO_DEBUG=0` and every variable listed in `docs/DEPLOYMENT.md`.
+  hard-code secrets. Defaults are safe for local dev; servers set
+  `DJANGO_ENV=staging|production` (DEBUG off, startup fails without real
+  secrets) and the variables in `.env.production.example`.
 - Page models live in `news/models.py` / `core/models.py`; StreamField blocks in
   `news/blocks.py`. Keep templates per page type in `templates/<app>/`.
 - Sections are `SectionPage`s directly under the `HomePage`; articles are

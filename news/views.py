@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.syndication.views import Feed
 from django.db.models import Count, Q, prefetch_related_objects
 from django.http import Http404, HttpResponse
@@ -99,6 +100,9 @@ def news_sitemap(request):
 def robots_txt(request):
     from core.templatetags.ledger import absolute
 
+    if settings.DJANGO_ENV == "staging":
+        # Keep the staging copy out of search results.
+        return HttpResponse("User-agent: *\nDisallow: /\n", content_type="text/plain")
     lines = [
         "User-agent: *",
         "Disallow: /admin/",

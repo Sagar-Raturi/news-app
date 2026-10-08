@@ -139,22 +139,30 @@ tested without an Anthropic API key (`NEWSDESK_WRITER=fake`).
 - [ ] Agents, house style, section guidelines and prices editable in admin
 - [ ] Retire the phase 2 commission screens
 
-### 5.2 Production hardening (PLAN item 43)
-- [ ] `docker-compose.prod.yml`: caddy, web (gunicorn + uvicorn workers, no
-      code volume mount), worker, beat, redis; health checks; restart policies
-- [ ] `config/asgi.py`; the image's default command becomes gunicorn, never
-      `runserver`
-- [ ] Settings: `DEBUG` off by default when `DJANGO_ENV=production`;
+### 5.2 Production hardening (PLAN item 43) — built
+- [x] `docker-compose.prod.yml`: caddy, web (gunicorn + uvicorn workers, no
+      code volume mount), worker, redis, optional bundled PostgreSQL
+      (`--profile bundled-db`); health checks; restart policies. A `beat`
+      service arrives with the first scheduled task (topic scout)
+- [x] The image's default command is gunicorn (`docker/gunicorn.conf.py`),
+      never `runserver`; runs as an unprivileged user; static files collected
+      at build time
+- [x] Settings: `DJANGO_ENV=staging|production` turns `DEBUG` off and refuses
+      to start without a real secret key, hosts and an https base URL;
       HSTS, secure cookies, `SECURE_SSL_REDIRECT`, referrer policy, CSRF
       trusted origins; Redis cache; `SERVER_EMAIL`/`ADMINS`
-- [ ] Media in object storage (`django-storages`), served via the CDN
-- [ ] Real email backend (SMTP or SES) for verification, receipts and workflow mail
-- [ ] Sentry for web and Celery errors; structured logs
-- [ ] `/healthz/` endpoint (database + Redis check) for uptime monitoring
-- [ ] Celery: late acknowledgement, time limits for agent tasks, `beat` schedule
-- [ ] `seed_demo` refuses to run in production; demo logins removed
-- [ ] Staff two-factor authentication
-- [ ] Rate limiting on login, sign-up and password reset
+- [x] Media in object storage (`django-storages`) when a bucket is set;
+      otherwise on a volume served by Caddy
+- [x] SMTP email backend configurable (SES, Postmark)
+- [x] Sentry for web and Celery errors (when `SENTRY_DSN` is set); timestamped logs
+- [x] `/healthz/` endpoint (database + Redis check) for uptime monitoring
+- [x] Celery: one task at a time per process, time limits for agent runs
+- [x] `seed_demo` refuses to run when deployed (so no demo logins); staging's
+      robots.txt blocks search engines
+- [x] Staff two-factor authentication: Cloudflare Access in front of the
+      admin (section 9, step 4) — no code
+- [x] Rate limiting on staff login (django-axes). Reader sign-up and password
+      reset get theirs with reader accounts (item 44)
 
 ### 5.3 Reader accounts (PLAN item 44)
 - [ ] `django-allauth`: email login, email verification, password reset,
@@ -262,33 +270,37 @@ accountant; this list is a starting point, not legal advice.
 ## 8. Configuration (environment variables)
 
 Production settings live in `/srv/ledger/.env.production` on the server
-(mode 600, never committed). Variables in **bold** are new and arrive with
-the work in section 5.
+(mode 600, never committed). Start from `.env.production.example`, which
+lists every variable with an example. Variables in **bold** arrive with later
+work (items 44–47).
 
 | Variable | Example / note |
 |---|---|
-| `DJANGO_DEBUG` | `0` (defaults to on today: always set it) |
+| `DJANGO_ENV` | `production` or `staging`. Turns DEBUG off; startup fails if the secret key, hosts or https base URL are missing, and production refuses `NEWSDESK_WRITER=fake` |
+| `SITE_DOMAIN` | `theledger.in` — Caddy's certificate and the www → apex redirect |
+| `ACME_EMAIL` | Address for Let's Encrypt notices |
 | `DJANGO_SECRET_KEY` | 50+ random characters; different per environment |
 | `DJANGO_ALLOWED_HOSTS` | `theledger.in,www.theledger.in` |
-| `DJANGO_CSRF_TRUSTED_ORIGINS` | `https://theledger.in,https://www.theledger.in` |
-| `DJANGO_SECURE_COOKIES` | `1` |
-| `SITE_BASE_URL` | `https://theledger.in` (canonical URLs, sitemaps) |
+| `SITE_BASE_URL` | `https://theledger.in` (canonical URLs, sitemaps; also the default CSRF trusted origin) |
 | `WAGTAILADMIN_BASE_URL` | `https://theledger.in` |
 | `DATABASE_URL` | `postgres://user:pass@host:25060/ledger?sslmode=require` |
-| `CELERY_BROKER_URL` | `redis://redis:6379/0` |
-| `ANTHROPIC_API_KEY` | Production key |
-| `NEWSDESK_WRITER` | `anthropic` (`fake` on staging if you want no API cost) |
-| `NEWSDESK_MAX_TOKENS` | Optional; phase 2 writer limit |
+| `POSTGRES_PASSWORD` | Only with the bundled database (`--profile bundled-db`) |
+| `ANTHROPIC_API_KEY` | Production key (without one, agent runs fail with a clear error) |
+| `NEWSDESK_WRITER` | `anthropic` (`fake` allowed on staging only) |
 | `DJANGO_EMAIL_BACKEND` | `django.core.mail.backends.smtp.EmailBackend` |
-| **`EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `DEFAULT_FROM_EMAIL`** | From SES/Postmark |
-| **`DJANGO_ENV`** | `production` / `staging` |
-| **`AWS_STORAGE_BUCKET_NAME`, `AWS_S3_ENDPOINT_URL`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `MEDIA_CDN_DOMAIN`** | Object storage for images |
-| **`SENTRY_DSN`** | Error tracking |
+| `EMAIL_HOST`, `EMAIL_PORT`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `DEFAULT_FROM_EMAIL`, `DJANGO_ADMINS` | From SES/Postmark; admins get error emails |
+| `AWS_STORAGE_BUCKET_NAME`, `AWS_S3_ENDPOINT_URL`, `AWS_S3_REGION_NAME`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_ACL`, `MEDIA_CDN_DOMAIN` | Object storage for images; leave the bucket empty to keep images on the server's disk |
+| `SENTRY_DSN` | Error tracking for web and worker |
+| `APP_VERSION` | The deployed git tag (image tag, Sentry release) |
+| `WEB_CONCURRENCY`, `WORKER_CONCURRENCY` | Optional tuning (defaults suit 2 vCPU / 4 GB) |
+| `DJANGO_HSTS_SECONDS` | Optional; defaults to a year in production, an hour on staging |
 | **`RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`** | Payments |
 | **`GOOGLE_OAUTH_CLIENT_ID`, `GOOGLE_OAUTH_CLIENT_SECRET`** | Sign in with Google |
 | **`PEXELS_API_KEY`** | Photo search |
-| `RUN_MIGRATIONS` | `1` on web only, `0` on worker and beat |
-| `SEED_DEMO` | Never set in production |
+| `SEED_DEMO` | Never set when deployed (the web container would refuse to start) |
+
+`CELERY_BROKER_URL`, `DJANGO_CACHE_URL` and `RUN_MIGRATIONS` are set by
+`docker-compose.prod.yml` itself.
 
 Rules: one set of secrets per environment; rotate any secret that was ever
 pasted into chat, a ticket or a commit; keep a copy of the production `.env`
@@ -296,7 +308,8 @@ in a password manager, not on a laptop.
 
 ## 9. First deployment, step by step
 
-Do this on staging first, then repeat for production.
+Do this on staging first (a subdomain such as `staging.theledger.in` works),
+then repeat for production.
 
 1. **Server.** Create an Ubuntu 24.04 VM (2 vCPU / 4 GB) in the chosen Indian
    region with SSH-key login only. Then:
@@ -310,34 +323,47 @@ Do this on staging first, then repeat for production.
 2. **Database.** Create managed PostgreSQL 16 in the same region and private
    network; enable daily backups and point-in-time recovery; allow
    connections only from the VM; create database `ledger` and an app user.
-3. **Storage.** Create a private bucket for media with versioning on, and an
-   access key limited to that bucket; put the CDN in front of it.
-4. **DNS and TLS.** Add the domain to Cloudflare; `A` record for the apex and
-   `www` → the VM's IP (proxied); SSL/TLS mode **Full (strict)**; Caddy
-   obtains the origin certificate.
+   *Budget alternative:* skip this, set `POSTGRES_PASSWORD` and point
+   `DATABASE_URL` at `db`, and add `--profile bundled-db` to every
+   `docker compose` command below — then you must run the backup in section 11.
+3. **Storage (optional at first).** Create a bucket for media with versioning
+   on, and an access key limited to that bucket; put the CDN in front of it.
+   Without a bucket, images live on the `media` volume on the server.
+4. **DNS, TLS and admin protection.** Add the domain to Cloudflare. Create
+   `A` records for the apex and `www` → the VM's IP, first as **DNS only**
+   (grey cloud) so Caddy can obtain its Let's Encrypt certificate on the
+   first start (step 6). Once `https://<domain>` works, switch both records
+   to **Proxied** (orange cloud) and set SSL/TLS mode to **Full (strict)**.
+   Then in Cloudflare Zero Trust → Access, add a self-hosted application for
+   `<domain>/admin`, `<domain>/django-admin` and `<domain>/newsdesk` with a
+   policy allowing only the staff email addresses (one-time PIN login): this
+   is the staff two-factor step.
 5. **Code.**
    ```bash
    sudo mkdir -p /srv/ledger && sudo chown $USER /srv/ledger
    git clone <repo> /srv/ledger && cd /srv/ledger
    git checkout v1.0.0            # always deploy a tag
-   nano .env.production           # section 8; then: chmod 600 .env.production
+   cp .env.production.example .env.production && chmod 600 .env.production
+   nano .env.production           # section 8
    ```
 6. **Start.**
    ```bash
    docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
-   docker compose -f docker-compose.prod.yml logs -f web   # migrations + bootstrap_site run here
+   docker compose -f docker-compose.prod.yml logs -f web   # deploy checks, migrations + bootstrap_site run here
+   curl -s https://<domain>/healthz/                       # {"database": "ok", "redis": "ok"}
    ```
 7. **First users.**
    ```bash
    docker compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
    ```
-   In the admin: create the real editors (Editors group) and writers, set up
-   2FA, set the site name and tagline in Settings → Site settings, give each
-   section a default author, and review the house style and agents under
-   Newsdesk AI.
-8. **Content.** Do not run `seed_demo`. Publish the About, AI policy, terms,
-   privacy, refund and contact pages. Generate and approve a handful of
-   launch articles.
+   In the admin: create the real editors (Editors group) and writers, set
+   the site name and tagline in Settings → Site settings, give each section a
+   default author, and review the house style and agents under Newsdesk AI.
+   Five wrong passwords lock a username out for an hour from that address;
+   unlock early with `exec web python manage.py axes_reset`.
+8. **Content.** Do not run `seed_demo` (it refuses when deployed). Publish
+   the About, AI policy, terms, privacy, refund and contact pages. Generate
+   and approve a handful of launch articles.
 9. **Payments.** In Razorpay test mode: create the plans, set the webhook
    URL (`https://<domain>/payments/razorpay/webhook/`) and secret, buy a test
    subscription, cancel it, check the account page. Switch to live keys only
@@ -401,6 +427,17 @@ still run against (add columns before using them; drop them a release later).
 ### Backups and restore drill
 - Database: managed daily backups + point-in-time recovery (keep at least 7 days).
 - Media: bucket versioning.
+- **Bundled database or media on disk** (no managed services): nothing backs
+  these up for you. Run nightly from cron on the server and copy the files
+  off the machine (object storage, or the provider's volume snapshots):
+  ```bash
+  cd /srv/ledger
+  docker compose -f docker-compose.prod.yml --profile bundled-db exec -T db pg_dump -U ledger -Fc ledger > backups/ledger-$(date +%F).dump
+  docker run --rm -v ledger_media:/media:ro -v "$PWD/backups":/out alpine tar czf /out/media-$(date +%F).tgz -C /media .
+  ```
+  Restore with `pg_restore --clean -U ledger -d ledger` inside the `db`
+  container. (The volume is named after the folder: `ledger_media` for
+  `/srv/ledger`; check with `docker volume ls`.)
 - Once a month: restore the latest backup into staging and open a few articles
   and the admin. A backup you haven't restored is a hope, not a backup.
 

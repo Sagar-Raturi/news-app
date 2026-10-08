@@ -4,3 +4,6 @@ node_modules
 media
 staticfiles
 **/__pycache__
+# Secrets never go into the image; Compose passes them at run time.
+.env
+.env.*

@@ -1,0 +1,104 @@
+# Production / staging stack. Run on the server from the repository folder:
+#
+#   docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+#
+# Settings come from .env.production (copy .env.production.example). The
+# database is managed PostgreSQL (DATABASE_URL); for a trial or a budget
+# staging server, add `--profile bundled-db` and point DATABASE_URL at
+# postgres://ledger:<POSTGRES_PASSWORD>@db:5432/ledger (see docs/DEPLOYMENT.md).
+
+x-env: &env
+  CELERY_BROKER_URL: redis://redis:6379/0
+  DJANGO_CACHE_URL: redis://redis:6379/1
+
+x-app: &app
+  build: .
+  image: ledger-app:${APP_VERSION:-latest}
+  restart: unless-stopped
+  env_file: .env.production
+  volumes:
+    - media:/app/media
+  depends_on:
+    redis:
+      condition: service_healthy
+
+services:
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN:?set SITE_DOMAIN in .env.production}
+      ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL in .env.production}
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - media:/srv/media:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      web:
+        condition: service_healthy
+
+  web:
+    <<: *app
+    # Runs migrations and bootstrap_site on start (docker/entrypoint.sh).
+    environment:
+      <<: *env
+      RUN_MIGRATIONS: "1"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/healthz/', timeout=5)"]
+      interval: 15s
+      timeout: 6s
+      # The first start runs every migration; give it time.
+      start_period: 300s
+      retries: 5
+
+  worker:
+    <<: *app
+    command: celery -A config worker --loglevel=info --concurrency=${WORKER_CONCURRENCY:-2}
+    environment:
+      <<: *env
+      RUN_MIGRATIONS: "0"
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    # Queue, cache and live events only — nothing that can't be rebuilt, but
+    # keep queued agent runs across restarts.
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy noeviction
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # Optional PostgreSQL on the same server (trial / budget staging). Back it
+  # up yourself (docs/DEPLOYMENT.md, section 11) — a managed database does
+  # this for you.
+  db:
+    image: postgres:16-alpine
+    profiles: ["bundled-db"]
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ledger
+      POSTGRES_USER: ledger
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ledger -d ledger"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  media:
+  caddy_data:
+  caddy_config:
+  redis_data:
+  pgdata:

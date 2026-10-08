@@ -7,6 +7,12 @@ set -e
 python manage.py wait_for_db
 
 if [ "${RUN_MIGRATIONS:-1}" = "1" ]; then
+  case "${DJANGO_ENV:-development}" in
+    staging|production)
+      # Print Django's production warnings in the log on every deploy.
+      python manage.py check --deploy
+      ;;
+  esac
   python manage.py migrate --noinput
   python manage.py bootstrap_site
   if [ "${SEED_DEMO:-0}" = "1" ]; then

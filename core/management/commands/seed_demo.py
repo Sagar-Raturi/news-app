@@ -5,7 +5,8 @@ from pathlib import Path
 
 from django.contrib.auth import get_user_model
 from django.core.files.images import ImageFile
-from django.core.management.base import BaseCommand
+from django.conf import settings
+from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.utils import timezone
 from wagtail.images.models import Image
@@ -67,6 +68,9 @@ class Command(BaseCommand):
         parser.add_argument("--if-empty", action="store_true", help="Do nothing if any article exists")
 
     def handle(self, *args, **options):
+        if settings.DEPLOYED:
+            # Demo articles are made up and the demo logins have public passwords.
+            raise CommandError(f"seed_demo is for local development only (DJANGO_ENV={settings.DJANGO_ENV}).")
         if options["if_empty"] and ArticlePage.objects.exists():
             self.stdout.write("Articles already exist; skipping demo seed.")
             return

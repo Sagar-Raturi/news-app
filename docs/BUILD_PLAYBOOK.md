@@ -332,6 +332,12 @@ launch). Extra item:
 ## 7. Known gotchas
 
 - **Celery doesn't auto-reload:** `docker compose restart worker` after Python edits.
+- **Containers run as user `app` (uid 1000).** A `media` volume created before
+  that is owned by root and uploads fail with PermissionError; fix it once:
+  `MSYS_NO_PATHCONV=1 docker compose run --rm --no-deps --user root --entrypoint chown web -R app:app /app/media`.
+- **Production static files:** `collectstatic` runs in the image build with
+  manifest hashing; a CSS `@import`/`url()` pointing at a missing file fails
+  the build (that's why `static/src` is excluded).
 - **Windows shell + non-ASCII:** heredoc Python patch scripts mangle characters
   like `•` or `—`; use the Edit tool, or run scripts with `PYTHONUTF8=1` from a file.
 - **Stale objects:** `create_version` locks and re-reads the workspace; it
