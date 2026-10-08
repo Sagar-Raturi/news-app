@@ -1,0 +1,39 @@
+{% comment %}Publisher details from Settings → Site settings. Missing details show only in preview, as a reminder.{% endcomment %}
+{% with s=settings.core.SiteSettings %}
+{% if value.kind == "publisher" and s.legal_name %}
+  <aside class="factbox not-prose">
+    <dl class="contact-list">
+      <div><dt>Publisher</dt><dd class="font-semibold">{{ s.legal_name }}</dd></div>
+      {% if s.registered_address %}<div><dt>Registered office</dt><dd>{{ s.registered_address|linebreaksbr }}</dd></div>{% endif %}
+      {% if s.contact_email %}<div><dt>Email</dt><dd><a href="mailto:{{ s.contact_email }}">{{ s.contact_email }}</a></dd></div>{% endif %}
+      {% if s.contact_phone %}<div><dt>Phone</dt><dd>{{ s.contact_phone }}</dd></div>{% endif %}
+    </dl>
+  </aside>
+{% elif value.kind == "grievance" and s.grievance_email %}
+  <aside class="factbox not-prose">
+    <dl class="contact-list">
+      <div><dt>{{ s.grievance_officer_designation|default:"Grievance Officer" }}</dt><dd class="font-semibold">{{ s.grievance_officer_name }}</dd></div>
+      <div><dt>Email</dt><dd><a href="mailto:{{ s.grievance_email }}">{{ s.grievance_email }}</a></dd></div>
+      {% if s.grievance_phone %}<div><dt>Phone</dt><dd>{{ s.grievance_phone }}</dd></div>{% endif %}
+      {% if s.registered_address %}<div><dt>Post</dt><dd>{{ s.grievance_officer_designation|default:"Grievance Officer" }}, {% if s.legal_name %}{{ s.legal_name }}, {% endif %}{{ s.registered_address|linebreaksbr }}</dd></div>{% endif %}
+      {% if s.self_regulatory_body %}<div><dt>Appeals</dt><dd>If you are not satisfied with our decision, you can appeal to {% if s.self_regulatory_body_url %}<a href="{{ s.self_regulatory_body_url }}">{{ s.self_regulatory_body }}</a>{% else %}{{ s.self_regulatory_body }}{% endif %}, the self-regulating body of which we are a member.</dd></div>{% endif %}
+    </dl>
+  </aside>
+{% elif value.kind == "privacy" and s.privacy_address %}
+  <aside class="factbox not-prose">
+    <dl class="contact-list">
+      <div><dt>Personal data questions</dt><dd><a href="mailto:{{ s.privacy_address }}">{{ s.privacy_address }}</a></dd></div>
+    </dl>
+  </aside>
+{% elif value.kind == "corrections" and s.corrections_address %}
+  <aside class="factbox not-prose">
+    <dl class="contact-list">
+      <div><dt>Report an error</dt><dd><a href="mailto:{{ s.corrections_address }}">{{ s.corrections_address }}</a></dd></div>
+    </dl>
+  </aside>
+{% elif request.is_preview %}
+  <aside class="factbox not-prose">
+    <p class="font-sans text-sm"><b>Not shown to readers yet:</b> fill in the {{ value.kind }} details in Settings → Site settings.</p>
+  </aside>
+{% endif %}
+{% endwith %}

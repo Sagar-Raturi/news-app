@@ -163,6 +163,7 @@ class AdminWorkflowTests(NewsroomTestCase):
                 "tags": "Inflation",
                 "published_date": "",
                 "ai_note": "",
+                "corrections": inline_formset([]),
                 action: "1",
             }
         )

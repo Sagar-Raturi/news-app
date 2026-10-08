@@ -22,9 +22,12 @@ session, follow `docs/BUILD_PLAYBOOK.md` (the `newsroom-build` skill in
 ## Layout
 ```
 config/            settings.py (env-driven), urls.py, celery.py, wsgi.py
-core/              StandardPage (About & AI policy), site settings, navigation
-                   template tags, newsroom roles/workflow setup, management
-                   commands (bootstrap_site, seed_demo), celery tasks
+core/              StandardPage (About, AI policy, Terms, Privacy, Contact…;
+                   launch text in trust_pages.py), GrievanceFormPage, site
+                   settings incl. publisher details, launch checklist
+                   (launch.py), navigation template tags, newsroom
+                   roles/workflow setup, management commands (bootstrap_site,
+                   seed_demo, launch_check), celery tasks
 news/              HomePage, SectionPage, ArticlePage, Author snippet, tags,
                    StreamField blocks, author/tag/search views, sitemaps, SEO
 newsdesk/          The AI newsroom

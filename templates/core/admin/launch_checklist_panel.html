@@ -1,0 +1,21 @@
+<section class="w-panel" aria-labelledby="launch-checklist-heading">
+  <div class="w-panel__header">
+    <h2 class="w-panel__heading" id="launch-checklist-heading">
+      {% if missing %}Before launch: {{ missing|length }} thing{{ missing|length|pluralize }} to do{% else %}Ready to launch{% endif %}
+    </h2>
+  </div>
+  <div class="w-panel__content">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      {% for check in checks %}
+        <li style="padding: 0.4rem 0; border-bottom: 1px solid var(--w-color-border-furniture);">
+          {% if check.ok %}✅{% else %}⬜{% endif %} <b>{{ check.label }}</b>
+          {% if not check.ok and check.fix %}<br><span class="w-help-text">{{ check.fix }}</span>{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    <h3 style="margin-top: 1rem;">Also confirm</h3>
+    <ul>
+      {% for item in manual %}<li>{{ item }}</li>{% endfor %}
+    </ul>
+  </div>
+</section>

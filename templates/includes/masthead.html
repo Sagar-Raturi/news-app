@@ -4,8 +4,8 @@
     <div class="flex items-center justify-between gap-4 border-b border-rule py-2 font-sans text-xs text-muted">
       <p><time datetime="{% now 'Y-m-d' %}">{% now "l, j F Y" %}</time></p>
       <nav aria-label="Utility" class="flex items-center gap-4">
-        {% if about_page %}<a class="hidden hover:text-ink sm:inline" href="{% pageurl about_page %}">About</a>
-        <a class="hover:text-ink" href="{% pageurl about_page %}#our-ai-policy">AI policy</a>{% endif %}
+        {% if trust_pages.about %}<a class="hidden hover:text-ink sm:inline" href="{% pageurl trust_pages.about %}">About</a>{% endif %}
+        {% if trust_pages.ai_policy %}<a class="hover:text-ink" href="{% pageurl trust_pages.ai_policy %}">AI policy</a>{% endif %}
         <a class="inline-flex items-center gap-1 hover:text-ink" href="{% url 'news:search' %}">
           <svg aria-hidden="true" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4.5 4.5"/></svg>
           Search

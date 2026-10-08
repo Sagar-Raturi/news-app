@@ -150,8 +150,10 @@ built and tested without an Anthropic API key.
       Commons, vision check), editor approves with the article, never-repeat
       enforcement (source ID, perceptual hash, one article per image), credits,
       real images in seed_demo
-- [ ] 48. Trust pages: terms, privacy, refund and cancellation, contact and
-      grievance officer, AI policy rewritten for agent-written articles,
-      consent notice
+- [x] 48. Trust pages: terms, privacy, contact and grievance officer (with
+      complaint form), corrections (notes on articles), About and AI policy
+      rewritten for agent-written articles, launch checklist. Refund and
+      cancellation policy moves to item 46; consent notice to the first
+      analytics/newsletter/ads
 - [ ] 49. Staging deployment, smoke tests, restore drill, monitoring alerts
 - [ ] 50. Production launch (docs/DEPLOYMENT.md section 10)

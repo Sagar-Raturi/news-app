@@ -1,0 +1,8 @@
+{% autoescape off %}Your complaint to {{ settings.legal_name|default:settings.site_name }} has been received.
+
+Reference: {{ reference }}
+
+Our {{ settings.grievance_officer_designation|default:"Grievance Officer" }} will look into it and tell you the decision within 15 days of receiving it. Please quote the reference if you write to us about it{% if settings.grievance_email %} at {{ settings.grievance_email }}{% endif %}.
+
+This message was sent automatically; you can reply to it.
+{% endautoescape %}

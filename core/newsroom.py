@@ -21,7 +21,8 @@ from wagtail.models import (
     WorkflowTask,
 )
 
-from core.models import StandardPage
+from core.models import GrievanceFormField, GrievanceFormPage, StandardPage
+from core.trust_pages import GRIEVANCES, STANDARD_PAGES
 from news.models import HomePage, SectionPage
 from newsdesk.desks import STARTER_DESKS
 from newsdesk.models import AgentDefinition, DeskAgent, ModelPrice, NewsroomAISettings
@@ -46,7 +47,6 @@ SECTIONS = [
 ]
 
 ABOUT_SLUG = "about"
-ABOUT_TITLE = "About & AI policy"
 
 # "add" lets writers create pages and edit/delete their own drafts, but not
 # colleagues' pages; Editors can edit anything.
@@ -142,12 +142,54 @@ def ensure_sections(home):
     return sections
 
 
-def ensure_about_page(home):
-    about = StandardPage.objects.child_of(home).filter(slug=ABOUT_SLUG).first()
-    if about is None:
-        about = home.add_child(instance=StandardPage(title=ABOUT_TITLE, slug=ABOUT_SLUG))
-        about.save_revision().publish()
-    return about
+def ensure_trust_pages(home):
+    """About, policy and contact pages plus the complaint form, created once as drafts.
+
+    Editors review (with a lawyer, for the legal pages) and publish them;
+    after that they own the text, so existing pages are never changed here.
+    """
+    pages = {}
+    for spec in STANDARD_PAGES:
+        page = StandardPage.objects.child_of(home).filter(slug=spec["slug"]).first()
+        if page is None:
+            page = home.add_child(
+                instance=StandardPage(
+                    title=spec["title"],
+                    slug=spec["slug"],
+                    intro=spec["intro"],
+                    body=spec["body"],
+                    search_description=spec["search_description"],
+                    live=False,
+                )
+            )
+            page.save_revision()
+        pages[spec["slug"]] = page
+    form = GrievanceFormPage.objects.child_of(home).filter(slug=GRIEVANCES["slug"]).first()
+    if form is None:
+        form = GrievanceFormPage(
+            title=GRIEVANCES["title"],
+            slug=GRIEVANCES["slug"],
+            intro=GRIEVANCES["intro"],
+            thank_you_text=GRIEVANCES["thank_you_text"],
+            subject=GRIEVANCES["subject"],
+            search_description=GRIEVANCES["search_description"],
+            live=False,
+        )
+        for order, (label, field_type, required, choices, help_text) in enumerate(GRIEVANCES["fields"]):
+            form.form_fields.add(
+                GrievanceFormField(
+                    sort_order=order,
+                    label=label,
+                    field_type=field_type,
+                    required=required,
+                    choices=choices,
+                    help_text=help_text,
+                )
+            )
+        home.add_child(instance=form)
+        form.save_revision()
+    pages[GRIEVANCES["slug"]] = form
+    return pages
 
 
 def _set_group_permissions(group, home, page_perms, collection_perms, model_perms):
@@ -267,7 +309,7 @@ def ensure_house_style():
 def bootstrap():
     home = ensure_home_page()
     sections = ensure_sections(home)
-    about = ensure_about_page(home)
+    trust_pages = ensure_trust_pages(home)
     writers, editors = ensure_groups(home)
     workflow = ensure_workflow(home, editors)
     desks = ensure_desks(sections)
@@ -279,7 +321,8 @@ def bootstrap():
         "desks": desks,
         "home": home,
         "sections": sections,
-        "about": about,
+        "about": trust_pages[ABOUT_SLUG],
+        "trust_pages": trust_pages,
         "writers": writers,
         "editors": editors,
         "workflow": workflow,

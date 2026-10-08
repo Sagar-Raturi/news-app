@@ -33,7 +33,7 @@ Contents
 | Paywall | Each article is free or for subscribers; registered readers get a few free premium reads a month; premium text is never sent to readers who aren't entitled **(to build)** |
 | Subscriptions | Monthly and annual plans in rupees, paid by card or UPI AutoPay through Razorpay; renewals, cancellation, receipts **(to build)** |
 | Images | Real, licensed photographs with credits; never the same image on two articles **(to build)** |
-| Trust pages | Terms, privacy, refund and cancellation, contact and grievance officer, corrections, AI policy **(to build / update)** |
+| Trust pages | About, AI policy, corrections, contact, grievance redressal (with complaint form), terms, privacy (built, as drafts for review); refund and cancellation **(with subscriptions)** |
 
 Launch is ready when every box in section 10 is ticked.
 
@@ -216,15 +216,27 @@ tested without an Anthropic API key (`NEWSDESK_WRITER=fake`).
 > download ping per use; Pexels and Wikimedia allow storing the file, which
 > fits Wagtail better. Check each provider's current terms before launch.
 
-### 5.7 Trust pages and policy (PLAN item 48)
-- [ ] Terms of use, Privacy policy, Refund and cancellation policy (with
-      concrete timelines), Contact (legal name, address, phone, email)
-- [ ] Grievance officer details and complaint form (IT Rules 2021)
-- [ ] Corrections policy (exists on About) and a visible corrections note on
-      corrected articles
-- [ ] AI policy rewritten for agent-written articles: what agents do, that
-      an editor approves every article, how images are sourced
-- [ ] Consent notice for analytics and newsletters
+### 5.7 Trust pages and policy (PLAN item 48) — built
+- [x] Terms of use, Privacy policy, Contact; publisher details (legal name,
+      address, phone, email) entered once in Settings → Site settings and
+      shown on every page that needs them
+- [x] Grievance Officer details and complaint form (IT Rules 2021): stored in
+      Forms, emailed to the officer, acknowledged to the complainant at once
+      with a reference number and the 15-day promise
+- [x] Corrections policy page (lists recent corrections) and a dated
+      correction note + "Corrected" label on corrected articles
+- [x] About and AI policy rewritten for agent-written articles
+- [x] Launch checklist on the admin dashboard and `manage.py launch_check`
+- [ ] Refund and cancellation policy (with concrete timelines): with
+      subscriptions (item 46), before Razorpay KYC
+- [ ] Consent notice: with the first analytics, newsletter or ads (none at
+      launch, so the privacy policy says no trackers)
+
+Every page is created by `bootstrap_site` as an **unpublished draft**. Have a
+lawyer review the Terms and Privacy policy, then publish them in the admin
+(Pages → Home). The pages describe the product as it is at launch; update
+them whenever it changes (reader accounts, payments, analytics or ads all
+change the privacy policy; the topic scout changes the AI policy).
 
 ## 6. Business, legal and compliance checklist
 
@@ -361,9 +373,13 @@ then repeat for production.
    default author, and review the house style and agents under Newsdesk AI.
    Five wrong passwords lock a username out for an hour from that address;
    unlock early with `exec web python manage.py axes_reset`.
-8. **Content.** Do not run `seed_demo` (it refuses when deployed). Publish
-   the About, AI policy, terms, privacy, refund and contact pages. Generate
-   and approve a handful of launch articles.
+8. **Content.** Do not run `seed_demo` (it refuses when deployed). Fill in
+   Settings → Site settings → Publisher details and Grievance redressal.
+   Review the draft About, AI policy, Corrections, Contact, Grievance
+   redressal, Terms and Privacy pages (the last two with a lawyer) and
+   publish them. Generate and approve a handful of launch articles. The
+   dashboard's launch checklist (or `exec web python manage.py launch_check`)
+   shows what is left.
 9. **Payments.** In Razorpay test mode: create the plans, set the webhook
    URL (`https://<domain>/payments/razorpay/webhook/`) and secret, buy a test
    subscription, cancel it, check the account page. Switch to live keys only
@@ -389,8 +405,11 @@ Readers and money
 - [ ] Metered reads count down and then stop
 - [ ] Subscribe (test mode), get access immediately after the webhook,
       receive the receipt; cancel and keep access until the period ends
-- [ ] Refund, terms, privacy and contact pages reachable from the footer and
-      checkout
+- [ ] Terms, privacy, contact and grievance pages reachable from the footer
+      (refund page too once subscriptions exist, and from checkout)
+- [ ] `manage.py launch_check` reports "Ready to launch"
+- [ ] Send a test complaint through the form: the officer gets it, the
+      complainant gets an acknowledgement with a reference number
 
 Newsroom
 - [ ] Topic scout suggests topics; accept one; agents produce a draft with

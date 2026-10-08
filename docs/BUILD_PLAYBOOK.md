@@ -29,7 +29,7 @@ Contents
 | 1 — Site (Wagtail news site, SEO, demo content) | Done |
 | 2 — Desk agents (commission → draft → review, article notes) | Done; being retired into the workspace at item 39 |
 | 3 — AI article workspace | Items 34–38 done (data model, workspace page, background runs, approve/publish, live activity feed, the full eight-agent pipeline with fact-check fix loop). Next: 38a (topic scout) |
-| 4 — Ship it (production, accounts, paywall, payments, images, ads, live blog, legal) | Planned in `PLAN.md` and `docs/DEPLOYMENT.md` |
+| 4 — Ship it (production, accounts, paywall, payments, images, ads, live blog, legal) | Owner chose a free soft launch first: 43 (production hardening) and 48 (trust pages) done; next 49 (staging) and 50 (launch), then 38a onwards |
 
 The owner has **no Anthropic API key yet**: everything is built and demoed with
 `NEWSDESK_WRITER=fake`. Every new agent role must have fake output.
@@ -303,6 +303,18 @@ feedback; item 39 adds the chat UI around them.
 Fully specified in `docs/DEPLOYMENT.md` section 5 (production hardening,
 reader accounts, paywall, subscriptions, images, trust pages, staging,
 launch). Extra item:
+
+**Keep the trust pages true.** The About, AI policy, Terms and Privacy pages
+(`core/trust_pages.py`, created once by `bootstrap_site`, then owned by the
+editors) describe the product as it is. A feature that changes what they say
+must come with a note to the owner listing the paragraphs to update in the
+admin (bootstrap won't touch published pages): 38a topic scout → AI policy
+("What the agents do"); 44 accounts → Privacy (what we collect, cookies,
+rights) and Terms (accounts); 45/46 paywall and payments → Terms
+(subscriptions), Privacy (payment provider) and a new Refund and cancellation
+page; 45a ads or any analytics → Privacy (cookies, third parties) plus a
+consent notice; 47 images → AI policy (image sourcing). Add new launch checks
+to `core/launch.py` when a feature adds a launch requirement.
 
 ### 45a. Ads for free readers (new)
 - Ad slots (in-article after paragraph N, between live updates, sidebar on

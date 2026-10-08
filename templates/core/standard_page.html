@@ -11,6 +11,8 @@
   </header>
   <div class="container-read mt-8"><div class="prose-ledger">
     {% for block in page.body %}{% include_block block %}{% endfor %}
-  </div></div>
+  </div>
+  {% if page.last_published_at %}<p class="mt-10 border-t border-rule pt-3 font-sans text-xs text-muted">Last updated <time datetime="{{ page.last_published_at|date:'Y-m-d' }}">{{ page.last_published_at|date:"j F Y" }}</time></p>{% endif %}
+  </div>
 </article>
 {% endblock %}

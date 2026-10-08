@@ -68,7 +68,7 @@ Workflow notifications are emailed; in development they are printed to the
 - **Pages:** homepage (curated top stories, opinion rail, latest, explainers,
   section blocks), section pages (type filter, HTMX “load more”), article pages,
   author pages (`/authors/<slug>/`), tag pages (`/tags/<slug>/`), search
-  (`/search/`, live HTMX results), About & AI policy (`/about/`).
+  (`/search/`, live HTMX results), About (`/about/`), AI policy, corrections, contact, grievance redressal (complaint form), terms and privacy pages.
 - **SEO:** Open Graph + Twitter cards, canonical URLs, `NewsArticle` JSON-LD
   (plus `WebSite` and `ProfilePage`), `/sitemap.xml` (pages, authors, tags),
   Google News sitemap at `/news-sitemap.xml` (last 48 hours), `/robots.txt`,

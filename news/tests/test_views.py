@@ -71,6 +71,8 @@ class SiteTestCase(TestCase):
         cls.about.intro = "Who we are."
         cls.about.body = [{"type": "heading", "value": "Our AI policy"}, {"type": "paragraph", "value": "<p>Humans decide.</p>"}]
         cls.about.save_revision().publish()
+        cls.ai_policy = result["trust_pages"]["ai-policy"]
+        cls.ai_policy.save_revision().publish()
 
 
 class HomePageViewTests(SiteTestCase):
@@ -169,7 +171,7 @@ class ArticlePageViewTests(SiteTestCase):
         response = self.client.get(self.rbi.url)
         self.assertContains(response, "AI-assisted")
         self.assertContains(response, "AI summarised the policy statement")
-        self.assertContains(response, "/about/#our-ai-policy")
+        self.assertContains(response, 'href="/ai-policy/">Read our AI policy')
         plain = self.client.get(self.old_news.url)
         self.assertNotContains(plain, 'id="ai-disclosure"')
 
@@ -285,8 +287,8 @@ class AboutPageViewTests(SiteTestCase):
     def test_about_and_ai_policy(self):
         response = self.client.get("/about/")
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "About &amp; AI policy")
-        self.assertContains(response, 'id="our-ai-policy"')
+        self.assertContains(response, "About us</h1>")
+        self.assertContains(response, "Last updated")
         self.assertIsInstance(response.context["page"], StandardPage)
 
 

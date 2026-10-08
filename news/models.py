@@ -287,6 +287,21 @@ class ArticleAuthor(Orderable):
         unique_together = [("page", "author")]
 
 
+class ArticleCorrection(Orderable):
+    """A published correction note, shown at the foot of the article (corrections policy)."""
+
+    page = ParentalKey("news.ArticlePage", on_delete=models.CASCADE, related_name="corrections")
+    date = models.DateField(default=timezone.localdate)
+    note = models.TextField(
+        help_text="What was wrong and what we changed, e.g. ‘An earlier version said the bill passed in July. It passed in August.’"
+    )
+
+    panels = [FieldPanel("date"), FieldPanel("note")]
+
+    class Meta(Orderable.Meta):
+        ordering = ["sort_order", "pk"]
+
+
 class ArticlePage(Page):
     class ArticleType(models.TextChoices):
         NEWS = "news", "News"
@@ -348,6 +363,12 @@ class ArticlePage(Page):
         ),
         MultiFieldPanel(
             [FieldPanel("ai_assisted"), FieldPanel("ai_note")], heading="AI disclosure"
+        ),
+        InlinePanel(
+            "corrections",
+            heading="Corrections",
+            label="Correction",
+            help_text="Add a note when you correct a factual error after publication. Spelling and style fixes need none.",
         ),
     ]
 

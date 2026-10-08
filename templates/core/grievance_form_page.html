@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-grievances{% endblock %}
+
+{% block content %}
+<article class="pt-8 sm:pt-12">
+  <header class="container-read border-b border-rule pb-6">
+    <h1 class="headline text-4xl sm:text-5xl">{{ page.title }}</h1>
+  </header>
+  <div class="container-read mt-8">
+    <div class="prose-ledger">{{ page.intro|richtext }}</div>
+
+    {% include "core/blocks/contact_details.html" with value=contact_value %}
+
+    <form action="{% pageurl page %}" method="post" class="form-ledger mt-10" novalidate>
+      {% csrf_token %}
+      <h2 class="headline text-2xl">Make a complaint</h2>
+      {% if form.non_field_errors %}<div class="form-error">{{ form.non_field_errors }}</div>{% endif %}
+      {% for field in form %}
+        {% if field.name == "website" %}
+          <div class="form-trap" aria-hidden="true">{{ field.label_tag }} {{ field }}</div>
+        {% elif field.field.widget.input_type == "checkbox" %}
+          <div class="form-field form-check">
+            {{ field }} <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {% for error in field.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+          </div>
+        {% else %}
+          <div class="form-field">
+            <label for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %} <span class="text-muted">(optional)</span>{% endif %}</label>
+            {% if field.help_text %}<p class="form-help">{{ field.help_text }}</p>{% endif %}
+            {{ field }}
+            {% for error in field.errors %}<p class="form-error">{{ error }}</p>{% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      <p class="form-help">We use what you send us only to handle your complaint. See our <a href="/privacy/">privacy policy</a>.</p>
+      <button type="submit" class="btn mt-4">Send complaint</button>
+    </form>
+  </div>
+</article>
+{% endblock %}

@@ -37,7 +37,7 @@ class DemoContentFileTests(TestCase):
 
     def test_about_page_has_ai_policy(self):
         headings = [b["value"] for b in self.content["about_page"]["body"] if b["type"] == "heading"]
-        self.assertIn("Our AI policy", headings)
+        self.assertIn("How we use AI", headings)
 
 
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
@@ -65,7 +65,13 @@ class SeedDemoTests(TestCase):
     def test_about_page_filled(self):
         about = StandardPage.objects.get(slug="about")
         self.assertTrue(about.intro)
-        self.assertContains(self.client.get("/about/"), 'id="our-ai-policy"')
+        self.assertContains(self.client.get("/about/"), 'href="/ai-policy/"')
+
+    def test_trust_pages_published_with_demo_publisher(self):
+        response = self.client.get("/contact/")
+        self.assertContains(response, "not a real company")
+        for slug in ["ai-policy", "corrections", "contact", "grievances", "terms", "privacy"]:
+            self.assertContains(self.client.get("/"), f'href="/{slug}/"')
 
     def test_demo_users_and_roles(self):
         User = get_user_model()
@@ -94,7 +100,7 @@ class SeedDemoTests(TestCase):
         urls = ["/", "/search/?q=monsoon", "/authors/", "/sitemap.xml", "/news-sitemap.xml", "/feed/", "/robots.txt"]
         urls += [page.url for page in ArticlePage.objects.live()]
         urls += [a.get_absolute_url() for a in Author.objects.all()]
-        urls += [f"/{slug}/" for slug in ["politics", "international", "local", "economy", "society", "education", "health", "science-tech", "opinion", "about"]]
+        urls += [f"/{slug}/" for slug in ["politics", "international", "local", "economy", "society", "education", "health", "science-tech", "opinion", "about", "ai-policy", "corrections", "contact", "grievances", "terms", "privacy"]]
         for url in urls:
             with self.subTest(url=url):
                 self.assertEqual(self.client.get(url).status_code, 200)

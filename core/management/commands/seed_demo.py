@@ -14,7 +14,7 @@ from wagtail.models import Collection, Site
 
 from core.demo_images import illustration
 from core.models import SiteSettings
-from core.newsroom import bootstrap
+from core.newsroom import ABOUT_SLUG, bootstrap
 from news.models import ArticleAuthor, ArticlePage, Author, HomeFeaturedArticle, SectionPage
 from newsdesk.models import DeskAgent, DeskFeedback
 
@@ -28,6 +28,15 @@ DEMO_USERS = [
     ("editor", "editor", "Editors", "ananya-iyer", False),
     ("writer", "writer", "Writers", "meera-deshpande", False),
 ]
+
+DEMO_PUBLISHER = {
+    "legal_name": "The Ledger Demo Publishing (not a real company)",
+    "registered_address": "Demonstration address, New Delhi 110001",
+    "contact_email": "editors@example.com",
+    "corrections_email": "corrections@example.com",
+    "grievance_officer_name": "Demo Grievance Officer",
+    "grievance_email": "grievance@example.com",
+}
 
 # Default bylines for the AI desks, and example memory showing per-desk,
 # per-article-type feedback (a desk's notes only reach that desk's agent).
@@ -85,6 +94,7 @@ class Command(BaseCommand):
             articles = self.create_articles(content["articles"], sections, authors, users)
             self.set_top_stories(site["home"], content["articles"], articles)
             self.fill_about_page(site["about"], content["about_page"])
+            self.publish_trust_pages(site["trust_pages"])
             self.create_review_draft(sections, authors, users)
             self.configure_desks(authors, users)
             self.configure_settings()
@@ -193,7 +203,7 @@ class Command(BaseCommand):
         about.title = data["title"]
         about.intro = data["intro"]
         about.body = data["body"]
-        about.search_description = "Who we are, our editorial standards and how we use AI."
+        about.search_description = "Who we are and the standards we hold ourselves to."
         about.save_revision().publish()
 
     def create_review_draft(self, sections, authors, users):
@@ -233,6 +243,18 @@ class Command(BaseCommand):
 
     def configure_settings(self):
         site = Site.objects.get(is_default_site=True)
-        settings = SiteSettings.for_site(site)
-        settings.demo_notice = True
-        settings.save()
+        site_settings = SiteSettings.for_site(site)
+        site_settings.demo_notice = True
+        # Obviously fictional publisher details so the policy and contact
+        # pages render fully in development. Real ones go in before launch.
+        for field, value in DEMO_PUBLISHER.items():
+            if not getattr(site_settings, field):
+                setattr(site_settings, field, value)
+        site_settings.save()
+
+    def publish_trust_pages(self, trust_pages):
+        """Publish the launch drafts (About is filled with demo text separately)."""
+        for slug, page in trust_pages.items():
+            page = page.specific
+            if slug != ABOUT_SLUG and not page.live:
+                page.save_revision().publish()

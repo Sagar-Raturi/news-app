@@ -1993,7 +1993,7 @@
     }
   ],
   "about_page": {
-    "title": "About & AI policy",
+    "title": "About us",
     "intro": "The Ledger is an analysis-led publication about India and its place in the world. We publish news, analysis, explainers, opinion and editorials, and we care more about context than speed. Please note that the site is currently running demonstration content: the articles and authors you see are illustrative examples written to show how the publication works, not reports of real events.",
     "body": [
       {
@@ -2042,44 +2042,11 @@
       },
       {
         "type": "heading",
-        "value": "Our AI policy"
+        "value": "How we use AI"
       },
       {
         "type": "paragraph",
-        "value": "<p>We use artificial intelligence as a tool, in limited and clearly defined ways, and never as a substitute for reporting or editorial judgement.</p>"
-      },
-      {
-        "type": "key_points",
-        "value": {
-          "title": "What this means in practice",
-          "points": [
-            "AI may assist with transcription of interviews, summarising long documents such as reports and judgments, producing first drafts of translations, and checking data for errors and inconsistencies.",
-            "AI never writes our opinion columns or editorials.",
-            "We never use AI to generate photographs or images presented as real. Illustrations are labelled as illustrations.",
-            "Every article in which AI tools played a material role carries an “AI-assisted” badge and a short note explaining how they were used.",
-            "A human editor reviews everything we publish and is accountable for it, whatever tools were used along the way."
-          ]
-        }
-      },
-      {
-        "type": "paragraph",
-        "value": "<p>We review this policy regularly as the technology and our understanding of it change. If you believe an article falls short of these standards, we want to hear from you.</p>"
-      },
-      {
-        "type": "heading",
-        "value": "Corrections"
-      },
-      {
-        "type": "paragraph",
-        "value": "<p>We make mistakes, and when we do we correct them promptly and transparently. Corrections are noted at the foot of the article concerned, with a description of what was changed. Minor fixes to spelling or style are made without a note. To report an error, write to <a href=\"mailto:corrections@example.com\">corrections@example.com</a> with a link to the article and a description of the problem.</p>"
-      },
-      {
-        "type": "heading",
-        "value": "Contact"
-      },
-      {
-        "type": "paragraph",
-        "value": "<ul><li>General enquiries and feedback: <a href=\"mailto:editors@example.com\">editors@example.com</a></li><li>Letters for publication: <a href=\"mailto:letters@example.com\">letters@example.com</a></li><li>News tips (we protect our sources): <a href=\"mailto:tips@example.com\">tips@example.com</a></li><li>Corrections: <a href=\"mailto:corrections@example.com\">corrections@example.com</a></li></ul>"
+        "value": "<p>Our articles are produced by AI agents working under human editors, and every one is approved by an editor before it is published. Our <a href=\"/ai-policy/\">AI policy</a> explains what the agents do and what they never do. To report a mistake, see our <a href=\"/corrections/\">corrections policy</a>; for anything else, <a href=\"/contact/\">contact us</a>.</p>"
       }
     ]
   }

@@ -1,0 +1,14 @@
+{% load wagtailcore_tags %}
+{% if corrections %}
+  <ul class="not-prose correction-list">
+    {% for correction in corrections %}
+      <li>
+        <p class="font-sans text-xs text-muted"><time datetime="{{ correction.date|date:'Y-m-d' }}">{{ correction.date|date:"j F Y" }}</time></p>
+        <p><a class="font-semibold hover:text-accent" href="{% pageurl correction.page %}">{{ correction.page.title }}</a></p>
+        <p class="text-ink-soft">{{ correction.note }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No corrections yet.</p>
+{% endif %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-grievances{% endblock %}
+
+{% block content %}
+<article class="pt-8 sm:pt-12">
+  <header class="container-read border-b border-rule pb-6">
+    <h1 class="headline text-4xl sm:text-5xl">Complaint received</h1>
+  </header>
+  <div class="container-read mt-8">
+    {% if form_submission %}<p class="font-sans text-lg">Your reference: <b>{{ reference }}</b></p>{% endif %}
+    <div class="prose-ledger mt-4">{{ page.thank_you_text|richtext }}</div>
+    {% include "core/blocks/contact_details.html" with value=contact_value %}
+  </div>
+</article>
+{% endblock %}

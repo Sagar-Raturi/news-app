@@ -26,6 +26,7 @@
         <span aria-hidden="true"> · </span>{{ page.reading_time }} min read
       </p>
       {% if page.ai_assisted %}<a href="#ai-disclosure" class="badge-ai">AI-assisted</a>{% endif %}
+      {% with latest=page.corrections.all|dictsortreversed:"date"|first %}{% if latest %}<a href="#corrections" class="font-semibold text-accent hover:underline">Corrected {{ latest.date|date:"j F Y" }}</a>{% endif %}{% endwith %}
     </div>
   </header>
 
@@ -52,11 +53,21 @@
   </div></div>
 
   <footer class="container-read mt-10 space-y-8">
+    {% if page.corrections.all %}
+      <aside id="corrections" class="border-l-2 border-accent bg-paper-dark px-5 py-4 font-sans text-sm text-ink-soft">
+        <p class="font-semibold text-ink">Correction{{ page.corrections.all|length|pluralize }}</p>
+        {% for correction in page.corrections.all %}
+          <p class="mt-1"><time class="font-semibold" datetime="{{ correction.date|date:'Y-m-d' }}">{{ correction.date|date:"j F Y" }}:</time> {{ correction.note }}</p>
+        {% endfor %}
+        {% if trust_pages.corrections %}<p class="mt-2"><a class="font-semibold text-accent hover:underline" href="{% pageurl trust_pages.corrections %}">Our corrections policy →</a></p>{% endif %}
+      </aside>
+    {% endif %}
+
     {% if page.ai_assisted %}
       <aside id="ai-disclosure" class="border-l-2 border-accent bg-paper-dark px-5 py-4 font-sans text-sm text-ink-soft">
         <p class="font-semibold text-ink">How AI was used in this article</p>
         <p class="mt-1">{{ page.ai_note|default:"AI tools assisted in producing this article. A human editor reviewed and is accountable for everything published." }}</p>
-        {% if about_page %}<p class="mt-2"><a class="font-semibold text-accent hover:underline" href="{% pageurl about_page %}#our-ai-policy">Read our AI policy →</a></p>{% endif %}
+        {% if trust_pages.ai_policy %}<p class="mt-2"><a class="font-semibold text-accent hover:underline" href="{% pageurl trust_pages.ai_policy %}">Read our AI policy →</a></p>{% endif %}
       </aside>
     {% endif %}
 

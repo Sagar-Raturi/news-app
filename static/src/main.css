@@ -98,6 +98,63 @@
     @apply inline-flex items-center justify-center gap-2 border border-ink px-5 py-2.5 font-sans text-sm font-semibold transition-colors hover:bg-ink hover:text-paper;
   }
 
+  /* Publisher details on Contact / policy pages */
+  .contact-list {
+    @apply space-y-2 font-sans text-sm;
+  }
+  .contact-list dt {
+    @apply text-xs font-semibold uppercase tracking-wider text-muted;
+  }
+  .contact-list a {
+    @apply underline decoration-accent underline-offset-2 hover:text-accent;
+  }
+  .correction-list > li {
+    @apply border-t border-rule py-4 font-serif;
+  }
+
+  /* Public forms (grievance complaints) */
+  .form-ledger .form-field {
+    @apply mt-5 font-sans text-sm;
+  }
+  .form-ledger label {
+    @apply font-semibold;
+  }
+  .form-ledger input[type="text"],
+  .form-ledger input[type="email"],
+  .form-ledger input[type="url"],
+  .form-ledger select,
+  .form-ledger textarea {
+    @apply mt-1 block w-full border border-rule-strong bg-paper px-3 py-2 font-sans text-base focus:border-ink focus:outline-none;
+  }
+  .form-ledger textarea {
+    @apply min-h-40;
+  }
+  .form-ledger .form-check {
+    @apply flex items-start gap-3;
+  }
+  .form-ledger .form-check input {
+    @apply mt-1 h-4 w-4 shrink-0 accent-accent;
+  }
+  .form-ledger .form-check label {
+    @apply font-normal;
+  }
+  .form-help {
+    @apply mt-1 font-sans text-xs text-muted;
+  }
+  .form-help a {
+    @apply underline;
+  }
+  .form-error {
+    @apply mt-1 font-sans text-sm font-semibold text-accent;
+  }
+  .form-trap {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
   .no-scrollbar {
     scrollbar-width: none;
   }
