@@ -4,7 +4,10 @@
 **paid product**. AI agents suggest topics and research, write and edit articles;
 a human editor approves and publishes. Some articles are free, others are behind
 a **paywall**; readers have their own **accounts**. Shipping plan:
-`docs/DEPLOYMENT.md` (deployment playbook).
+`docs/DEPLOYMENT.md` (deployment playbook). To continue the build in a new
+session, follow `docs/BUILD_PLAYBOOK.md` (the `newsroom-build` skill in
+`.claude/skills/` walks through it); the owner's original brief is in
+`docs/specs/ai-article-workspace.md`.
 
 ## Stack
 - Python 3.12 (Docker) / 3.11+ locally, Django 5.2 LTS, Wagtail 7.0 LTS
@@ -42,7 +45,9 @@ static/src/        Tailwind source (main.css) — edit this, then rebuild
 static/css/site.css  compiled Tailwind output (committed; do not hand-edit)
 static/js/         vendored htmx.min.js
 docker/            entrypoint script
-docs/              DEPLOYMENT.md (playbook), screenshots
+docs/              DEPLOYMENT.md (shipping playbook), BUILD_PLAYBOOK.md
+                   (how to continue the build), specs/, screenshots
+.claude/skills/    newsroom-build: how a new session resumes the build
 ```
 
 ## Commands
@@ -80,6 +85,9 @@ docs/              DEPLOYMENT.md (playbook), screenshots
   licence and credit. No image is used for more than one article. Never
   AI-generated images presented as photographs; a generated illustration must
   be labelled as one.
+- **Live blogs** for running stories (protests, conflicts, results): agents
+  draft short sourced updates, the editor approves each one; free to read.
+- **Ads only for free readers**; subscribers see none.
 - **No Anthropic API key yet:** develop, test and demo with
   `NEWSDESK_WRITER=fake`. Every agent role needs offline fake output
   (`newsdesk/pipeline/fake.py`).

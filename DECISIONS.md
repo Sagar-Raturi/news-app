@@ -99,3 +99,5 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Premium text is cut on the server, never hidden with CSS/JS, and marked with Google's paywalled-content structured data — no leaks, no cloaking penalty.
 - Reader accounts with django-allauth, separate from staff accounts — readers never see the admin.
 - Photos from Pexels and Wikimedia Commons (files can be stored, licence recorded) until a wire subscription; Unsplash is skipped because its terms require hotlinking. One image per article, enforced.
+- Live blogs are free to read and carry ads; every agent-drafted update needs an editor's approval, even during breaking news — speed comes from a one-click mobile queue, not from skipping review.
+- Ads are shown only to readers without a subscription — ad-free reading is part of what subscribers pay for.

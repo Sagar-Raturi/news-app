@@ -110,6 +110,9 @@ items 36, 38 and 40.
 - [ ] 38a. Topic scout (core, per the owner): scheduled and on-demand topic
       suggestions with ready briefs per section, accept/reject queue,
       accepted topics start generating automatically
+- [ ] 38b. Live blog: LiveBlogPage + LiveUpdate, live desk agent drafting
+      sourced updates and key points, one-click approval queue, live updates
+      for readers, LiveBlogPosting JSON-LD, ad slots, free to read
 - [ ] 39. Feedback chat + targeted block-level revisions; session context and
       summarisation; retire Commission / Revise with AI / Article notes and
       migrate their data into workspaces
@@ -135,6 +138,9 @@ built and tested without an Anthropic API key.
       type and an editor control in the workspace, server-side truncation,
       metered free reads, paywalled-content JSON-LD, feeds and search without
       premium text, cache rules
+- [ ] 45a. Ads for free readers only: ad slots (in-article, between live
+      updates), lazy-loaded fixed-size containers, ads.txt, consent for EEA/UK
+      visitors, global switch; subscribers see none
 - [ ] 46. Subscriptions: Plan / Subscription / PaymentEvent, Razorpay
       Subscriptions checkout (cards, UPI AutoPay), verified idempotent
       webhooks, renewals, grace period, cancellation, receipts, reconciliation
