@@ -107,10 +107,43 @@ items 36, 38 and 40.
 - [ ] 38. Full pipeline: orchestrator plan, researcher (web search/fetch),
       analyst, outliner, writer, fact-checker loop, editor, SEO; retry a
       failed step — CHECK IN
+- [ ] 38a. Topic scout (core, per the owner): scheduled and on-demand topic
+      suggestions with ready briefs per section, accept/reject queue,
+      accepted topics start generating automatically
 - [ ] 39. Feedback chat + targeted block-level revisions; session context and
       summarisation; retire Commission / Revise with AI / Article notes and
       migrate their data into workspaces
 - [ ] 40. Inline comments with re-anchoring across versions — CHECK IN
 - [ ] 41. Admin: editable agents, house style, section guidelines, prices
-- [ ] 42. Cost and usage display, topic scout, AI policy draft, polish,
-      README/DECISIONS/CLAUDE updates, full test run
+- [ ] 42. Cost and usage display, polish, README/DECISIONS/CLAUDE updates,
+      full test run
+
+# Phase 4 — Ship it: production, readers, paywall, payments, images
+
+The playbook is `docs/DEPLOYMENT.md` (sections 5, 9 and 10). Items 44–48 can be
+built and tested without an Anthropic API key.
+
+- [ ] 43. Production hardening: docker-compose.prod.yml (caddy, gunicorn +
+      uvicorn ASGI, worker, beat, redis), production settings (security
+      headers, Redis cache, SMTP email, Sentry, logging), media on object
+      storage, /healthz/, Celery limits and beat, seed_demo blocked in
+      production, staff 2FA, auth rate limits
+- [ ] 44. Reader accounts: django-allauth (email login + verification,
+      password reset, Google sign-in), account page, readers kept out of the
+      admin, data export and deletion
+- [ ] 45. Paywall: article access level (free / subscribers) with defaults by
+      type and an editor control in the workspace, server-side truncation,
+      metered free reads, paywalled-content JSON-LD, feeds and search without
+      premium text, cache rules
+- [ ] 46. Subscriptions: Plan / Subscription / PaymentEvent, Razorpay
+      Subscriptions checkout (cards, UPI AutoPay), verified idempotent
+      webhooks, renewals, grace period, cancellation, receipts, reconciliation
+- [ ] 47. Images: licence metadata, picture-editor agent (Pexels + Wikimedia
+      Commons, vision check), editor approves with the article, never-repeat
+      enforcement (source ID, perceptual hash, one article per image), credits,
+      real images in seed_demo
+- [ ] 48. Trust pages: terms, privacy, refund and cancellation, contact and
+      grievance officer, AI policy rewritten for agent-written articles,
+      consent notice
+- [ ] 49. Staging deployment, smoke tests, restore drill, monitoring alerts
+- [ ] 50. Production launch (docs/DEPLOYMENT.md section 10)

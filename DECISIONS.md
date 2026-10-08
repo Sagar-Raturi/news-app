@@ -90,3 +90,12 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Until live streaming lands, the activity panel polls every 2 s while a run is active and reloads the page when it finishes.
 - "Highly personal" writing (owner's choice) means a strong publication voice — confident, witty, warm, addressing the reader, taking a clear line — with no first person and no invented experiences; it fits the existing AI policy and the no-opinion rule. bootstrap_site upgrades a house style still on an earlier shipped default and leaves edited ones alone.
 - The topic scout moves from "optional" to core and is built straight after the full pipeline — the owner wants agents to propose topics with ready briefs, leaving the editor to approve.
+
+## Phase 4 — Shipping (assumptions in docs/DEPLOYMENT.md, section 2)
+
+- Payments through Razorpay Subscriptions — Stripe takes new Indian businesses by invitation only; Razorpay supports cards and UPI AutoPay mandates.
+- Hosting: one Docker Compose VM + managed PostgreSQL + object storage in an Indian region, behind Cloudflare — cheapest reliable start; the database is the only irreplaceable part and it is managed and backed up.
+- Paywall default: news and explainers free, analysis for subscribers, editor override per article, 3 free premium reads a month for registered readers — free stories bring readers from search; analysis is what people pay for.
+- Premium text is cut on the server, never hidden with CSS/JS, and marked with Google's paywalled-content structured data — no leaks, no cloaking penalty.
+- Reader accounts with django-allauth, separate from staff accounts — readers never see the admin.
+- Photos from Pexels and Wikimedia Commons (files can be stored, licence recorded) until a wire subscription; Unsplash is skipped because its terms require hotlinking. One image per article, enforced.
