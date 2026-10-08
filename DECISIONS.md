@@ -88,3 +88,5 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Versions are compared by visible content, not markup — Draftail re-serialises rich text on save, and a save without changes shouldn't create a version or a diff.
 - On the public page, citations [S3] become numbered links ([1], [2]…) to the source, numbered in the order the article cites them; importing a hand edit maps them back.
 - Until live streaming lands, the activity panel polls every 2 s while a run is active and reloads the page when it finishes.
+- "Highly personal" writing (owner's choice) means a strong publication voice — confident, witty, warm, addressing the reader, taking a clear line — with no first person and no invented experiences; it fits the existing AI policy and the no-opinion rule. bootstrap_site upgrades a house style still on an earlier shipped default and leaves edited ones alone.
+- The topic scout moves from "optional" to core and is built straight after the full pipeline — the owner wants agents to propose topics with ready briefs, leaving the editor to approve.

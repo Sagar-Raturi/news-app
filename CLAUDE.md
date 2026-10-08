@@ -72,11 +72,12 @@ docker/            entrypoint script
   write and edit** articles. The human editor's job is to **approve and
   publish**, with optional feedback. Design every flow so the default is
   "agents propose, editor clicks approve"; nothing publishes without that click.
-- Writing style should be **highly personal** (a distinctive authorial voice).
-  Exactly what that means is still to be agreed with the owner — it must not
-  mean invented first-person experiences or quotes, and it has to be squared
-  with the house style, the "no AI opinion/editorials" rule and the public AI
-  policy before the prompts change.
+- Writing style is **highly personal**, decided as: a strong, recognisable
+  voice in the spirit of The Economist's named columns — confident, witty,
+  warm, talks to the reader ("you"), vivid images, takes a clear line — but
+  never "I" and never invented experiences, quotes or encounters. The voice
+  belongs to the publication. Lives in the house style
+  (`newsdesk/roles.py` → `DEFAULT_HOUSE_STYLE`, editable in admin).
 - No Anthropic API key yet: develop, test and demo with `NEWSDESK_WRITER=fake`.
   Every agent role needs offline fake output (`newsdesk/pipeline/fake.py`).
 

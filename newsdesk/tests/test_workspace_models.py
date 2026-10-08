@@ -64,6 +64,22 @@ class AgentSetupTests(WorkspaceTestCase):
         self.assertEqual(settings.house_style, DEFAULT_HOUSE_STYLE)
         self.assertEqual(settings.web_search_cost_per_1000, Decimal("10.00"))
 
+    def test_bootstrap_upgrades_an_untouched_house_style_only(self):
+        from newsdesk.roles import PREVIOUS_HOUSE_STYLES
+
+        settings = NewsroomAISettings.load()
+        settings.house_style = PREVIOUS_HOUSE_STYLES[0]
+        settings.save()
+        bootstrap()
+        self.assertEqual(NewsroomAISettings.load().house_style, DEFAULT_HOUSE_STYLE)
+        self.assertIn('never write as "I"', DEFAULT_HOUSE_STYLE)
+
+        settings = NewsroomAISettings.load()
+        settings.house_style = "Our own style."
+        settings.save()
+        bootstrap()
+        self.assertEqual(NewsroomAISettings.load().house_style, "Our own style.")
+
     def test_desks_never_auto_publish_by_default(self):
         self.assertFalse(self.economy.auto_publish)
 

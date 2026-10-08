@@ -24,8 +24,8 @@ from wagtail.models import (
 from core.models import StandardPage
 from news.models import HomePage, SectionPage
 from newsdesk.desks import STARTER_DESKS
-from newsdesk.models import AgentDefinition, DeskAgent, ModelPrice
-from newsdesk.roles import DEFAULT_MODEL, STARTER_AGENTS, starter_prices
+from newsdesk.models import AgentDefinition, DeskAgent, ModelPrice, NewsroomAISettings
+from newsdesk.roles import DEFAULT_HOUSE_STYLE, DEFAULT_MODEL, PREVIOUS_HOUSE_STYLES, STARTER_AGENTS, starter_prices
 
 WRITERS = "Writers"
 EDITORS = "Editors"
@@ -254,6 +254,15 @@ def ensure_prices():
         )
 
 
+def ensure_house_style():
+    """Upgrade the house style to the current default unless an editor has changed it."""
+    settings = NewsroomAISettings.load()
+    if settings.house_style.strip() in {text.strip() for text in PREVIOUS_HOUSE_STYLES}:
+        settings.house_style = DEFAULT_HOUSE_STYLE
+        settings.save(update_fields=["house_style"])
+    return settings
+
+
 @transaction.atomic
 def bootstrap():
     home = ensure_home_page()
@@ -264,6 +273,7 @@ def bootstrap():
     desks = ensure_desks(sections)
     agents = ensure_agents()
     ensure_prices()
+    ensure_house_style()
     return {
         "agents": agents,
         "desks": desks,
