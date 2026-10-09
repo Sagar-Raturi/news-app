@@ -7,3 +7,4 @@ staticfiles
 # Secrets never go into the image; Compose passes them at run time.
 .env
 .env.*
+backups

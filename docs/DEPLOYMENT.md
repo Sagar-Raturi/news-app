@@ -5,6 +5,12 @@ how to run it afterwards. It is written for the owner and whoever operates the
 site. Sections marked **(to build)** describe work that is planned in
 `PLAN.md` but not in the code yet; everything else describes what exists.
 
+**The chosen route** (GoDaddy domain, Cloudflare, Hostinger VPS with the
+bundled database, Brevo email, Cloudflare R2 backups) is written out step by
+step in `.claude/skills/deploy-ledger/SKILL.md`, with progress tracked in
+`docs/DEPLOY_LOG.md`. This playbook keeps the background and the general
+procedure.
+
 Contents
 
 1. What we are shipping
@@ -45,13 +51,13 @@ build starts; log the outcome in `DECISIONS.md`.
 | # | Decision | Recommendation | Why |
 |---|---|---|---|
 | 1 | Brand and domain | Decide the final name (The Ledger is a placeholder), run a trademark search, buy the `.com` and `.in` | The name appears in the site settings, emails, payment pages and Google News |
-| 2 | Hosting | One virtual machine (Docker Compose) + managed PostgreSQL, in an Indian region (DigitalOcean Bengaluru or AWS Mumbai) | Cheapest setup that is still reliable; the database, the only thing you can't lose, is managed and backed up by the provider. Low latency for Indian readers |
+| 2 | Hosting | **Chosen:** Hostinger VPS KVM 2 (2 vCPU, 8 GB) running Docker Compose with PostgreSQL on the same server, backed up nightly to Cloudflare R2; domain at GoDaddy, DNS on Cloudflare. (Managed PostgreSQL remains supported via `DATABASE_URL`.) | Rupee billing with UPI and about half the cost of AWS Lightsail; 8 GB fits the database comfortably; domain and backups kept outside Hostinger so moving is easy |
 | 3 | Payments | Razorpay Subscriptions (cards, UPI AutoPay) | Stripe accepts new Indian businesses by invitation only; Razorpay supports Indian recurring payments natively |
 | 4 | What is free | News and explainers free; analysis for subscribers; the editor can override per article; registered readers get 3 free premium articles a month | Free news brings readers in from search and social; the analysis is what people pay for |
 | 5 | Prices | Monthly and annual plans in INR (annual at roughly 10× monthly) | Set the actual prices yourself after looking at comparable Indian publications |
 | 6 | Login methods | Email + password, plus "Sign in with Google" | Covers almost everyone; Google sign-in removes password friction |
 | 7 | Images | Pexels and Wikimedia Commons now; a wire/agency photo subscription (PTI, ANI, Reuters or Getty) once revenue allows | Free, real, licensed photos today; news-event photos of real people need a wire service |
-| 8 | Transactional email | Amazon SES (Mumbai) or Postmark | Verification, password reset and receipts must arrive reliably |
+| 8 | Transactional email | **Chosen:** Brevo (free, 300/day) for sending; Cloudflare Email Routing for receiving grievance@/contact@ | Free at launch volumes; complaint acknowledgements must arrive reliably |
 | 9 | Staff security | Two-factor authentication for every staff account | Admin accounts can publish to the whole site |
 | 10 | AI models | Start every agent on Claude Opus 5.5; move research, outlining, SEO and summaries to Sonnet 5.5 if costs are high | Quality first; each agent's model can be changed in the admin without a deploy |
 
@@ -320,6 +326,10 @@ in a password manager, not on a laptop.
 
 ## 9. First deployment, step by step
 
+The Hostinger-specific version of these steps, including server hardening,
+email and backups, is `.claude/skills/deploy-ledger/SKILL.md`. The generic
+outline:
+
 Do this on staging first (a subdomain such as `staging.theledger.in` works),
 then repeat for production.
 
@@ -446,17 +456,11 @@ still run against (add columns before using them; drop them a release later).
 ### Backups and restore drill
 - Database: managed daily backups + point-in-time recovery (keep at least 7 days).
 - Media: bucket versioning.
-- **Bundled database or media on disk** (no managed services): nothing backs
-  these up for you. Run nightly from cron on the server and copy the files
-  off the machine (object storage, or the provider's volume snapshots):
-  ```bash
-  cd /srv/ledger
-  docker compose -f docker-compose.prod.yml --profile bundled-db exec -T db pg_dump -U ledger -Fc ledger > backups/ledger-$(date +%F).dump
-  docker run --rm -v ledger_media:/media:ro -v "$PWD/backups":/out alpine tar czf /out/media-$(date +%F).tgz -C /media .
-  ```
-  Restore with `pg_restore --clean -U ledger -d ledger` inside the `db`
-  container. (The volume is named after the folder: `ledger_media` for
-  `/srv/ledger`; check with `docker volume ls`.)
+- **Bundled database or media on disk** (the Hostinger setup): nothing backs
+  these up for you. `docker/backup.sh` dumps the database and the images,
+  keeps 7 days on the server, copies them to Cloudflare R2 (30 days) and
+  pings healthchecks.io; cron runs it nightly. `docker/restore.sh <db.dump>
+  [media.tgz] --yes` puts a backup back (it stops the site meanwhile).
 - Once a month: restore the latest backup into staging and open a few articles
   and the admin. A backup you haven't restored is a hope, not a backup.
 

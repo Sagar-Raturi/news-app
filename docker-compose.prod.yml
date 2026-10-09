@@ -7,6 +7,10 @@
 # staging server, add `--profile bundled-db` and point DATABASE_URL at
 # postgres://ledger:<POSTGRES_PASSWORD>@db:5432/ledger (see docs/DEPLOYMENT.md).
 
+# Fixed project name: volumes are always ledger_media, ledger_pgdata… whatever
+# the folder is called, and it never collides with the development stack.
+name: ledger
+
 x-env: &env
   CELERY_BROKER_URL: redis://redis:6379/0
   DJANGO_CACHE_URL: redis://redis:6379/1
@@ -95,6 +99,13 @@ services:
       interval: 5s
       timeout: 3s
       retries: 20
+
+  # PostgreSQL client tools for docker/backup.sh and docker/restore.sh; works
+  # with the bundled database and with a managed one (uses DATABASE_URL).
+  pgtools:
+    image: postgres:16-alpine
+    profiles: ["tools"]
+    env_file: .env.production
 
 volumes:
   media:

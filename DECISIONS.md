@@ -136,3 +136,14 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Refund and cancellation policy waits for subscriptions (item 46) — publishing one now would describe payments that don't exist. Likewise the consent notice waits for the first analytics, newsletter or ads.
 - Launch checklist: what code can verify (publisher details, pages live, demo notice off, no demo logins, an article published, API key, real email) is checked on the admin dashboard for editors/admins and by `manage.py launch_check` (exit 1 while incomplete); what it can't (lawyer review, Cloudflare Access, MIB filing, uptime monitor) is listed for the owner to confirm.
 - The footer no longer links to /admin/ ("Newsroom login"): staff know the address, and with Cloudflare Access in front of it there is nothing for readers there.
+
+## Deployment route (2026-10-09)
+
+- Owner's choice: domain at **GoDaddy**, DNS/proxy/Access/email routing/backups on **Cloudflare**, server on **Hostinger VPS KVM 2** — the domain and backups stay outside the hosting company so moving servers means restoring a backup and changing one DNS record.
+- Database runs on the same server (`bundled-db`, made the default through `COMPOSE_PROFILES` in `.env.production`), backed up nightly by `docker/backup.sh` to Cloudflare R2 (30 days) with a healthchecks.io alarm for missed nights — managed PostgreSQL would roughly double the hosting bill at launch.
+- `docker-compose.prod.yml` has a fixed project name (`ledger`) so volume names don't depend on the folder and never collide with the development stack, and a `pgtools` service so backup/restore work the same with the bundled or a managed database.
+- Backups go to R2 through the official rclone image; the R2 keys reach it as environment variables passed by name, never on a command line or in a temporary file.
+- Restore extracts images over the current folder rather than emptying it first: nothing is deleted, and files uploaded after the backup are simply unused.
+- Email: Brevo (free tier) sends; Cloudflare Email Routing receives grievance@/contact@/corrections@ into the owner's Gmail.
+- One server does staging first (`staging.<domain>`, fake agents), then is wiped and switched to production behind a Cloudflare Access "wall" until launch day; later updates are tested locally and deployed as tags.
+- The step-by-step guide is a project skill (`.claude/skills/deploy-ledger/SKILL.md`) so any future session can resume it; progress (never secrets) lives in `docs/DEPLOY_LOG.md`.

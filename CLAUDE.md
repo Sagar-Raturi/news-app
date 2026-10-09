@@ -48,10 +48,13 @@ templates/         base.html, includes/, news/, core/, search/, newsdesk/
 static/src/        Tailwind source (main.css) — edit this, then rebuild
 static/css/site.css  compiled Tailwind output (committed; do not hand-edit)
 static/js/         vendored htmx.min.js
-docker/            entrypoint script, Caddyfile, gunicorn.conf.py (production)
+docker/            entrypoint script, Caddyfile, gunicorn.conf.py (production),
+                   backup.sh / restore.sh (database + images, to Cloudflare R2)
 docs/              DEPLOYMENT.md (shipping playbook), BUILD_PLAYBOOK.md
                    (how to continue the build), specs/, screenshots
-.claude/skills/    newsroom-build: how a new session resumes the build
+.claude/skills/    newsroom-build: how a new session resumes the build;
+                   deploy-ledger: the step-by-step deployment guide
+                   (GoDaddy + Cloudflare + Hostinger), progress in docs/DEPLOY_LOG.md
 ```
 
 ## Commands
