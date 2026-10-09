@@ -19,6 +19,10 @@ services:
       POSTGRES_DB: newsapp
       POSTGRES_USER: newsapp
       POSTGRES_PASSWORD: newsapp
+    # Reachable from this computer only, for database tools (pgAdmin, VS Code).
+    # 5433 avoids clashing with a locally installed PostgreSQL on 5432.
+    ports:
+      - "127.0.0.1:5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
