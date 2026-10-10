@@ -1,7 +1,7 @@
 {
   "name": "the-ledger",
   "private": true,
-  "description": "Front-end build for The Ledger (Tailwind CSS + vendored HTMX)",
+  "description": "Front-end build for Manthan Reviews (Tailwind CSS + vendored HTMX)",
   "scripts": {
     "build:css": "tailwindcss -i static/src/main.css -o static/css/site.css --minify",
     "watch:css": "tailwindcss -i static/src/main.css -o static/css/site.css --watch=always",

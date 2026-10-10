@@ -5,21 +5,21 @@
       "name": "Ananya Iyer",
       "role": "Political Editor",
       "bio": "Ananya Iyer has covered Parliament, elections and Centre-state relations for fifteen years, first from Chennai and now from Delhi. She writes on legislation, federalism and the machinery of government.",
-      "twitter": "ananyaiyer_ledger"
+      "twitter": "ananyaiyer_manthan"
     },
     {
       "slug": "farhan-qureshi",
       "name": "Farhan Qureshi",
       "role": "International Affairs Editor",
-      "bio": "Farhan Qureshi has reported from South-east Asia and the Gulf and now edits The Ledger's international coverage from Delhi. He is interested in trade, migration and India's neighbourhood.",
-      "twitter": "farhanq_ledger"
+      "bio": "Farhan Qureshi has reported from South-east Asia and the Gulf and now edits Manthan Reviews' international coverage from Delhi. He is interested in trade, migration and India's neighbourhood.",
+      "twitter": "farhanq_manthan"
     },
     {
       "slug": "meera-deshpande",
       "name": "Meera Deshpande",
       "role": "Economics Correspondent",
       "bio": "Meera Deshpande writes about monetary policy, public finance and the rural economy from Mumbai. Before journalism she worked as a research analyst at a Pune-based policy institute.",
-      "twitter": "meerad_ledger"
+      "twitter": "meerad_manthan"
     },
     {
       "slug": "arjun-gowda",
@@ -33,14 +33,14 @@
       "name": "Priyanka Bora",
       "role": "Health Reporter",
       "bio": "Priyanka Bora covers public health, hospitals and health policy. She trained in public health in Guwahati and has reported from district hospitals across the North-east and the Hindi heartland.",
-      "twitter": "priyankabora_ledger"
+      "twitter": "priyankabora_manthan"
     },
     {
       "slug": "siddharth-nair",
       "name": "Siddharth Nair",
       "role": "Science Writer",
       "bio": "Siddharth Nair writes about space, technology and the science behind public policy. He studied physics in Thiruvananthapuram and has followed India's space programme for more than a decade.",
-      "twitter": "sidnair_ledger"
+      "twitter": "sidnair_manthan"
     },
     {
       "slug": "harpreet-kaur",
@@ -60,7 +60,42 @@
       "slug": "editorial-board",
       "name": "The Editorial Board",
       "role": "Editorial",
-      "bio": "The Ledger's editorials represent the collective view of the publication's editorial board. They are unsigned because they speak for the institution rather than for any one writer.",
+      "bio": "Manthan Reviews' editorials represent the collective view of the publication's editorial board. They are unsigned because they speak for the institution rather than for any one writer.",
+      "twitter": ""
+    },
+    {
+      "slug": "tanvi-kulkarni",
+      "name": "Tanvi Kulkarni",
+      "role": "Data Editor",
+      "bio": "Tanvi Kulkarni trained as a statistician in Pune and spent a decade building surveys before turning to journalism. She runs the Data desk, where every chart has to earn its place.",
+      "twitter": ""
+    },
+    {
+      "slug": "neel-chopra",
+      "name": "Neel Chopra",
+      "role": "Business Editor",
+      "bio": "Neel Chopra covers companies, markets and regulation from Mumbai. Before journalism he worked in equity research, which taught him to read the notes to the accounts first.",
+      "twitter": ""
+    },
+    {
+      "slug": "lavanya-pillai",
+      "name": "Lavanya Pillai",
+      "role": "Environment Correspondent",
+      "bio": "Lavanya Pillai writes about energy, climate and water. She has reported from coal towns in Jharkhand, solar parks in Rajasthan and flood plains in Assam.",
+      "twitter": ""
+    },
+    {
+      "slug": "kabir-dhillon",
+      "name": "Kabir Dhillon",
+      "role": "Sports Editor",
+      "bio": "Kabir Dhillon has covered cricket, hockey and the business of Indian sport for twelve years. He is more interested in who runs the game than in who won the toss.",
+      "twitter": ""
+    },
+    {
+      "slug": "ishita-banerjee",
+      "name": "Ishita Banerjee",
+      "role": "Culture Editor",
+      "bio": "Ishita Banerjee edits the Culture section and reads in Bengali, Hindi and English. She writes about books, cinema and the institutions that keep the arts alive.",
       "twitter": ""
     }
   ],
@@ -1990,11 +2025,1267 @@
           "note": ""
         }
       ]
+    },
+    {
+      "slug": "women-working-more-what-kind-of-work",
+      "headline": "India's women are working more. Look closely at what kind of work",
+      "standfirst": "Female labour-force participation has almost doubled in six years of official surveys. Most of the rise is in self-employment on farms and in family businesses, not in salaried jobs.",
+      "section": "data",
+      "type": "analysis",
+      "authors": [
+        "tanvi-kulkarni"
+      ],
+      "tags": [
+        "Jobs",
+        "Women",
+        "PLFS",
+        "Data"
+      ],
+      "featured": true,
+      "days_ago": 0.15,
+      "hero_caption": "An illustration of rising bars beside the silhouettes of women at work in a field, a shop and an office.",
+      "hero_alt": "Illustration of a rising bar chart with women working in a field, a shop and an office.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>For years, one statistic embarrassed every argument about Indian growth: fewer than a quarter of working-age women were in the labour force. In 2017-18 the government's Periodic Labour Force Survey (PLFS) put the figure at 23.3%, one of the lowest rates of any large economy. Six survey rounds later it stands at 41.7%. On paper, that is one of the fastest increases ever recorded anywhere.</p><p>You would expect such a leap to be front-page news, and in a way it has been. But the headline number hides more than it reveals. Dig into the survey's own tables and a more complicated picture emerges, one that should temper both the celebration and the scepticism.</p>"
+        },
+        {
+          "type": "chart",
+          "value": {
+            "title": "Women in the labour force, % of those aged 15 and over",
+            "unit": "%",
+            "bars": [
+              {
+                "label": "2017-18",
+                "value": 23.3
+              },
+              {
+                "label": "2018-19",
+                "value": 24.5
+              },
+              {
+                "label": "2019-20",
+                "value": 30.0
+              },
+              {
+                "label": "2020-21",
+                "value": 32.5
+              },
+              {
+                "label": "2021-22",
+                "value": 32.8
+              },
+              {
+                "label": "2022-23",
+                "value": 37.0
+              },
+              {
+                "label": "2023-24",
+                "value": 41.7
+              }
+            ],
+            "highlight": "2023-24",
+            "source": "Periodic Labour Force Survey annual reports, MoSPI",
+            "note": "Usual status (principal and subsidiary activity). Survey years run July to June."
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Where the rise came from"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The first thing the tables show is geography. The increase is overwhelmingly rural. In towns and cities women's participation has crept up by a few points; in villages it has surged. The second is the type of work. The share of women workers who are self-employed has grown, and within that category a large group is classified as \"helpers in household enterprises\": women working on the family farm or in the family shop, usually without a wage of their own.</p><p>That is still work, and the survey is right to count it. A woman who tends the family's livestock contributes to output whether or not anyone pays her. But it is not the transformation that the phrase \"women joining the workforce\" conjures up: the move into factories, offices and services, with an independent income, that reshaped the economies of East Asia.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A rise in participation is not the same as a rise in opportunity. The survey can tell you the first; you have to dig for the second.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Three explanations, not mutually exclusive"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Economists offer three explanations. The optimistic one is that rural women are genuinely doing more paid and productive work, helped by better roads, self-help groups, cooking-gas connections that free up hours once spent gathering fuel, and cash-transfer schemes that give women a little capital. The pessimistic one is distress: when household incomes are squeezed, more family members pitch in, and some of the jump coincides with the pandemic years. The technical one is measurement: survey questions and enumerator practice can change how unpaid work is recorded.</p><p>The evidence supports a bit of all three. The rise began before the pandemic and continued after it, which argues against a pure distress story. But salaried employment for women has grown far more slowly than participation, which argues against a pure success story.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Women's labour-force participation rose from 23.3% in 2017-18 to 41.7% in 2023-24, according to the PLFS.",
+              "The increase is concentrated in rural areas and in self-employment, much of it unpaid work in family enterprises.",
+              "Regular salaried jobs for women have grown far more slowly.",
+              "The real test is whether women's earnings, not just their participation, keep rising."
+            ]
+          }
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "How the PLFS measures work",
+            "body": "<p>The survey asks what each person did over the previous year (\"usual status\"). Someone counts as in the labour force if they worked, or sought work, for a major part of the year, or worked for at least 30 days in a subsidiary role. Unpaid helpers in a household enterprise count as workers. Since 2025 the survey has also published monthly and quarterly estimates, which are not directly comparable with the annual series shown here.</p>"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What to watch"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The numbers that matter next are earnings and job type. If women's average earnings and their share of regular salaried work start to climb, the story of the past six years will look like the start of a genuine transformation. If they do not, India will have counted its women into the workforce without paying them for it.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Periodic Labour Force Survey, annual reports 2017-18 to 2023-24",
+          "publisher": "Ministry of Statistics and Programme Implementation",
+          "url": "https://www.mospi.gov.in/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "fertility-map-delimitation-explained",
+      "headline": "The fertility map that could redraw Indian politics",
+      "standfirst": "Southern states have reached European birth rates; parts of the north have not. With a new census due, here is why that gap has become a constitutional question.",
+      "section": "data",
+      "type": "explainer",
+      "authors": [
+        "tanvi-kulkarni",
+        "ananya-iyer"
+      ],
+      "tags": [
+        "Census",
+        "Delimitation",
+        "Population",
+        "Data"
+      ],
+      "featured": false,
+      "days_ago": 1.3,
+      "hero_caption": "An illustration of a map of India shaded in bands of colour, with a ballot box in the foreground.",
+      "hero_alt": "Illustration of a shaded map of India and a ballot box.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>India's population story is usually told as one number. It is really two countries moving at different speeds. Most states now have fewer than 2.1 children per woman, the \"replacement\" rate at which a population eventually stops growing. A handful of large northern states are still above it. That gap, once a matter for demographers, now sits at the heart of a political argument about how many seats each state should have in Parliament.</p>"
+        },
+        {
+          "type": "chart",
+          "value": {
+            "title": "Total fertility rate: children per woman, selected states",
+            "unit": "",
+            "bars": [
+              {
+                "label": "Bihar",
+                "value": 3.0
+              },
+              {
+                "label": "Meghalaya",
+                "value": 2.9
+              },
+              {
+                "label": "Uttar Pradesh",
+                "value": 2.4
+              },
+              {
+                "label": "Jharkhand",
+                "value": 2.3
+              },
+              {
+                "label": "India",
+                "value": 2.0
+              },
+              {
+                "label": "Kerala",
+                "value": 1.8
+              },
+              {
+                "label": "Tamil Nadu",
+                "value": 1.8
+              },
+              {
+                "label": "Karnataka",
+                "value": 1.7
+              },
+              {
+                "label": "Maharashtra",
+                "value": 1.7
+              },
+              {
+                "label": "West Bengal",
+                "value": 1.6
+              },
+              {
+                "label": "Sikkim",
+                "value": 1.1
+              }
+            ],
+            "highlight": "India",
+            "source": "National Family Health Survey (NFHS-5), 2019-21",
+            "note": "Replacement fertility is about 2.1 children per woman."
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is delimitation?",
+            "answer": "<p>Delimitation is the redrawing of constituency boundaries and the reallocation of seats among states according to population. The Constitution links each state's share of Lok Sabha seats to its population, so that one vote carries roughly the same weight everywhere.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Why has it not happened for so long?",
+            "answer": "<p>Seat shares were frozen on the basis of the 1971 census, first in 1976 and again by a constitutional amendment in 2001, which extended the freeze until the first census taken after 2026. The aim was to avoid penalising states that brought their birth rates down. That deadline is now in sight.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What changes with the next census?",
+            "answer": "<p>The census, the first since 2011, has a reference date of 1 March 2027, with snow-bound areas counted earlier. Once its figures are published, the freeze lapses unless Parliament extends it. A straightforward reallocation by population would shift seats from the south and east towards the populous northern states, because their populations have grown faster since 1971.</p>"
+          }
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "1971",
+            "label": "the census on which each state's share of Lok Sabha seats is still based",
+            "source": "Constitution of India, Articles 81 and 82"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Why do southern states object?",
+            "answer": "<p>Their argument is one of fairness: they did what national policy asked, reducing fertility through education and health care, and would be rewarded with less political weight. They also point out that they contribute more in taxes than they receive from the Centre. Northern states reply that equal representation for every citizen is a basic democratic principle that cannot be frozen for ever.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Are there ways to soften the blow?",
+            "answer": "<p>Several have been floated: enlarging the Lok Sabha so that no state loses seats in absolute terms, extending the freeze again, or giving the Rajya Sabha a stronger role in protecting states' interests. Each has costs. A much larger House may be unwieldy; another freeze postpones a problem that grows with every decade.</p>"
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Most states are below replacement fertility; Bihar, Uttar Pradesh and a few others are above it.",
+              "Lok Sabha seat shares are still based on the 1971 census.",
+              "The freeze on seat shares lasts until the first census after 2026, which has a reference date of 1 March 2027.",
+              "How Parliament handles reallocation will test Centre-state relations for a generation."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "National Family Health Survey (NFHS-5) state fact sheets",
+          "publisher": "International Institute for Population Sciences / Ministry of Health and Family Welfare",
+          "url": "https://rchiips.org/nfhs/",
+          "note": ""
+        },
+        {
+          "title": "Census 2027 notification",
+          "publisher": "Office of the Registrar General and Census Commissioner, India",
+          "url": "https://censusindia.gov.in/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "quick-commerce-ten-minute-economics",
+      "headline": "Ten minutes to your door: the costly arithmetic of quick commerce",
+      "standfirst": "Grocery delivery in minutes has become a fixture of Indian cities. Whether it can make money without hollowing out the neighbourhood kirana is still an open question.",
+      "section": "business",
+      "type": "analysis",
+      "authors": [
+        "neel-chopra"
+      ],
+      "tags": [
+        "Quick Commerce",
+        "Retail",
+        "Start-ups",
+        "Kirana"
+      ],
+      "featured": false,
+      "days_ago": 0.45,
+      "hero_caption": "An illustration of a delivery rider on a scooter racing past a small neighbourhood shop, with a stopwatch overhead.",
+      "hero_alt": "Illustration of a delivery rider passing a corner shop beneath a stopwatch.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Order a packet of curd, a phone charger and a bunch of coriander, and in many Indian cities they will be at your door before the kettle boils. Quick commerce, the business of delivering everyday goods in ten to twenty minutes, has gone from novelty to habit in barely four years. It is now the fastest-growing slice of Indian retail and one of the most fiercely contested.</p><p>The question investors keep asking is simple: can it make money? The question everyone else should ask is what it does to the 1.3 crore or so small shops that have supplied India's daily needs for generations.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "The machine behind the minutes"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The speed does not come from fast riders but from geography. Platforms run \"dark stores\": small warehouses, closed to the public, placed within two or three kilometres of their customers and stocked with a few thousand of the most-ordered items. The model works only where orders are dense enough to keep riders busy and stock moving, which is why it began in the biggest metros and is now pushing into smaller cities with mixed results.</p><p>The economics hinge on three numbers: how much each order is worth, how many orders each dark store handles a day, and how much the platform spends on discounts to win them. Platforms have worked hard on the first, adding electronics, beauty products and even appliances to lift basket size, and on the second by blanketing cities with stores. The third is where the money has gone.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "The ten-minute promise is a real-estate strategy disguised as a delivery service.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "heading",
+          "value": "The kirana question"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Distributors' associations have complained to the Competition Commission of India that deep discounting by well-funded platforms amounts to predatory pricing, and that brands give them better terms than traditional channels. The platforms reply that they are expanding the market, not stealing it, and that consumers clearly want what they offer.</p><p>Both can be partly true. The kirana's strengths (credit to regular customers, personal service, a shopkeeper who knows your order) are real, and many have adapted by taking orders on WhatsApp and delivering themselves. But the shops most exposed are those in dense, affluent neighbourhoods, where quick commerce is strongest and where margins on packaged goods were already thin.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Quick commerce depends on dense networks of dark stores close to customers.",
+              "Profitability turns on order value, orders per store and discount spending.",
+              "Distributors allege predatory pricing; platforms say they are growing the market.",
+              "Urban kiranas in affluent areas face the most pressure; many are adapting with their own delivery."
+            ]
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What to watch"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Watch for three things: whether the platforms' reported losses keep narrowing as they cut discounts, whether the competition regulator opens a formal inquiry, and whether expansion into smaller cities holds up once the novelty fades. If density turns out to be a metro luxury, quick commerce will settle into being a large but limited business rather than the future of Indian retail.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Company annual reports and shareholder letters",
+          "publisher": "Listed quick-commerce operators",
+          "url": "",
+          "note": ""
+        },
+        {
+          "title": "Competition Act, 2002: provisions on abuse of dominant position",
+          "publisher": "Competition Commission of India",
+          "url": "https://www.cci.gov.in/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "sebi-f-and-o-rules-explained",
+      "headline": "Nine in ten lose: why SEBI keeps tightening the rules on derivatives trading",
+      "standfirst": "The market regulator's own study found that 93% of individual futures and options traders lost money over three years. Here is what it has changed, and why the losses have not disappeared.",
+      "section": "business",
+      "type": "explainer",
+      "authors": [
+        "neel-chopra"
+      ],
+      "tags": [
+        "SEBI",
+        "Stock Market",
+        "Derivatives",
+        "Personal Finance"
+      ],
+      "featured": false,
+      "days_ago": 2.2,
+      "hero_caption": "An illustration of a smartphone showing a jagged red trading chart, with coins slipping through an open hand.",
+      "hero_alt": "Illustration of a phone with a falling trading chart and coins slipping through a hand.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>India has become the world's largest market for equity options by number of contracts traded, and much of that volume comes from individuals trading on their phones. In 2024 the Securities and Exchange Board of India (SEBI) published a study of what happened to them. The answer was stark, and it has driven a steady tightening of the rules ever since.</p>"
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "93%",
+            "label": "share of individual F&O traders who lost money between 2021-22 and 2023-24",
+            "source": "SEBI study, September 2024"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What are futures and options?",
+            "answer": "<p>They are derivatives: contracts whose value depends on the price of something else, such as a share or an index like the Nifty. An option gives the right, but not the obligation, to buy or sell at a set price before a set date. Because a small payment controls a large exposure, gains and losses are magnified. Options that expire within days, popular with retail traders, are especially volatile.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What did SEBI find?",
+            "answer": "<p>Studying more than a crore of individual traders, SEBI found that 93% lost money over the three years to March 2024, with aggregate losses of more than ₹1.8 lakh crore. Only about one in a hundred made profits of more than ₹1 lakh after transaction costs. Much of the money flowed to proprietary trading firms and foreign investors using algorithms.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What has SEBI changed?",
+            "answer": "<p>From late 2024 it phased in a package of measures: a larger minimum contract size for index derivatives, so that each trade requires more capital; only one weekly expiry per exchange; collection of option premiums upfront; extra margin on expiry days; and an end to some margin benefits on calendar spreads. Exchanges were also told to monitor positions within the trading day.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Has it worked?",
+            "answer": "<p>Volumes fell after the changes, and the number of individual traders dipped. But a follow-up study found that the large majority of those still trading continued to lose money. Tightening the rules can make the casino smaller; it cannot change the odds for players up against faster, better-capitalised rivals.</p>"
+          }
+        },
+        {
+          "type": "callout",
+          "value": {
+            "title": "Before you trade",
+            "body": "<p>Brokers must now show every client a risk disclosure based on SEBI's findings when they log in to trade derivatives. If you trade, compare your total profit and loss after brokerage, taxes and charges over a full year, not your best week.</p>"
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "SEBI's 2024 study found 93% of individual F&O traders lost money over three years.",
+              "Contract sizes, weekly expiries and margin rules have all been tightened.",
+              "Volumes fell, but most remaining retail traders still lose money."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Analysis of profit and loss of individual traders dealing in equity F&O segment",
+          "publisher": "Securities and Exchange Board of India",
+          "url": "https://www.sebi.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Circular on measures to strengthen the equity index derivatives framework",
+          "publisher": "Securities and Exchange Board of India",
+          "url": "https://www.sebi.gov.in/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "ahmedabad-2030-commonwealth-games",
+      "headline": "Ahmedabad 2030: what the Commonwealth Games can, and cannot, buy India",
+      "standfirst": "The centenary Games will be India's first big multi-sport event since Delhi 2010. Done well, they are a rehearsal for an Olympic bid. Done badly, they are a repeat of 2010.",
+      "section": "sports",
+      "type": "analysis",
+      "authors": [
+        "kabir-dhillon"
+      ],
+      "tags": [
+        "Commonwealth Games",
+        "Ahmedabad",
+        "Olympics",
+        "Sports Policy"
+      ],
+      "featured": true,
+      "days_ago": 0.7,
+      "hero_caption": "An illustration of a stadium bowl at dusk with a running track and the outline of Ahmedabad's skyline.",
+      "hero_alt": "Illustration of a stadium at dusk against a city skyline.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>When Ahmedabad was confirmed as host of the 2030 Commonwealth Games, the celebrations had a second audience in mind. The 2030 Games mark a hundred years since the first edition in Hamilton, Canada; for India's sports establishment they are also a dress rehearsal. The country has told the International Olympic Committee that it wants to host the 2036 Olympics, and Ahmedabad is the likely candidate city. Every venue, contract and traffic plan for 2030 will be read as evidence for or against that ambition.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "The shadow of 2010"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>You do not have to be old to remember Delhi 2010. The Games themselves went off reasonably well, and Indian athletes won a record haul of medals. But the run-up was a cautionary tale: venues finished at the last minute, costs far above early estimates, and corruption cases that dragged on for years. An official inquiry catalogued delays and irregularities in contracts. The phrase \"Commonwealth Games\" became, for a while, shorthand for waste.</p><p>The organisers of 2030 have every incentive to show that lesson has been learned. The Commonwealth Games movement itself has changed: the Glasgow 2026 Games were cut to a slimmer programme of sports, using existing venues, to keep costs down. Ahmedabad has the opposite temptation: to build big, because an Olympic bid rewards spectacle.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A Games is a seven-year infrastructure project with a two-week party at the end. Judge it by the seven years.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What the Games can buy"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Done well, a multi-sport event can leave behind useful things: public transport built to a deadline, training facilities that elite and young athletes can actually use afterwards, and an events industry that knows how to run competitions to international standards. It can also give Olympic sports outside cricket a rare moment in front of a mass audience.</p><p>What it cannot buy is a sporting culture. India's medal tally at the Olympics depends on what happens in schools, district stadiums and state federations, not in a showpiece arena. Spending on a few iconic venues can crowd out the dull, decentralised investment that produces athletes.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Ahmedabad will host the centenary Commonwealth Games in 2030.",
+              "India has signalled interest in hosting the 2036 Olympics; 2030 is a test run.",
+              "Delhi 2010's cost overruns and corruption cases are the benchmark to beat.",
+              "The lasting value lies in usable facilities and transport, not iconic stadiums."
+            ]
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What to watch"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Three early signals will tell you how this is going: whether a published, audited budget appears and stays close to reality; whether venue plans include a credible use for each facility after 2030; and whether governance of the organising committee is transparent enough that procurement decisions can be scrutinised. Get those right and the Olympic case writes itself. Get them wrong and 2010 will not be the last cautionary tale.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Host city announcements",
+          "publisher": "Commonwealth Sport",
+          "url": "https://thecgf.com/",
+          "note": ""
+        },
+        {
+          "title": "Future Host Commission process for Olympic Games",
+          "publisher": "International Olympic Committee",
+          "url": "https://olympics.com/ioc",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "womens-cricket-after-world-cup",
+      "headline": "After the World Cup, the hard part: building women's cricket below the summit",
+      "standfirst": "India's first women's ODI World Cup title brought crowds, sponsors and prime-time audiences. Turning one triumph into a deep, durable game depends on what happens far from the stadium lights.",
+      "section": "sports",
+      "type": "analysis",
+      "authors": [
+        "kabir-dhillon"
+      ],
+      "tags": [
+        "Cricket",
+        "Women's Sport",
+        "WPL",
+        "BCCI"
+      ],
+      "featured": false,
+      "days_ago": 1.1,
+      "hero_caption": "An illustration of a young girl in cricket whites practising in a dusty schoolyard, a floodlit stadium in the distance.",
+      "hero_alt": "Illustration of a girl practising cricket in a schoolyard with a stadium in the distance.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>When India beat South Africa in Navi Mumbai in November 2025 to win the women's ODI World Cup for the first time, the scenes looked familiar to anyone who remembered 1983 or 2011: crowded streets, overnight celebrations, cricketers turned household names. The comparison is apt in another way. Those men's triumphs did not just reward a generation; they reshaped the sport's economics.</p><p>Whether the women's win does the same depends less on the players at the top than on the structures beneath them.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "What has already changed"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The women's game in India has been building for some time. In 2022 the Board of Control for Cricket in India (BCCI) announced equal match fees for its centrally contracted women and men in international cricket. The Women's Premier League (WPL), launched in 2023, gave players franchise contracts, exposure to overseas teammates and a televised domestic stage. A World Cup win on home soil adds the one thing that money alone cannot buy: a mass audience that now knows the players' names.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A trophy fills stadiums for a season. A pathway fills them for a generation.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Where the gaps are"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Below the elite, the pathway thins quickly. Many girls still have no school or district team to play in, and the number of well-equipped grounds and qualified women coaches is small. The domestic calendar, though longer than it was, offers fewer matches and lower pay than the men's. Associations in some states treat the women's programme as an obligation rather than an investment.</p><p>None of this is unusual; women's sport everywhere has had to fight for the same basics. But India has an unusual opportunity: a governing body with enormous resources and, for the first time, commercial demand that justifies spending them.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "India won its first women's ODI World Cup in November 2025.",
+              "Equal international match fees (2022) and the WPL (2023) laid the groundwork.",
+              "Grassroots access, coaching and the domestic calendar are the weak links.",
+              "Commercial demand now gives the board a business case for investing below the elite level."
+            ]
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What to watch"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Measure success by numbers that are less glamorous than television ratings: how many girls are registered with state associations, how many domestic matches women play each year, and how many women coach and umpire. If those climb over the next five years, the 2025 team will have done more than win a trophy.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Press releases on pay equity and the Women's Premier League",
+          "publisher": "Board of Control for Cricket in India",
+          "url": "https://www.bcci.tv/",
+          "note": ""
+        },
+        {
+          "title": "ICC Women's Cricket World Cup 2025 results",
+          "publisher": "International Cricket Council",
+          "url": "https://www.icc-cricket.com/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "why-india-produces-chess-grandmasters",
+      "headline": "Why India keeps producing chess grandmasters",
+      "standfirst": "A country that had one grandmaster in 1988 now has more than 80, a world champion and Olympiad gold. Here is how that happened.",
+      "section": "sports",
+      "type": "explainer",
+      "authors": [
+        "kabir-dhillon"
+      ],
+      "tags": [
+        "Chess",
+        "Grandmasters",
+        "Chennai"
+      ],
+      "featured": false,
+      "days_ago": 3.0,
+      "hero_caption": "An illustration of a chessboard with pieces casting long shadows shaped like a city skyline.",
+      "hero_alt": "Illustration of chess pieces casting shadows shaped like a skyline.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>In 1988 India had exactly one chess grandmaster. Today it has more than 80, and in the space of a few months in 2024 it won both the open and women's gold medals at the Chess Olympiad in Budapest and produced the youngest undisputed world champion in the game's history. Few countries have climbed so far, so fast, in any sport.</p>"
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "80+",
+            "label": "Indian chess grandmasters, up from one in 1988",
+            "source": "FIDE ratings database"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Where did it start?",
+            "answer": "<p>With Viswanathan Anand, who became India's first grandmaster in 1988 and later world champion. His success made chess a respectable career in a country where it had been a pastime, and it turned Chennai into the centre of Indian chess, with clubs, coaches and a culture of tournament play that fed generation after generation.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Why so many now?",
+            "answer": "<p>Three things came together. Strong computer engines and online platforms gave young Indians access to world-class training material and opponents without leaving home. A dense network of private academies and coaches, many of them strong players themselves, turned that access into systematic preparation. And a crowded calendar of open tournaments at home let promising juniors earn the rating points and title norms they need.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Does government support matter?",
+            "answer": "<p>It has helped at the margins: state governments, particularly Tamil Nadu, have backed tournaments and hosted the 2022 Chess Olympiad in Mamallapuram. Public-sector employers have long given sports quotas to strong players. But the engine of Indian chess has mostly been families and private coaches, which is also its weakness: the pathway favours children whose parents can afford coaching and travel.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What could slow it down?",
+            "answer": "<p>Cost and concentration. A few states produce most of the grandmasters, and the expense of international tournaments is a barrier for talented players from poorer families. Broadening the base, through school chess and travel grants, would decide whether this is a golden generation or a permanent fact of the chess world.</p>"
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "India has gone from one grandmaster in 1988 to more than 80.",
+              "In 2024 it won both Olympiad golds and produced the youngest undisputed world champion.",
+              "Engines, online play, private academies and a busy domestic calendar drove the rise.",
+              "Cost and regional concentration are the main obstacles to going further."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "FIDE ratings and titles database",
+          "publisher": "International Chess Federation (FIDE)",
+          "url": "https://ratings.fide.com/",
+          "note": ""
+        },
+        {
+          "title": "45th Chess Olympiad, Budapest 2024: final standings",
+          "publisher": "FIDE",
+          "url": "https://www.fide.com/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "india-solar-boom-sunset-problem",
+      "headline": "India's solar boom has a sunset problem",
+      "standfirst": "Clean sources now make up half of India's installed power capacity, years ahead of target. But demand peaks after dark, and without storage the sun cannot keep the lights on.",
+      "section": "environment",
+      "type": "analysis",
+      "authors": [
+        "lavanya-pillai"
+      ],
+      "tags": [
+        "Solar",
+        "Energy",
+        "Batteries",
+        "Climate"
+      ],
+      "featured": true,
+      "days_ago": 0.3,
+      "hero_caption": "An illustration of rows of solar panels in a desert at sunset, with a city lighting up on the horizon.",
+      "hero_alt": "Illustration of solar panels in the desert at sunset and a city lighting up beyond.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>In mid-2025 India passed a milestone it had promised the world for 2030: half of its installed electricity capacity now comes from non-fossil sources. Solar did most of the lifting, with installed capacity crossing 100 gigawatts earlier that year, more than ten times what it was a decade before. On a sunny afternoon, solar farms in Rajasthan and Gujarat now supply a large share of the country's power.</p><p>Then the sun sets, the air conditioners stay on, and the grid turns back to coal.</p>"
+        },
+        {
+          "type": "stat",
+          "value": {
+            "figure": "50%",
+            "label": "share of India's installed power capacity from non-fossil sources, reached in mid-2025",
+            "source": "Ministry of New and Renewable Energy"
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Capacity is not electricity"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The milestone measures capacity: how much power plants could produce at full tilt. Solar panels produce for only part of the day, so their share of electricity actually generated is far smaller than their share of capacity. Coal still supplies most of India's electricity, and it supplies almost all of it after dark.</p><p>That matters more each year because India's demand curve has changed. Peak demand, which used to come in the afternoon, increasingly arrives in the evening, when households switch on lights, fans and air conditioners. Grid managers call the shape the \"duck curve\": cheap solar floods the middle of the day, then expensive power has to ramp up quickly as the sun goes down.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "India has solved the problem of making cheap electricity at noon. The next problem is selling it at nine at night.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Storage, finally"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The answer is storage, chiefly batteries and pumped hydro. Battery prices have fallen sharply, and recent government tenders for battery storage have drawn bids far below what was expected a few years ago. The Centre has offered viability-gap funding to support early projects, and the power ministry has advised that new solar tenders include storage alongside the panels.</p><p>The constraint is now less about technology than about rules and wires. Transmission lines from the sunny west have lagged behind new solar farms, leaving some capacity stranded. State distribution companies, many of them financially weak, are reluctant to sign long contracts for storage that costs more than the coal power they are used to.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Non-fossil sources reached half of installed capacity in 2025, years ahead of the 2030 goal.",
+              "Solar's share of electricity generated is much smaller than its share of capacity.",
+              "Evening peaks still depend on coal; storage is the missing piece.",
+              "Transmission and the finances of state discoms are now the binding constraints."
+            ]
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What to watch"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Track how much storage is actually commissioned, not tendered; how fast new transmission corridors from Rajasthan and Gujarat are completed; and whether evening coal generation starts to flatten. Those are the numbers that will show whether India's clean-energy story extends past sunset.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Physical progress: installed renewable energy capacity",
+          "publisher": "Ministry of New and Renewable Energy",
+          "url": "https://mnre.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "All-India installed capacity and generation reports",
+          "publisher": "Central Electricity Authority",
+          "url": "https://cea.nic.in/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "india-carbon-market-explained",
+      "headline": "India's carbon market, explained: who must cut, and who pays",
+      "standfirst": "Heavy industries now have legally binding targets to cut the carbon intensity of what they make. Here is how the new trading scheme works, and why Europe's border tax gives it extra urgency.",
+      "section": "environment",
+      "type": "explainer",
+      "authors": [
+        "lavanya-pillai",
+        "neel-chopra"
+      ],
+      "tags": [
+        "Carbon Market",
+        "Climate Policy",
+        "Industry",
+        "CBAM"
+      ],
+      "featured": false,
+      "days_ago": 2.6,
+      "hero_caption": "An illustration of factory chimneys whose smoke turns into a rising and falling price chart.",
+      "hero_alt": "Illustration of factory chimneys with smoke shaped like a price chart.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>India has a carbon market. Most people have not noticed, because it is designed to start slowly and because it does not cap total emissions. But for the country's aluminium smelters, cement kilns, paper mills and chlor-alkali plants, it is now the law, and it will soon reach steel and refineries too.</p>"
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "What is the Carbon Credit Trading Scheme?",
+            "answer": "<p>It is a framework notified in 2023 under the Energy Conservation Act, as amended in 2022. It has two parts: a compliance market, in which designated industrial plants must meet targets, and a voluntary market, in which others can earn credits for cutting emissions. The Bureau of Energy Efficiency runs it, with trading on power exchanges.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "How do the targets work?",
+            "answer": "<p>Each obligated plant gets a target for greenhouse-gas emissions intensity: tonnes of carbon dioxide equivalent per tonne of product. A plant that beats its target earns carbon credit certificates; one that misses must buy certificates from others or pay a penalty. Because the targets are about intensity, a plant can grow its output, and its total emissions, while still complying, provided each tonne it makes is cleaner.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Which industries are covered?",
+            "answer": "<p>Targets were first notified for aluminium, cement, chlor-alkali, and pulp and paper plants, with others, including petroleum refining, petrochemicals, textiles, and iron and steel, set to follow. These are among the most energy-intensive industries in the country.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Why does Europe matter?",
+            "answer": "<p>The European Union's Carbon Border Adjustment Mechanism (CBAM) puts a charge on the embedded emissions of imports such as steel, aluminium and cement, with payments due from 2026. Indian exporters may be able to deduct a carbon price paid at home. A credible domestic price could therefore keep money in India that would otherwise go to European treasuries.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "value": {
+            "question": "Will it cut emissions?",
+            "answer": "<p>That depends on how tight the targets are and what certificates end up costing. Intensity targets that merely follow existing efficiency trends will produce a market with plenty of supply and a low price, rewarding plants for what they would have done anyway. Stricter targets would bite harder but raise costs for industries that employ millions.</p>"
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "India's compliance carbon market sets emissions-intensity targets, not an absolute cap.",
+              "Aluminium, cement, chlor-alkali and paper came first; steel and refining follow.",
+              "Plants that beat targets earn certificates; those that miss must buy them.",
+              "Europe's border carbon tax gives India a reason to establish a credible price."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "Carbon Credit Trading Scheme, 2023 and amendments",
+          "publisher": "Ministry of Power / Bureau of Energy Efficiency",
+          "url": "https://beeindia.gov.in/",
+          "note": ""
+        },
+        {
+          "title": "Carbon Border Adjustment Mechanism",
+          "publisher": "European Commission",
+          "url": "https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "indian-fiction-translation-revolution",
+      "headline": "Lost and found in translation: Indian fiction's quiet revolution",
+      "standfirst": "Two International Booker prizes in four years went to books translated from Indian languages. The real story is the translators, and the publishers finally paying them attention.",
+      "section": "culture",
+      "type": "analysis",
+      "authors": [
+        "ishita-banerjee"
+      ],
+      "tags": [
+        "Books",
+        "Translation",
+        "Literature",
+        "Booker Prize"
+      ],
+      "featured": false,
+      "days_ago": 0.9,
+      "hero_caption": "An illustration of an open book whose pages turn into scripts from several Indian languages.",
+      "hero_alt": "Illustration of an open book with pages becoming Indian scripts.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>For most of its modern history, Indian literature reached the wider world in one language: English. Writers in Hindi, Bengali, Tamil, Malayalam, Kannada and a dozen other languages had vast readerships at home and almost none abroad. That is changing, and fast.</p><p>In 2022 the International Booker Prize went to <i>Tomb of Sand</i>, Geetanjali Shree's Hindi novel in Daisy Rockwell's translation. In 2025 it went to <i>Heart Lamp</i>, Banu Mushtaq's Kannada short stories translated by Deepa Bhasthi: the first collection of stories, and the first book translated from Kannada, to win. Two wins in four years is not a fluke. It is the visible tip of a shift in what Indian publishers commission and what readers buy.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "The translator steps forward"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The International Booker splits its prize equally between author and translator, and that principle is spreading. Translators' names increasingly appear on Indian book covers rather than in small print inside. Domestic prizes, notably the JCB Prize for Literature, have repeatedly honoured translated novels, giving publishers a commercial reason to look beyond English.</p><p>There is a practical side, too. A good translator is also a scout, an editor and an advocate, spotting books that could travel and persuading publishers to take a risk. Many of the translations now winning prizes began as passion projects that took years to find a home.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "For a century the question was which Indian writers wrote in English. Now it is which English readers will read Indian writers.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What still holds it back"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Translation remains badly paid, and the pool of skilled translators for some language pairs is tiny. Most translation still flows into English, not between Indian languages: a Malayalam reader is more likely to find a Kannada novel in English than in Malayalam. And prizes concentrate attention on a few titles while the backlist of great untranslated work grows.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Translated Indian books won the International Booker in 2022 (Hindi) and 2025 (Kannada).",
+              "Translators are gaining recognition, prize money and cover credit.",
+              "Domestic prizes have given publishers a commercial reason to commission translation.",
+              "Pay, a shortage of translators and the dominance of English remain obstacles."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "International Booker Prize winners",
+          "publisher": "The Booker Prizes",
+          "url": "https://thebookerprizes.com/",
+          "note": ""
+        },
+        {
+          "title": "JCB Prize for Literature: past winners",
+          "publisher": "JCB Literature Foundation",
+          "url": "https://www.thejcbprize.org/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "single-screen-cinema-last-reel",
+      "headline": "The single screen's last reel",
+      "standfirst": "The neighbourhood cinema hall built India's film culture. Squeezed by multiplexes, streaming and property prices, thousands have closed. A few are finding ways to survive.",
+      "section": "culture",
+      "type": "analysis",
+      "authors": [
+        "ishita-banerjee"
+      ],
+      "tags": [
+        "Cinema",
+        "Film Industry",
+        "Streaming",
+        "Cities"
+      ],
+      "featured": false,
+      "days_ago": 2.9,
+      "hero_caption": "An illustration of an old art-deco cinema facade with a hand-painted poster and a single lit marquee bulb.",
+      "hero_alt": "Illustration of an art-deco cinema facade with a hand-painted poster.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Every Indian town had one: a hall with a hand-painted poster, a balcony that cost a little more, and a crowd that whistled at the hero's entry. Single-screen cinemas built the habit of moviegoing that made India the world's most prolific film industry. By most industry estimates, their number has fallen by more than half in the past two decades.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "Three squeezes at once"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The first squeeze was the multiplex. From the early 2000s, chains built screens in malls with better sound, comfortable seats and food that earns more than tickets. Urban audiences followed. The second was property: a single screen in the middle of a growing city often sits on land worth far more as a shopping centre or apartments than as a cinema. Owners who inherited a hall faced a simple calculation.</p><p>The third was streaming. Since the pandemic, films reach subscription platforms within weeks of release, and many mid-sized films skip cinemas altogether. For a hall that depends on a steady supply of films its audience wants, a thinner release calendar is fatal.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A multiplex sells an evening out. A single screen sold a town its stories.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Who is surviving, and how"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The survivors tend to share a few traits. Many are in smaller towns where multiplexes have not arrived. Some have renovated, adding better projection and seating while keeping prices low. Others have found loyal audiences for regional-language cinema, especially as big Telugu, Tamil, Malayalam and Kannada films have drawn crowds across the country. A few in big cities have become heritage venues, programming festivals and restored classics.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Single-screen cinemas have declined sharply over two decades.",
+              "Multiplexes, land values and streaming squeezed them at once.",
+              "Survivors rely on smaller towns, renovation, regional cinema and heritage programming."
+            ]
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What to watch"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Policy can help at the margins: lower entertainment taxes for small halls, easier rules for converting part of a building while keeping the screen, and support for digital projection. But the decisive factor is the films themselves. As long as the industry makes films that work best in a packed, noisy hall, some halls will keep their lights on.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Annual reports on the media and entertainment sector",
+          "publisher": "FICCI-EY",
+          "url": "https://www.ey.com/en_in",
+          "note": ""
+        },
+        {
+          "title": "Certification statistics",
+          "publisher": "Central Board of Film Certification",
+          "url": "https://www.cbfcindia.gov.in/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "upi-in-one-chart",
+      "headline": "UPI in one chart: from under a billion payments a year to 185 billion",
+      "standfirst": "India's instant-payments system has grown two-hundredfold in seven years. The curve is still rising, but the money behind it has a problem: almost nobody pays to use it.",
+      "section": "data",
+      "type": "analysis",
+      "authors": [
+        "tanvi-kulkarni",
+        "siddharth-nair"
+      ],
+      "tags": [
+        "UPI",
+        "Digital Payments",
+        "NPCI",
+        "Data"
+      ],
+      "featured": false,
+      "days_ago": 1.6,
+      "hero_caption": "An illustration of a QR code dissolving into a steeply rising line of dots.",
+      "hero_alt": "Illustration of a QR code turning into a rising line of dots.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>Few charts in Indian economic life look like this one. In the financial year 2017-18, the first full year of the Unified Payments Interface (UPI), Indians made fewer than a billion payments with it. In 2024-25 they made about 185 billion: roughly 500 million a day, from tea stalls to tax payments.</p>"
+        },
+        {
+          "type": "chart",
+          "value": {
+            "title": "UPI transactions per financial year, billions",
+            "unit": "",
+            "bars": [
+              {
+                "label": "2017-18",
+                "value": 0.9
+              },
+              {
+                "label": "2018-19",
+                "value": 5.4
+              },
+              {
+                "label": "2019-20",
+                "value": 12.5
+              },
+              {
+                "label": "2020-21",
+                "value": 22.3
+              },
+              {
+                "label": "2021-22",
+                "value": 46.0
+              },
+              {
+                "label": "2022-23",
+                "value": 83.7
+              },
+              {
+                "label": "2023-24",
+                "value": 131.1
+              },
+              {
+                "label": "2024-25",
+                "value": 185.8
+              }
+            ],
+            "highlight": "2024-25",
+            "source": "National Payments Corporation of India (NPCI), monthly UPI statistics",
+            "note": "Financial years run April to March. Figures rounded."
+          }
+        },
+        {
+          "type": "heading",
+          "value": "Small payments, big numbers"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>The growth is mostly in volume, not value. The average UPI payment has been falling for years as people use it for ever smaller purchases: the vegetable vendor, the auto-rickshaw, the ₹20 cup of chai. That is exactly what its designers hoped for. Cash's great advantage was that it worked for tiny amounts; UPI has taken that advantage away.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "UPI has become public infrastructure, like a road. The question is who pays to resurface it.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "heading",
+          "value": "The money problem"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Because the government has set a zero merchant discount rate for most UPI payments, banks and payment apps earn almost nothing directly from processing them. The system is funded by a mix of government incentives and the hope of cross-selling loans and other products. Two apps handle the large majority of transactions, a concentration regulators have long wanted to reduce but have repeatedly postponed acting on.</p><p>Neither problem stops the curve rising. Both will shape whether the system can pay for the security, fraud prevention and resilience that a network of this size needs.</p>"
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "UPI processed about 185 billion transactions in 2024-25, up from under a billion in 2017-18.",
+              "Growth is driven by many small payments; the average value per payment keeps falling.",
+              "Zero fees for most payments leave the system dependent on subsidies and cross-selling."
+            ]
+          }
+        }
+      ],
+      "sources": [
+        {
+          "title": "UPI product statistics",
+          "publisher": "National Payments Corporation of India",
+          "url": "https://www.npci.org.in/what-we-do/upi/product-statistics",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
+    },
+    {
+      "slug": "heat-action-plans-fall-short",
+      "headline": "India's cities have heat plans. Most are not built to work",
+      "standfirst": "Ahmedabad showed in 2013 that a heat action plan can save lives. A decade on, dozens of cities have one, but few have the money, local data or legal backing to make it more than a document.",
+      "section": "environment",
+      "type": "analysis",
+      "authors": [
+        "lavanya-pillai"
+      ],
+      "tags": [
+        "Heatwaves",
+        "Cities",
+        "Climate Adaptation",
+        "Public Health"
+      ],
+      "featured": false,
+      "days_ago": 2.0,
+      "hero_caption": "An illustration of a city street shimmering in heat, with a water stall shaded by a striped awning.",
+      "hero_alt": "Illustration of a hot city street and a shaded water stall.",
+      "body": [
+        {
+          "type": "paragraph",
+          "value": "<p>After a heatwave in May 2010 caused a sharp rise in deaths, Ahmedabad drew up South Asia's first heat action plan in 2013. The idea was simple: warn people early, open cooling spaces, keep water available, change working hours for outdoor labour, and prepare hospitals for heatstroke. Studies afterwards suggested it saved lives. The plan became a template, and national disaster-management guidelines now encourage every heat-prone city and state to have one.</p><p>Many do. The trouble is what is inside them.</p>"
+        },
+        {
+          "type": "heading",
+          "value": "Plans without teeth"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>A 2023 review by the Centre for Policy Research of 37 heat action plans found that most were built on national rather than local temperature thresholds, few identified the people most at risk, and almost none said where the money would come from. Many did not name which department was legally responsible for each action. A plan that cannot be funded or enforced is a list of good intentions.</p><p>Heat also does its damage at night. Warm nights, when the body cannot recover, are increasingly common in Indian cities, yet most plans are triggered only by daytime maximum temperatures. Humidity, which makes the same temperature far more dangerous in coastal cities, is often ignored.</p>"
+        },
+        {
+          "type": "pullquote",
+          "value": {
+            "quote": "A heatwave is a disaster that leaves no rubble, which is why it is so easy to under-prepare for.",
+            "attribution": ""
+          }
+        },
+        {
+          "type": "key_points",
+          "value": {
+            "title": "Key points",
+            "points": [
+              "Ahmedabad's 2013 plan, the first in South Asia, became the model for others.",
+              "A 2023 review of 37 plans found most lacked local thresholds, vulnerability mapping and funding.",
+              "Night-time heat and humidity are often left out of the triggers.",
+              "The fix is local data, named responsibilities and a budget line."
+            ]
+          }
+        },
+        {
+          "type": "heading",
+          "value": "What to watch"
+        },
+        {
+          "type": "paragraph",
+          "value": "<p>Look for three changes in the plans cities publish before next summer: thresholds set from local health and weather data, a list of the people most at risk (outdoor workers, the elderly, slum residents), and a budget. Where all three appear, the plan is likely to save lives. Where they do not, it is likely to be rediscovered only after the next heatwave.</p>"
+        }
+      ],
+      "sources": [
+        {
+          "title": "How is India adapting to heatwaves? An assessment of heat action plans",
+          "publisher": "Centre for Policy Research",
+          "url": "https://cprindia.org/",
+          "note": ""
+        },
+        {
+          "title": "Guidelines for preparation of action plan: prevention and management of heat wave",
+          "publisher": "National Disaster Management Authority",
+          "url": "https://ndma.gov.in/",
+          "note": ""
+        }
+      ],
+      "ai_assisted": false,
+      "ai_note": ""
     }
   ],
   "about_page": {
     "title": "About us",
-    "intro": "The Ledger is an analysis-led publication about India and its place in the world. We publish news, analysis, explainers, opinion and editorials, and we care more about context than speed. Please note that the site is currently running demonstration content: the articles and authors you see are illustrative examples written to show how the publication works, not reports of real events.",
+    "intro": "Manthan Reviews is an analysis-led publication about India and its place in the world. We publish news, analysis, explainers, opinion and editorials, and we care more about context than speed. Please note that the site is currently running demonstration content: the articles and authors you see are illustrative examples written to show how the publication works, not reports of real events.",
     "body": [
       {
         "type": "heading",
@@ -2002,7 +3293,15 @@
       },
       {
         "type": "paragraph",
-        "value": "<p>The Ledger is an independent newsroom built on a simple idea: that readers are better served by understanding a story than by merely hearing about it first. We cover politics, the economy, cities, society, education, health, science and India's relations with the world, and we try to explain not just what happened but why it matters and what might happen next.</p><p>We are a small team of reporters, editors and columnists drawn from across the country. We have no affiliation with any political party, and our editorial decisions are made by our editors alone.</p>"
+        "value": "<p>Manthan Reviews is an independent newsroom built on a simple idea: that readers are better served by understanding a story than by merely hearing about it first. We cover politics, the economy, business, data, cities, society, the environment, education, health, science, sport, culture and India's relations with the world, and we try to explain not just what happened but why it matters and what might happen next.</p><p>We are a small team of reporters, editors and columnists drawn from across the country. We have no affiliation with any political party, and our editorial decisions are made by our editors alone.</p>"
+      },
+      {
+        "type": "heading",
+        "value": "Why Manthan"
+      },
+      {
+        "type": "paragraph",
+        "value": "<p><i>Manthan</i> means churning. In the old story of the churning of the ocean, gods and demons heave on a great serpent wound around a mountain, and out of the turbulence come poison and nectar alike. News works the same way. Every day brings a flood of claims, numbers and noise; our job is to churn it patiently until what is valuable rises to the top, and to tell you plainly which is which.</p>"
       },
       {
         "type": "callout",
@@ -2038,7 +3337,7 @@
       },
       {
         "type": "paragraph",
-        "value": "<p>Every article carries a label so that you know what kind of journalism you are reading.</p><ul><li><b>News</b> reports what has happened, as fully and fairly as we can establish it.</li><li><b>Analysis</b> goes behind the news to explain causes, consequences and trade-offs. It reflects the reporter's informed judgement but not a political position.</li><li><b>Explainer</b> sets out the background to a complex subject, often in question-and-answer form, so that readers can follow the debate.</li><li><b>Opinion</b> is a signed argument by a columnist or guest writer. It represents the writer's view, not The Ledger's.</li><li><b>Editorial</b> is the unsigned, collective view of our editorial board, and the only place where The Ledger itself takes a position.</li></ul>"
+        "value": "<p>Every article carries a label so that you know what kind of journalism you are reading.</p><ul><li><b>News</b> reports what has happened, as fully and fairly as we can establish it.</li><li><b>Analysis</b> goes behind the news to explain causes, consequences and trade-offs. It reflects the reporter's informed judgement but not a political position.</li><li><b>Explainer</b> sets out the background to a complex subject, often in question-and-answer form, so that readers can follow the debate.</li><li><b>Opinion</b> is a signed argument by a columnist or guest writer. It represents the writer's view, not Manthan Reviews'.</li><li><b>Editorial</b> is the unsigned, collective view of our editorial board, and the only place where Manthan Reviews itself takes a position.</li></ul>"
       },
       {
         "type": "heading",

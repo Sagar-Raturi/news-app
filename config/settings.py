@@ -200,7 +200,7 @@ if AWS_STORAGE_BUCKET_NAME:
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Wagtail
-WAGTAIL_SITE_NAME = "The Ledger"
+WAGTAIL_SITE_NAME = "Manthan Reviews"
 WAGTAILADMIN_BASE_URL = os.environ.get("WAGTAILADMIN_BASE_URL", "http://localhost:8000")
 WAGTAILSEARCH_BACKENDS = {"default": {"BACKEND": "wagtail.search.backends.database"}}
 WAGTAILDOCS_EXTENSIONS = ["csv", "docx", "key", "odt", "pdf", "pptx", "rtf", "txt", "xlsx", "zip"]

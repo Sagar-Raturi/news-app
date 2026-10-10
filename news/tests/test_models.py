@@ -5,6 +5,7 @@ from django.utils import timezone
 from wagtail.test.utils import WagtailPageTestCase
 
 from core.models import StandardPage
+from news.blocks import BarChartBlock
 from news.models import ArticlePage, HomeFeaturedArticle, HomePage, SectionPage, live_articles
 
 from .utils import make_article, make_author, make_home, make_section
@@ -129,3 +130,33 @@ class HomePageTests(WagtailPageTestCase):
         live = make_article(self.section, title="Live")
         HomeFeaturedArticle.objects.create(page=self.home, article=draft, sort_order=0)
         self.assertEqual(self.home.get_top_stories(1), [live])
+
+
+class BarChartBlockTests(WagtailPageTestCase):
+    def render(self, **overrides):
+        block = BarChartBlock()
+        raw = {
+            "title": "Solar capacity",
+            "unit": " GW",
+            "bars": [{"label": "2015", "value": 5}, {"label": "2025", "value": 100}],
+            "highlight": "2025",
+            "source": "MNRE",
+            "note": "",
+        }
+        raw.update(overrides)
+        return block.render(block.to_python(raw))
+
+    def test_bars_scale_to_the_largest_value(self):
+        html = self.render()
+        self.assertIn("width: 5.0%", html)
+        self.assertIn("width: 100.0%", html)
+        self.assertIn("100 GW", html)
+        self.assertIn("Source: MNRE", html)
+
+    def test_highlight_marks_one_row(self):
+        self.assertEqual(self.render().count("is-highlight"), 1)
+        self.assertEqual(self.render(highlight="").count("is-highlight"), 0)
+
+    def test_all_zero_values_do_not_divide_by_zero(self):
+        html = self.render(bars=[{"label": "a", "value": 0}])
+        self.assertIn("width: 0.0%", html)

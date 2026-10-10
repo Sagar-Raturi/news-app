@@ -295,12 +295,12 @@ work (items 44–47).
 | Variable | Example / note |
 |---|---|
 | `DJANGO_ENV` | `production` or `staging`. Turns DEBUG off; startup fails if the secret key, hosts or https base URL are missing, and production refuses `NEWSDESK_WRITER=fake` |
-| `SITE_DOMAIN` | `theledger.in` — Caddy's certificate and the www → apex redirect |
+| `SITE_DOMAIN` | `manthanreviews.in` — Caddy's certificate and the www → apex redirect |
 | `ACME_EMAIL` | Address for Let's Encrypt notices |
 | `DJANGO_SECRET_KEY` | 50+ random characters; different per environment |
-| `DJANGO_ALLOWED_HOSTS` | `theledger.in,www.theledger.in` |
-| `SITE_BASE_URL` | `https://theledger.in` (canonical URLs, sitemaps; also the default CSRF trusted origin) |
-| `WAGTAILADMIN_BASE_URL` | `https://theledger.in` |
+| `DJANGO_ALLOWED_HOSTS` | `manthanreviews.in,www.manthanreviews.in` |
+| `SITE_BASE_URL` | `https://manthanreviews.in` (canonical URLs, sitemaps; also the default CSRF trusted origin) |
+| `WAGTAILADMIN_BASE_URL` | `https://manthanreviews.in` |
 | `DATABASE_URL` | `postgres://user:pass@host:25060/ledger?sslmode=require` |
 | `POSTGRES_PASSWORD` | Only with the bundled database (`--profile bundled-db`) |
 | `ANTHROPIC_API_KEY` | Production key (without one, agent runs fail with a clear error) |
@@ -330,7 +330,7 @@ The Hostinger-specific version of these steps, including server hardening,
 email and backups, is `.claude/skills/deploy-ledger/SKILL.md`. The generic
 outline:
 
-Do this on staging first (a subdomain such as `staging.theledger.in` works),
+Do this on staging first (a subdomain such as `staging.manthanreviews.in` works),
 then repeat for production.
 
 1. **Server.** Create an Ubuntu 24.04 VM (2 vCPU / 4 GB) in the chosen Indian

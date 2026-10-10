@@ -130,7 +130,7 @@ class FakeWriter:
             headline=page.title,
             standfirst=page.standfirst,
             body=body,
-            sources=[DraftSource(title="Material supplied by the editor", publisher="The Ledger", url="")],
+            sources=[DraftSource(title="Material supplied by the editor", publisher="Manthan Reviews", url="")],
             tags=[tag.name for tag in page.tags.all()] or ["Demo"],
             editor_notes="Demo revision: the fake writer only records the instructions.",
         )
@@ -171,7 +171,7 @@ class FakeWriter:
                     source="",
                 ),
             ],
-            sources=[DraftSource(title="Material supplied by the editor", publisher="The Ledger", url="")],
+            sources=[DraftSource(title="Material supplied by the editor", publisher="Manthan Reviews", url="")],
             tags=["Demo"],
             editor_notes="Demo draft: replace with real reporting before publishing.",
         )

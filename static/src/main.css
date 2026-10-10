@@ -1,4 +1,4 @@
-/* The Ledger — Tailwind source. Rebuild with `npm run build:css`. */
+/* Manthan Reviews — Tailwind source. Rebuild with `npm run build:css`. */
 @import "tailwindcss" source(none);
 @plugin "@tailwindcss/typography";
 
@@ -7,10 +7,12 @@
 @source "../../core/templates";
 
 @theme {
+  --font-display: "Fraunces", "Source Serif 4", Georgia, serif;
   --font-serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  /* Ink on paper, one accent. */
+  /* Ink on paper, a deep-ocean brand colour for the masthead and footer,
+     and one vermilion accent. */
   --color-paper: #fbf9f4;
   --color-paper-dark: #f2eee5;
   --color-ink: #17140f;
@@ -18,8 +20,13 @@
   --color-muted: #6b665d;
   --color-rule: #ddd7cb;
   --color-rule-strong: #17140f;
-  --color-accent: #b4441c;
-  --color-accent-dark: #8f3414;
+  --color-accent: #b8321f;
+  --color-accent-dark: #922716;
+  --color-accent-bright: #f08a5d;
+  --color-brand: #12284a;
+  --color-brand-soft: #1e3a63;
+  --color-on-brand: #f6f1e7;
+  --color-on-brand-muted: #b7c2d6;
 }
 
 @layer base {
@@ -53,6 +60,60 @@
   }
   .container-read {
     @apply mx-auto w-full max-w-[42.5rem] px-4 sm:px-0;
+  }
+
+  /* Brand lockup: churning emblem + wordmark (see includes/logo.html) */
+  .brand-lockup {
+    @apply inline-flex items-center gap-3 sm:gap-4;
+  }
+  .brand-emblem {
+    @apply h-9 w-9 shrink-0 min-[400px]:h-11 min-[400px]:w-11 sm:h-14 sm:w-14 lg:h-[4.25rem] lg:w-[4.25rem];
+  }
+  .brand-emblem .e-disc {
+    fill: var(--color-brand);
+  }
+  .brand-emblem .e-staff {
+    fill: var(--color-on-brand);
+  }
+  .brand-emblem .e-wave {
+    fill: none;
+    stroke: var(--color-on-brand);
+  }
+  .brand-emblem .e-accent {
+    fill: none;
+    stroke: var(--color-accent-bright);
+  }
+  .brand-wordmark {
+    @apply text-[1.85rem] leading-none font-semibold tracking-[-0.025em] whitespace-nowrap text-brand min-[400px]:text-[2.2rem] sm:text-6xl lg:text-7xl;
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+  }
+  .brand-wordmark em {
+    @apply font-normal italic text-accent;
+  }
+  .brand-lockup.is-small .brand-emblem {
+    @apply h-10 w-10 sm:h-10 sm:w-10 lg:h-10 lg:w-10;
+  }
+  .brand-lockup.is-small .brand-wordmark {
+    @apply text-[1.65rem] sm:text-[1.65rem] lg:text-[1.65rem];
+  }
+  .brand-lockup.is-inverse .e-disc {
+    fill: var(--color-on-brand);
+  }
+  .brand-lockup.is-inverse .e-staff {
+    fill: var(--color-brand);
+  }
+  .brand-lockup.is-inverse .e-wave {
+    stroke: var(--color-brand);
+  }
+  .brand-lockup.is-inverse .e-accent {
+    stroke: var(--color-accent);
+  }
+  .brand-lockup.is-inverse .brand-wordmark {
+    @apply text-on-brand;
+  }
+  .brand-lockup.is-inverse .brand-wordmark em {
+    @apply text-accent-bright;
   }
 
   /* Labels and meta (Inter) */
@@ -209,6 +270,43 @@
   .pullquote blockquote::before {
     content: "“";
     @apply block font-serif text-5xl leading-none not-italic text-accent;
+  }
+
+  /* Bar chart block (news/blocks/chart.html) */
+  .chart {
+    @apply my-10 border-t-2 border-brand pt-3;
+  }
+  .chart-title {
+    @apply mb-4 font-sans text-sm font-bold text-ink;
+  }
+  .chart table {
+    @apply border-collapse;
+  }
+  .chart-row th,
+  .chart-row td {
+    @apply py-1 align-middle;
+  }
+  .chart-label {
+    @apply w-[34%] pr-3 text-left font-sans text-[0.8rem] font-medium text-ink-soft sm:w-[28%];
+  }
+  .chart-cell {
+    @apply flex items-center gap-2;
+  }
+  .chart-bar {
+    @apply block h-5 min-w-[2px] bg-brand-soft/80;
+  }
+  .chart-value {
+    @apply shrink-0 font-sans text-[0.8rem] font-semibold tabular-nums text-ink;
+  }
+  .chart-row.is-highlight .chart-bar {
+    @apply bg-accent;
+  }
+  .chart-row.is-highlight .chart-label,
+  .chart-row.is-highlight .chart-value {
+    @apply text-accent;
+  }
+  .chart-foot {
+    @apply mt-3 space-y-1 border-t border-rule pt-2 font-sans text-xs text-muted;
   }
 
   .factbox {

@@ -1,0 +1,23 @@
+{% load l10n %}<figure class="chart not-prose">
+  <figcaption class="chart-title">{{ value.title }}</figcaption>
+  <table class="w-full">
+    <thead class="sr-only"><tr><th scope="col">Category</th><th scope="col">Value</th></tr></thead>
+    <tbody>
+      {% for row in rows %}
+        <tr class="chart-row{% if row.highlight %} is-highlight{% endif %}">
+          <th scope="row" class="chart-label">{{ row.label }}</th>
+          <td class="chart-cell">
+            <span class="chart-bar" style="width: {{ row.width|unlocalize }}%"></span>
+            <span class="chart-value">{{ row.value|floatformat:"-1" }}{{ value.unit }}</span>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% if value.note or value.source %}
+    <div class="chart-foot">
+      {% if value.note %}<p>{{ value.note }}</p>{% endif %}
+      {% if value.source %}<p>Source: {{ value.source }}</p>{% endif %}
+    </div>
+  {% endif %}
+</figure>

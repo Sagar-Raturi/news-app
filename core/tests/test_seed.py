@@ -9,7 +9,7 @@ from django.core.management import call_command
 from django.test import TestCase, override_settings
 from wagtail.models import WorkflowState
 
-from core.management.commands.seed_demo import CONTENT_FILE
+from core.management.commands.seed_demo import CONTENT_FILE, MAX_TOP_STORIES
 from core.models import SiteSettings, StandardPage
 from news.models import ArticlePage, Author, HomeFeaturedArticle, HomePage
 
@@ -60,7 +60,11 @@ class SeedDemoTests(TestCase):
         self.assertEqual(ArticlePage.objects.live().filter(ai_assisted=True).count(), 4)
 
     def test_top_stories_curated(self):
-        self.assertEqual(HomeFeaturedArticle.objects.count(), 5)
+        # Every featured article, up to the homepage panel's limit.
+        content = json.loads(CONTENT_FILE.read_text(encoding="utf-8"))
+        featured = sum(1 for a in content["articles"] if a.get("featured"))
+        self.assertEqual(HomeFeaturedArticle.objects.count(), min(featured, MAX_TOP_STORIES))
+        self.assertLessEqual(HomeFeaturedArticle.objects.count(), 7)
 
     def test_about_page_filled(self):
         about = StandardPage.objects.get(slug="about")

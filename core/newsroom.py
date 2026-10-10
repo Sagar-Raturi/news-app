@@ -21,7 +21,7 @@ from wagtail.models import (
     WorkflowTask,
 )
 
-from core.models import GrievanceFormField, GrievanceFormPage, StandardPage
+from core.models import GrievanceFormField, GrievanceFormPage, SiteSettings, StandardPage
 from core.trust_pages import GRIEVANCES, STANDARD_PAGES
 from news.models import HomePage, SectionPage
 from newsdesk.desks import STARTER_DESKS
@@ -33,16 +33,27 @@ EDITORS = "Editors"
 WORKFLOW_NAME = "Newsroom review"
 TASK_NAME = "Editor review"
 
-# (title, slug, intro, show_on_homepage)
+SITE_NAME = "Manthan Reviews"
+TAGLINE = "Churning the news, distilling what matters"
+# The working title before the publication was named; renamed once by bootstrap.
+LEGACY_SITE_NAMES = {"The Ledger"}
+LEGACY_TAGLINES = {"News, analysis and argument from India"}
+
+# (title, slug, intro, show_on_homepage), in navigation order.
 SECTIONS = [
     ("Politics", "politics", "Parliament, parties, elections and the business of governing India.", True),
     ("International", "international", "India in the world: diplomacy, trade, security and the diaspora.", True),
-    ("Local", "local", "Cities, towns and districts — the decisions that shape daily life.", True),
     ("Economy", "economy", "Growth, jobs, prices, markets and the policies behind them.", True),
+    ("Business", "business", "Companies, industries, start-ups and the people and rules that shape them.", True),
+    ("Data", "data", "The numbers behind the news: charts, trends and what the statistics really say.", True),
+    ("Local", "local", "Cities, towns and districts — the decisions that shape daily life.", True),
     ("Society", "society", "How Indians live, work and change: culture, rights and communities.", True),
+    ("Environment", "environment", "Climate, energy, water, air and the cost of a warming country.", True),
     ("Education", "education", "Schools, universities, exams and the skills India needs.", True),
     ("Health", "health", "Public health, hospitals, medicine and wellbeing.", True),
     ("Science & Tech", "science-tech", "Space, research, digital India and the technology economy.", True),
+    ("Sports", "sports", "Cricket and beyond: the games, the money and the institutions that run them.", True),
+    ("Culture", "culture", "Books, cinema, music and the arts, reviewed and argued over.", True),
     ("Opinion", "opinion", "Columns, arguments and the editorial view.", False),
 ]
 
@@ -112,7 +123,7 @@ def ensure_home_page():
             page.delete()
         root.refresh_from_db()
         home = root.add_child(
-            instance=HomePage(title="The Ledger", slug="home", intro="News, analysis and argument from India")
+            instance=HomePage(title=SITE_NAME, slug="home", intro=TAGLINE)
         )
         home.save_revision().publish()
     # Match the Wagtail Site to SITE_BASE_URL so page.full_url (canonical
@@ -121,12 +132,40 @@ def ensure_home_page():
     port = base.port or (443 if base.scheme == "https" else 80)
     site = Site.objects.filter(is_default_site=True).first()
     if site is None:
-        site = Site(is_default_site=True, site_name="The Ledger")
+        site = Site(is_default_site=True, site_name=SITE_NAME)
+    if site.site_name in LEGACY_SITE_NAMES:
+        site.site_name = SITE_NAME
     site.hostname = base.hostname or "localhost"
     site.port = port
     site.root_page = home
     site.save()
+    rename_legacy_brand(home, site)
     return home
+
+
+def rename_legacy_brand(home, site):
+    """Move an install from the working title to the publication's name.
+
+    Only values still at the old defaults change, so an editor's own
+    site name, tagline or homepage title is never overwritten.
+    """
+    if home.title in LEGACY_SITE_NAMES:
+        home.title = SITE_NAME
+        if home.intro in LEGACY_TAGLINES:
+            home.intro = TAGLINE
+        revision = home.save_revision()
+        if home.live:
+            revision.publish()
+    site_settings = SiteSettings.for_site(site)
+    changed = []
+    if site_settings.site_name in LEGACY_SITE_NAMES:
+        site_settings.site_name = SITE_NAME
+        changed.append("site_name")
+    if site_settings.tagline in LEGACY_TAGLINES:
+        site_settings.tagline = TAGLINE
+        changed.append("tagline")
+    if changed:
+        site_settings.save(update_fields=changed)
 
 
 def ensure_sections(home):
@@ -138,6 +177,13 @@ def ensure_sections(home):
                 instance=SectionPage(title=title, slug=slug, intro=intro, show_on_homepage=on_home, show_in_menus=True)
             )
             section.save_revision().publish()
+            if sections:
+                # New sections slot in after their predecessor in SECTIONS, not
+                # at the end of the menu; existing ones keep any editor's order.
+                previous = sections[-1]
+                previous.refresh_from_db()
+                section.move(previous, pos="right")
+                section.refresh_from_db()
         sections.append(section)
     return sections
 

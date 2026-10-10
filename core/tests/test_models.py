@@ -27,5 +27,5 @@ class SiteSettingsTests(WagtailPageTestCase):
     def test_defaults(self):
         make_home()
         settings = SiteSettings.for_site(Site.objects.get(is_default_site=True))
-        self.assertEqual(settings.site_name, "The Ledger")
+        self.assertEqual(settings.site_name, "Manthan Reviews")
         self.assertEqual(settings.publication_language, "en")

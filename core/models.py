@@ -33,9 +33,9 @@ class StandardPage(Page):
 
 @register_setting(icon="site")
 class SiteSettings(BaseSiteSetting):
-    site_name = models.CharField(max_length=80, default="The Ledger")
+    site_name = models.CharField(max_length=80, default="Manthan Reviews")
     tagline = models.CharField(
-        max_length=160, default="News, analysis and argument from India"
+        max_length=160, default="Churning the news, distilling what matters"
     )
     publication_language = models.CharField(
         max_length=10, default="en", help_text="ISO 639 code used in the Google News sitemap"

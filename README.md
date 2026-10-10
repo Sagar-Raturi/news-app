@@ -1,4 +1,4 @@
-# The Ledger
+# Manthan Reviews
 
 An analysis-led Indian news website — news, analysis, explainers, opinion and
 editorials — built with Django 5.2, Wagtail 7.0, PostgreSQL, HTMX and Tailwind CSS.
@@ -57,13 +57,14 @@ Workflow notifications are emailed; in development they are printed to the
 
 ## What's in it
 
-- **Sections:** Politics, International, Local, Economy, Society, Education,
-  Health, Science & Tech, Opinion (Wagtail pages under the homepage).
+- **Sections:** Politics, International, Local, Economy, Business, Data,
+  Society, Environment, Education, Health, Science & Tech, Sports, Culture,
+  Opinion (Wagtail pages under the homepage; each except Opinion has an AI desk).
 - **Article types:** News, Analysis, Explainer, Opinion, Editorial.
 - **Article fields:** headline, standfirst, ordered author(s), section (the
   parent page), type, tags, hero image + caption/credit, StreamField body
   (paragraphs, headings, images, pull quotes, key points, Q&A, key figures,
-  fact boxes, embeds, tables), sources/references, published date, AI-assisted
+  fact boxes, bar charts, embeds, tables), sources/references, published date, AI-assisted
   flag with a disclosure note.
 - **Pages:** homepage (curated top stories, opinion rail, latest, explainers,
   section blocks), section pages (type filter, HTMX “load more”), article pages,
@@ -74,7 +75,7 @@ Workflow notifications are emailed; in development they are printed to the
   Google News sitemap at `/news-sitemap.xml` (last 48 hours), `/robots.txt`,
   RSS at `/feed/`.
 
-Top stories are curated in the admin on the homepage (*Pages → The Ledger →
+Top stories are curated in the admin on the homepage (*Pages → Manthan Reviews →
 Top stories*); empty slots fall back to the latest articles. Site name,
 tagline, Twitter handle, default share image and the demo-content notice are
 under *Settings → Site settings*.

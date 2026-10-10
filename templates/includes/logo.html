@@ -1,0 +1,13 @@
+{% load ledger %}{# Brand lockup: the churning emblem and the wordmark. Pass inverse=True on brand-coloured backgrounds, small=True for compact use. #}
+{% with parts=settings.core.SiteSettings.site_name|wordmark %}
+<span class="brand-lockup{% if inverse %} is-inverse{% endif %}{% if small %} is-small{% endif %}">
+  <svg class="brand-emblem" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+    <circle class="e-disc" cx="24" cy="24" r="23"/>
+    <rect class="e-staff" x="22.6" y="6.5" width="2.8" height="31" rx="1.4"/>
+    <ellipse class="e-accent" cx="24" cy="16.5" rx="8" ry="2.6" stroke-width="2"/>
+    <path class="e-wave" d="M7 29.5c3-3 6-3 8.5 0s5.5 3 8.5 0 6-3 8.5 0 5.5 3 8.5 0" stroke-width="2.4" stroke-linecap="round"/>
+    <path class="e-accent" d="M10 35.5c2.3-2.3 4.7-2.3 7 0s4.7 2.3 7 0 4.7-2.3 7 0 4.7 2.3 7 0" stroke-width="2.2" stroke-linecap="round"/>
+  </svg>
+  <span class="brand-wordmark">{{ parts.0 }}{% if parts.1 %} <em>{{ parts.1 }}</em>{% endif %}</span>
+</span>
+{% endwith %}

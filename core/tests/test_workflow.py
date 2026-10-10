@@ -3,10 +3,12 @@ from django.contrib.auth.models import Group
 from django.core.management import call_command
 from django.test import TestCase
 from django.urls import reverse
-from wagtail.models import GroupPagePermission, Workflow, WorkflowPage, WorkflowState
+from wagtail.models import GroupPagePermission, Site, Workflow, WorkflowPage, WorkflowState
 from wagtail.test.utils.form_data import inline_formset, nested_form_data, rich_text, streamfield
 
-from core.newsroom import EDITORS, WORKFLOW_NAME, WRITERS, bootstrap
+from core.models import SiteSettings
+from newsdesk.models import DeskAgent
+from core.newsroom import EDITORS, SECTIONS, SITE_NAME, TAGLINE, WORKFLOW_NAME, WRITERS, bootstrap
 from news.models import ArticleAuthor, ArticlePage, Author, SectionPage
 
 User = get_user_model()
@@ -18,8 +20,8 @@ class BootstrapTests(TestCase):
         home = result["home"]
         self.assertEqual(
             [s.slug for s in SectionPage.objects.child_of(home)],
-            ["politics", "international", "local", "economy", "society",
-             "education", "health", "science-tech", "opinion"],
+            ["politics", "international", "economy", "business", "data", "local", "society", "environment",
+             "education", "health", "science-tech", "sports", "culture", "opinion"],
         )
         self.assertEqual(result["about"].url, "/about/")
         self.assertTrue(Group.objects.filter(name=WRITERS).exists())
@@ -27,6 +29,45 @@ class BootstrapTests(TestCase):
         self.assertFalse(Group.objects.filter(name="Moderators").exists())
         self.assertEqual(home.get_workflow().name, WORKFLOW_NAME)
         self.assertEqual(list(Workflow.objects.filter(active=True)), [result["workflow"]])
+
+    def test_new_sections_join_the_menu_in_order(self):
+        home = bootstrap()["home"]
+        for slug in ("data", "sports"):
+            DeskAgent.objects.filter(section__slug=slug).delete()
+            SectionPage.objects.get(slug=slug).delete()
+        bootstrap()
+        self.assertEqual(
+            [s.slug for s in SectionPage.objects.child_of(home)],
+            [slug for _, slug, _, _ in SECTIONS],
+        )
+
+    def test_renames_the_working_title_once(self):
+        result = bootstrap()
+        home, site = result["home"], Site.objects.get(is_default_site=True)
+        home.title, home.intro = "The Ledger", "News, analysis and argument from India"
+        home.save_revision().publish()
+        site.site_name = "The Ledger"
+        site.save()
+        settings = SiteSettings.for_site(site)
+        settings.site_name, settings.tagline = "The Ledger", "News, analysis and argument from India"
+        settings.save()
+
+        bootstrap()
+        home.refresh_from_db()
+        site.refresh_from_db()
+        settings.refresh_from_db()
+        self.assertEqual((home.title, home.intro), (SITE_NAME, TAGLINE))
+        self.assertEqual(site.site_name, SITE_NAME)
+        self.assertEqual((settings.site_name, settings.tagline), (SITE_NAME, TAGLINE))
+
+    def test_keeps_an_editors_own_name(self):
+        site = bootstrap() and Site.objects.get(is_default_site=True)
+        settings = SiteSettings.for_site(site)
+        settings.site_name, settings.tagline = "Manthan", "Our own line"
+        settings.save()
+        bootstrap()
+        settings.refresh_from_db()
+        self.assertEqual((settings.site_name, settings.tagline), ("Manthan", "Our own line"))
 
     def test_is_idempotent(self):
         call_command("bootstrap_site", verbosity=0)

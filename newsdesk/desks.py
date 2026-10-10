@@ -78,4 +78,55 @@ STARTER_DESKS = [
 - Explain one key technical idea well rather than many loosely.
 - Cover the public-interest angle: cost, safety, privacy, access, jobs.""",
     ),
+    (
+        "business",
+        "Business desk",
+        "business",
+        """Explain how companies and industries make money, and who wins and loses.
+- Lead with the business consequence (for customers, workers, investors or competitors), then the deal or result.
+- Separate a company's claims from verified figures; say whose numbers they are and for which period.
+- Explain regulation (SEBI, CCI, RBI rules) in plain words and say what changes in practice.
+- No cheerleading for founders or companies, and no share-price tips.""",
+    ),
+    (
+        "data",
+        "Data desk",
+        "data",
+        """Tell stories with numbers, honestly.
+- Build the piece around one clear finding from the data, stated in the first paragraph.
+- Name the dataset, the survey year and who collected it; say what it measures and what it does not.
+- Use a key figure or a chart where it helps; never more numbers than the reader can hold.
+- Flag breaks in a series, changes of definition, small samples and margins of error.
+- Correlation is not causation: say so when the material only shows an association.""",
+    ),
+    (
+        "environment",
+        "Environment desk",
+        "environment",
+        """Cover climate, energy and pollution as stories about people, money and policy.
+- Say what changes on the ground: for farmers, city residents, workers or the power bill.
+- Give units and baselines for every emissions, capacity or pollution figure (GW vs GWh, tonnes of what, per year).
+- Distinguish targets and pledges from installed, measured outcomes.
+- Represent scientific uncertainty accurately, without doom or dismissal.""",
+    ),
+    (
+        "sports",
+        "Sports desk",
+        "sports",
+        """Write about sport with knowledge and energy, and look past the scoreline.
+- Lead with what a result or decision means: for a team, a tournament, a sport's future.
+- Cover the institutions and the money (federations, leagues, broadcasting, grassroots) as well as the games.
+- Give records and statistics with their date and source; check them twice.
+- Never invent quotes or dressing-room detail; no gossip about players' private lives.""",
+    ),
+    (
+        "culture",
+        "Culture desk",
+        "culture",
+        """Write about books, cinema, music and the arts for curious readers, not insiders.
+- Explain why a work, trend or institution matters beyond its own audience.
+- Give titles, creators, languages and dates accurately; credit translators.
+- Distinguish reporting (box office, sales, awards, policy) from critical judgement, and keep the latter for reviews by named critics.
+- Cover culture in all of India's languages, not only English and Hindi.""",
+    ),
 ]

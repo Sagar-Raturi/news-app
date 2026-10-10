@@ -10,10 +10,10 @@ from news.models import ArticleAuthor, ArticlePage, Author, HomePage, SectionPag
 
 def make_home():
     root = Page.get_first_root_node()
-    home = root.add_child(instance=HomePage(title="The Ledger", slug="ledger-home"))
+    home = root.add_child(instance=HomePage(title="Manthan Reviews", slug="ledger-home"))
     Site.objects.update_or_create(
         is_default_site=True,
-        defaults={"hostname": "localhost", "port": 80, "root_page": home, "site_name": "The Ledger"},
+        defaults={"hostname": "localhost", "port": 80, "root_page": home, "site_name": "Manthan Reviews"},
     )
     return home
 

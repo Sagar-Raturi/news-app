@@ -87,7 +87,7 @@ def page_sources(version):
 
 def ai_note(workspace):
     return Truncator(
-        f"Researched and drafted by The Ledger's AI newsroom for the {workspace.desk.section.title} section, "
+        f"Researched and drafted by Manthan Reviews' AI newsroom for the {workspace.desk.section.title} section, "
         "then reviewed and approved by an editor before publication."
     ).chars(300)
 

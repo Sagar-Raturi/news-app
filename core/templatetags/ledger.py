@@ -34,7 +34,7 @@ def _site_name(context):
     from core.models import SiteSettings
 
     request = context.get("request")
-    return SiteSettings.for_request(request).site_name if request else "The Ledger"
+    return SiteSettings.for_request(request).site_name if request else "Manthan Reviews"
 
 
 @register.simple_tag(takes_context=True)
@@ -59,3 +59,10 @@ def share_image_url(image):
     if not image:
         return ""
     return absolute(image.get_rendition("fill-1200x630").url)
+
+
+@register.filter
+def wordmark(name):
+    """Split a site name for the logo: first word upright, the rest in italics."""
+    first, _, rest = (name or "").partition(" ")
+    return first, rest

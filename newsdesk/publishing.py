@@ -85,7 +85,7 @@ def choose_author(request):
 
 def ai_note(request, model):
     return Truncator(
-        f"Drafted by The Ledger's {request.desk.name} AI agent ({model}) from reporting material "
+        f"Drafted by Manthan Reviews' {request.desk.name} AI agent ({model}) from reporting material "
         "supplied by our journalists, then reviewed and edited by an editor before publication."
     ).chars(300)
 

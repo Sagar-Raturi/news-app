@@ -1,6 +1,8 @@
 # CLAUDE.md — project conventions
 
-"The Ledger" (working title): an analysis-led Indian news publication sold as a
+"Manthan Reviews" (formerly the working title "The Ledger"; internal names such as
+the `ledger` template-tag library, CSS classes and the production Docker project
+keep the old name): an analysis-led Indian news publication sold as a
 **paid product**. AI agents suggest topics and research, write and edit articles;
 a human editor approves and publishes. Some articles are free, others are behind
 a **paywall**; readers have their own **accounts**. Shipping plan:
@@ -105,7 +107,7 @@ docs/              DEPLOYMENT.md (shipping playbook), BUILD_PLAYBOOK.md
   `DJANGO_ENV=staging|production` (DEBUG off, startup fails without real
   secrets) and the variables in `.env.production.example`.
 - Page models live in `news/models.py` / `core/models.py`; StreamField blocks in
-  `news/blocks.py`. Keep templates per page type in `templates/<app>/`.
+  `news/blocks.py` (incl. a server-rendered bar chart for the Data desk). Keep templates per page type in `templates/<app>/`.
 - Sections are `SectionPage`s directly under the `HomePage`; articles are
   `ArticlePage`s under a section (so the section is the parent page).
 - An article's display date is `published_date`, auto-filled from
@@ -148,11 +150,16 @@ docs/              DEPLOYMENT.md (shipping playbook), BUILD_PLAYBOOK.md
 
 ## Design direction
 Serious editorial newspaper look (spirit of The Economist / The Hindu, own identity).
+- Identity: *manthan* means churning; the emblem is a churning staff and rope
+  over ocean waves (`templates/includes/logo.html`, `static/img/favicon.svg`,
+  `static/img/logo.png`). Wordmark in **Fraunces** (`--font-display`), first
+  word upright, the rest italic in the accent colour.
 - Type: **Source Serif 4** for headlines and article body (`font-serif`),
   **Inter** for UI text — nav, labels, bylines, buttons (`font-sans`).
-- One accent colour (`accent`, deep sindoor/terracotta) used sparingly:
-  kickers, the masthead rule, active states, drop caps. Everything else is ink
-  on paper (near-black on warm off-white) with greys.
+- Colour: ink on paper (near-black on warm off-white) with greys; deep-ocean
+  navy (`brand`) only for the masthead utility bar, footer and emblem; one
+  vermilion accent (`accent`) used sparingly: kickers, active states, drop
+  caps, highlighted chart bars.
 - Thin rule lines (`border-rule`) between stories; no cards, shadows or rounded
   boxes for story lists.
 - Homepage: multi-column grid (1 col mobile → 12-col grid on desktop).

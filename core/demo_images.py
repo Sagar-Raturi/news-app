@@ -17,6 +17,11 @@ PALETTES = {
     "health": ("#e3ebe6", "#2a6f68", "#d17a5c", "#1f2a44", "#9cb4a8"),
     "science-tech": ("#dde3ea", "#14213d", "#3a6ea5", "#fca311", "#b4441c"),
     "opinion": ("#efe9dd", "#17140f", "#b4441c", "#8a817c", "#c9a227"),
+    "business": ("#e6e3da", "#12284a", "#b8321f", "#c9a227", "#4a5d73"),
+    "data": ("#e7ebef", "#12284a", "#3a6ea5", "#b8321f", "#9aa9bd"),
+    "environment": ("#e2e9dc", "#2d5a3d", "#7aa35c", "#d9a441", "#1f4e5f"),
+    "sports": ("#ebe4d6", "#1f6f50", "#b8321f", "#f0b429", "#12284a"),
+    "culture": ("#efe2dc", "#6d2e46", "#d17a5c", "#e0a458", "#264653"),
 }
 DEFAULT_PALETTE = PALETTES["opinion"]
 
@@ -33,7 +38,7 @@ def illustration(seed, section_slug, size=(1600, 900)):
     width, height = size
     base = Image.new("RGBA", size, _rgba(bg, 255))
 
-    # Ledger lines.
+    # Ruled lines, like a notebook.
     lines = ImageDraw.Draw(base)
     for y in range(0, height, 36):
         lines.line([(0, y), (width, y)], fill=_rgba(colours[-1], 22), width=1)

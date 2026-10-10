@@ -18,7 +18,7 @@ from news.models import ArticleCorrection, SectionPage
 from news.tests.utils import make_article
 
 PUBLISHER = {
-    "legal_name": "Ledger Media Private Limited",
+    "legal_name": "Manthan Media Private Limited",
     "registered_address": "12 Example Road\nNew Delhi 110001",
     "contact_email": "hello@ledger.test",
     "grievance_officer_name": "R. Sharma",
@@ -89,7 +89,7 @@ class PublishedPagesTests(TrustPagesTestCase):
         self.set_publisher(contact_phone="+91 11 0000 0000", self_regulatory_body="News Council (example)")
         self.publish("contact")
         response = self.client.get("/contact/")
-        self.assertContains(response, "Ledger Media Private Limited")
+        self.assertContains(response, "Manthan Media Private Limited")
         self.assertContains(response, "12 Example Road<br>New Delhi 110001")
         self.assertContains(response, "+91 11 0000 0000")
         self.assertContains(response, "R. Sharma")
@@ -151,7 +151,7 @@ class GrievanceFormTests(TrustPagesTestCase):
         self.assertEqual(receipt.reply_to, ["grievance@ledger.test"])
         self.assertIn(reference, receipt.body)
         self.assertIn("within 15 days", receipt.body)
-        self.assertIn("Ledger Media Private Limited", receipt.body)
+        self.assertIn("Manthan Media Private Limited", receipt.body)
 
     def test_spam_trap_drops_the_submission(self):
         response = self.client.post("/grievances/", self.complaint(website="http://spam.example"))

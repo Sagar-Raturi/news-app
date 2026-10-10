@@ -310,7 +310,7 @@ class SitemapTests(SiteTestCase):
         root = ET.fromstring(response.content)
         urls = {u.find("s:loc", NS).text: u for u in root.findall("s:url", NS)}
         recent = urls[f"http://localhost:8000{self.rbi.url}"]
-        self.assertEqual(recent.find("news:news/news:publication/news:name", NS).text, "The Ledger")
+        self.assertEqual(recent.find("news:news/news:publication/news:name", NS).text, "Manthan Reviews")
         self.assertEqual(recent.find("news:news/news:publication/news:language", NS).text, "en")
         self.assertEqual(recent.find("news:news/news:title", NS).text, "RBI holds rates as food prices cool")
         self.assertIsNotNone(recent.find("news:news/news:publication_date", NS).text)

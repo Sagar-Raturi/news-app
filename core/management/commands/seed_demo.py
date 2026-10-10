@@ -20,6 +20,13 @@ from newsdesk.models import DeskAgent, DeskFeedback
 
 CONTENT_FILE = Path(__file__).resolve().parents[2] / "seed_data" / "demo_content.json"
 DEMO_COLLECTION = "Demo images"
+HERO_CREDIT = "Illustration: Manthan Reviews"
+MAX_TOP_STORIES = 7
+# Demo values written under the working title, renamed on the next seed.
+LEGACY_DEMO_VALUES = {
+    "legal_name": "The Ledger Demo Publishing (not a real company)",
+    "hero_credit": "Illustration: The Ledger",
+}
 
 # Local-development logins (documented in the README). Never use in production.
 DEMO_USERS = [
@@ -30,7 +37,7 @@ DEMO_USERS = [
 ]
 
 DEMO_PUBLISHER = {
-    "legal_name": "The Ledger Demo Publishing (not a real company)",
+    "legal_name": "Manthan Reviews Demo Publishing (not a real company)",
     "registered_address": "Demonstration address, New Delhi 110001",
     "contact_email": "editors@example.com",
     "corrections_email": "corrections@example.com",
@@ -48,6 +55,11 @@ DESK_AUTHORS = {
     "education": "harpreet-kaur",
     "health": "priyanka-bora",
     "science-tech": "siddharth-nair",
+    "business": "neel-chopra",
+    "data": "tanvi-kulkarni",
+    "environment": "lavanya-pillai",
+    "sports": "kabir-dhillon",
+    "culture": "ishita-banerjee",
 }
 DESK_FEEDBACK = [
     ("politics", "", "Always say what stage a bill is at and what must happen next for it to become law."),
@@ -55,6 +67,8 @@ DESK_FEEDBACK = [
     ("economy", "", "Lead with what the change means for a household budget before giving the headline figure."),
     ("economy", "explainer", "Where the material allows, include one worked example using the material's own figures."),
     ("health", "news", "Always name the health authority behind any advice, and link it if a URL is in the material."),
+    ("data", "", "Every chart needs a one-line takeaway as its title, not just a label."),
+    ("sports", "analysis", "Cover the money and governance behind a result, not only the match."),
 ]
 
 REVIEW_DRAFT = {
@@ -171,7 +185,7 @@ class Command(BaseCommand):
                 article_type=item["type"],
                 hero_image=self.demo_image(item["slug"], item["section"], item["headline"], item.get("hero_alt", "")),
                 hero_caption=item.get("hero_caption", ""),
-                hero_credit="Illustration: The Ledger",
+                hero_credit=HERO_CREDIT,
                 body=item["body"],
                 sources=[{"type": "source", "value": source} for source in item.get("sources", [])],
                 ai_assisted=item.get("ai_assisted", False),
@@ -194,7 +208,8 @@ class Command(BaseCommand):
 
     def set_top_stories(self, home, data, articles):
         HomeFeaturedArticle.objects.filter(page=home).delete()
-        featured = sorted((a for a in data if a.get("featured")), key=lambda a: a["days_ago"])
+        # Newest first, and no more than the homepage's "Top stories" panel allows.
+        featured = sorted((a for a in data if a.get("featured")), key=lambda a: a["days_ago"])[:MAX_TOP_STORIES]
         for order, item in enumerate(featured):
             HomeFeaturedArticle.objects.create(page=home, article=articles[item["slug"]], sort_order=order)
         home.save_revision().publish()
@@ -248,9 +263,10 @@ class Command(BaseCommand):
         # Obviously fictional publisher details so the policy and contact
         # pages render fully in development. Real ones go in before launch.
         for field, value in DEMO_PUBLISHER.items():
-            if not getattr(site_settings, field):
+            if not getattr(site_settings, field) or getattr(site_settings, field) == LEGACY_DEMO_VALUES.get(field):
                 setattr(site_settings, field, value)
         site_settings.save()
+        ArticlePage.objects.filter(hero_credit=LEGACY_DEMO_VALUES["hero_credit"]).update(hero_credit=HERO_CREDIT)
 
     def publish_trust_pages(self, trust_pages):
         """Publish the launch drafts (About is filled with demo text separately)."""

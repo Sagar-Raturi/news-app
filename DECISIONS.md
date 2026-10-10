@@ -147,3 +147,11 @@ Choices made where the brief was ambiguous. One line each: choice — reason.
 - Email: Brevo (free tier) sends; Cloudflare Email Routing receives grievance@/contact@/corrections@ into the owner's Gmail.
 - One server does staging first (`staging.<domain>`, fake agents), then is wiped and switched to production behind a Cloudflare Access "wall" until launch day; later updates are tested locally and deployed as tags.
 - The step-by-step guide is a project skill (`.claude/skills/deploy-ledger/SKILL.md`) so any future session can resume it; progress (never secrets) lives in `docs/DEPLOY_LOG.md`.
+
+## Name, identity and new sections (2026-10-10)
+
+- The publication is now **Manthan Reviews** (the owner's choice; the working title's domain was unavailable). `bootstrap_site` renames an existing install once — homepage title, Wagtail site name, Site settings name and tagline — but only where they still hold the old defaults, so an editor's own wording is never overwritten. The house style and unedited agent prompts are upgraded through the existing `PREVIOUS_HOUSE_STYLES` / `customised` mechanism.
+- Internal identifiers keep the old name: the `ledger` template-tag library, `prose-ledger`/`form-ledger` CSS classes, `LedgerStaticFilesConfig`, and in production the `ledger` Docker project, database, volumes and backup path. Renaming those buys nothing for readers and, on a server, would orphan the existing volumes.
+- Tagline: "Churning the news, distilling what matters". Identity: churning-staff emblem in deep-ocean navy with a vermilion accent; the navy appears only in the masthead bar, footer and emblem so the pages stay ink-on-paper.
+- New sections, each with a desk agent: **Business, Data, Environment, Sports, Culture** — the sections a general analysis magazine is expected to carry (business and finance, a data/graphics desk, climate, sport, books and arts). New sections are slotted into the menu after their predecessor in `SECTIONS`; existing sections keep any order an editor has set.
+- Data journalism gets a **bar chart** StreamField block rendered on the server as a real table with CSS bars: no JavaScript, readable by screen readers and search engines, and it inherits the site's colours. The AI agents don't produce charts yet; editors add them by hand.
